@@ -1,103 +1,93 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./Header.css";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import logo from "../../assets/logo.png";
 
 const Header = () => {
-  const location = useLocation();
   const isLogin = true;
 
   return (
-    <>
-      <nav
-        className="navbar navbar-expand-lg bg-body-tertiary px-5"
-        data-bs-theme="dark"
-      >
-        <div className="container-fluid">
-          <NavLink to={"/"} className="navbar-brand">
-            LK Gaming Solutions
-          </NavLink>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav mb-2 mb-lg-0 mx-auto">
-              <li className="nav-item">
-                <NavLink
-                  to={"/"}
-                  className={`nav-link me-5 ${location.pathname === "/" ? "active" : ""}`}
-                >
-                  Home <i className="bi bi-house-fill"></i>
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  to={"/play-station"}
-                  className={`nav-link me-5 ${location.pathname.startsWith("/play-station/") ? "active" : ""}`}
-                >
-                  Play Station <i className="bi bi-playstation"></i>
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  to={"/xbox"}
-                  className={`nav-link me-5 ${
-                    location.pathname.startsWith("/xbox/") ? "active" : ""
-                  }`}
-                >
-                  Xbox <i className="bi bi-xbox"></i>
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  to={"/pc"}
-                  className={`nav-link me-5 ${location.pathname.startsWith("/pc/") ? "active" : ""}`}
-                >
-                  PC <i className="bi bi-pc"></i>
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                {isLogin ? (
-                    <li class="nav-item dropdown">
-                      <i className="bi bi-person-circle nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                      <ul class="dropdown-menu">
-                        <li><a class="dropdown-item">Profile</a></li>
-                        <li><a class="dropdown-item">Settings</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item">Logout</a></li>
-                      </ul>
-                    </li>
-                ) : (
-                  <NavLink
-                    to={"/login"}
-                    className={`nav-link ${location.pathname === "/login" ? "active" : ""}`}
-                  >
-                    Login
-                  </NavLink>
-                )}
-              </li>
-            </ul>
-            <form className="d-flex" role="search">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button className="btn btn-primary" type="submit">
-                Search
-              </button>
-            </form>
-          </div>
+    <Navbar
+      expand="lg"
+      className="bg-body-tertiary px-lg-5 px-3 header"
+      data-bs-theme="dark"
+    >
+      <Container fluid>
+        <Navbar.Brand as={NavLink} to={"/"}>
+          <img src={logo} style={{ width: "25px" }} className="me-2" alt="logo" />
+          <span style={{ color: "#BD9B52" }}>LK Gaming Solutions</span>
+        </Navbar.Brand>
+        <Nav.Link as={NavLink} to={"/cart"} className="d-lg-none ms-5">
+          <i className="bi bi-cart-fill"></i> 0
+        </Nav.Link>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mx-auto">
+            <Nav.Link className="mx-auto me-lg-3" as={NavLink} to={"/"}>
+              Home
+            </Nav.Link>
+            <Nav.Link className="mx-auto me-lg-3" as={NavLink} to={"/play-station"}>
+              PlayStation
+            </Nav.Link>
+            <Nav.Link className="mx-auto me-lg-3" as={NavLink} to={"/xbox"}>
+              Xbox
+            </Nav.Link>
+            <Nav.Link as={NavLink} to={"/pc"} className="mx-auto">
+              PC
+            </Nav.Link>
+            {isLogin ? (
+              <>
+                <Nav.Link className="d-lg-none mx-auto" as={NavLink} to={"/profile"}>
+                  Profile
+                </Nav.Link>
+                <Nav.Link className="d-lg-none mx-auto" as={NavLink} to={"/settings"}>
+                  Settings
+                </Nav.Link>
+                <Nav.Link className="d-lg-none mx-auto">Logout</Nav.Link>
+              </>
+            ) : (
+              <Nav.Link className="d-lg-none mx-auto" as={NavLink} to={"/login"}>
+                Login
+              </Nav.Link>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+        <div className="d-none d-lg-block">
+          <Nav>
+            <Nav.Link
+              as={NavLink}
+              to={"/cart"}
+              className="d-none d-lg-block me-lg-5"
+            >
+              <i className="bi bi-cart-fill"></i> 0
+            </Nav.Link>
+            {isLogin ? (
+              <NavDropdown
+                className="d-none d-lg-block"
+                title={<i className="bi bi-person-circle"></i>}
+                id="basic-nav-dropdown"
+              >
+                <NavDropdown.Item as={NavLink} to={"/profile"}>
+                  Profile
+                </NavDropdown.Item>
+                <NavDropdown.Item as={NavLink} to={"/settings"}>
+                  Settings
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item>Logout</NavDropdown.Item>
+              </NavDropdown>
+            ) : (
+              <Nav.Link className="d-none d-lg-block" as={NavLink} to={"/login"}>
+                Login
+              </Nav.Link>
+            )}
+          </Nav>
         </div>
-      </nav>
-    </>
+      </Container>
+    </Navbar>
   );
 };
 

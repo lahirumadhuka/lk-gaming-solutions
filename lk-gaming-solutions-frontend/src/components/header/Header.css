@@ -1,0 +1,47 @@
+/* Hide the default dropdown icon */
+.header .dropdown-toggle::after {
+  display: none !important;
+}
+
+.header .nav-link,
+.header .dropdown-item {
+    color: #ffffff;
+}
+
+.header .nav-link:hover,
+.header .dropdown-item:hover {
+    color: #BD9B52;
+    scale: 1.02;
+    transition: color 0.8s ease, scale 0.8s ease;
+}
+
+.header .nav-link.active,
+.header .dropdown-item.active,
+.header .dropdown.show .bi-person-circle {
+    color: #BD9B52;
+    scale: 1.02;
+}
+
+.header .dropdown-item:hover {
+  background-color: transparent !important;
+}
+
+.header .dropdown-item.active {
+  background-color: transparent !important;
+}
+
+.header .dropdown-menu {
+    opacity: 0;
+    transform: translate(-90%, -10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    display: block;
+    margin-left: 110%;
+    pointer-events: none;
+  }
+
+  /* When dropdown is open */
+  .header .show>.dropdown-menu {
+    opacity: 1;
+    transform: translate(-90%, 0);
+    pointer-events: auto;
+  }
