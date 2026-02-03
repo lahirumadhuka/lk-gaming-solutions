@@ -1,3 +1,17 @@
 .footer {
-    background: #2B3035;
+    background: rgba(10, 14, 26, 0.95);
+}
+
+.footer .footer-link {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.footer input {
+  border: 2px solid #BD9B52;
+}
+
+.footer input:focus {
+  border-color: #BD9B52;
+  box-shadow: 0 0 0 0.1rem #eed091;
 }
