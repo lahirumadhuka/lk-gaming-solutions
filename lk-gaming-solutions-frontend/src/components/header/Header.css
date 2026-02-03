@@ -1,6 +1,29 @@
 /* Hide the default dropdown icon */
+.header {
+  background: rgba(10, 14, 26, 0.95);
+  font-size: 20px;
+}
+
+.header .navbar-brand img {
+  width: 40px;
+}
+
+.header .navbar-brand span {
+  font-size: 25px;
+  color: #BD9B52;
+}
+
 .header .dropdown-toggle::after {
   display: none !important;
+}
+
+.header .dropdown-menu {
+  border: 1px solid #BD9B52;
+  background-color: rgba(10, 14, 26, 0.95);
+}
+
+.header .dropdown-divider {
+  background-color: #BD9B52;
 }
 
 .header .nav-link,
@@ -45,3 +68,13 @@
     transform: translate(-90%, 0);
     pointer-events: auto;
   }
+
+   /* Navbar Toggle */
+.header .nav-toggle {
+  border-color: #BD9B52;
+  color: #eed091;
+}
+
+.header .nav-toggle-icon {
+  color: #BD9B52;
+}

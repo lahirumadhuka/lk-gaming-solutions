@@ -11,62 +11,68 @@ const Header = () => {
 
   return (
     <Navbar
-      expand="lg"
-      className="bg-body-tertiary px-lg-5 px-3 header"
-      data-bs-theme="dark"
+      expand="xl"
+      className="px-xl-5 px-3 header shadow-lg"
     >
       <Container fluid>
-        <Navbar.Brand as={NavLink} to={"/"}>
-          <img src={logo} style={{ width: "25px" }} className="me-2" alt="logo" />
-          <span style={{ color: "#BD9B52" }}>LK Gaming Solutions</span>
+        <Navbar.Brand as={NavLink} to={"/"} className="navbar-brand d-flex align-content-center">
+          <img src={logo} className="me-2" alt="logo" />
+          <span className="d-none d-md-block">LK Gaming Solutions</span>
         </Navbar.Brand>
-        <Nav.Link as={NavLink} to={"/cart"} className="d-lg-none ms-5">
-          <i className="bi bi-cart-fill"></i> 0
-        </Nav.Link>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <div className="d-flex gap-3">
+          <Nav.Link as={NavLink} to={"/cart"} className="d-xl-none mt-1">
+            <i className="bi bi-cart-fill"></i> 0
+          </Nav.Link>
+          <Navbar.Toggle className="nav-toggle">
+            <i className="bi bi-list fs-1 nav-toggle-icon"></i>
+          </Navbar.Toggle>
+        </div>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mx-auto">
-            <Nav.Link className="mx-auto me-lg-3" as={NavLink} to={"/"}>
+            <Nav.Link className="mx-auto me-xl-3 mt-1 mt-xl-0" as={NavLink} to={"/"}>
               Home
             </Nav.Link>
-            <Nav.Link className="mx-auto me-lg-3" as={NavLink} to={"/play-station"}>
-              PlayStation
+            <Nav.Link className="mx-auto me-xl-3" as={NavLink} to={"/play-station"}>
+              <i className="bi bi-playstation me-1"></i>PlayStation
             </Nav.Link>
-            <Nav.Link className="mx-auto me-lg-3" as={NavLink} to={"/xbox"}>
-              Xbox
+            <Nav.Link className="mx-auto me-xl-3" as={NavLink} to={"/xbox"}>
+              <i className="bi bi-xbox me-1"></i>Xbox
             </Nav.Link>
             <Nav.Link as={NavLink} to={"/pc"} className="mx-auto">
-              PC
+              <i className="bi bi-pc-display me-1"></i>PC
+            </Nav.Link>
+            <Nav.Link as={NavLink} to={"/hot-deals"} className="mx-auto">
+              <i className="bi bi-fire me-1"></i>Hot Deals
             </Nav.Link>
             {isLogin ? (
               <>
-                <Nav.Link className="d-lg-none mx-auto" as={NavLink} to={"/profile"}>
+                <Nav.Link className="d-xl-none mx-auto" as={NavLink} to={"/profile"}>
                   Profile
                 </Nav.Link>
-                <Nav.Link className="d-lg-none mx-auto" as={NavLink} to={"/settings"}>
+                <Nav.Link className="d-xl-none mx-auto" as={NavLink} to={"/settings"}>
                   Settings
                 </Nav.Link>
-                <Nav.Link className="d-lg-none mx-auto">Logout</Nav.Link>
+                <Nav.Link className="d-xl-none mx-auto">Logout</Nav.Link>
               </>
             ) : (
-              <Nav.Link className="d-lg-none mx-auto" as={NavLink} to={"/login"}>
+              <Nav.Link className="d-xl-none mx-auto" as={NavLink} to={"/login"}>
                 Login
               </Nav.Link>
             )}
           </Nav>
         </Navbar.Collapse>
-        <div className="d-none d-lg-block">
+        <div className="d-none d-xl-block">
           <Nav>
             <Nav.Link
               as={NavLink}
               to={"/cart"}
-              className="d-none d-lg-block me-lg-5"
+              className="d-none d-xl-block me-xl-5"
             >
               <i className="bi bi-cart-fill"></i> 0
             </Nav.Link>
             {isLogin ? (
               <NavDropdown
-                className="d-none d-lg-block"
+                className="d-none d-xl-block"
                 title={<i className="bi bi-person-circle"></i>}
                 id="basic-nav-dropdown"
               >
@@ -80,7 +86,7 @@ const Header = () => {
                 <NavDropdown.Item>Logout</NavDropdown.Item>
               </NavDropdown>
             ) : (
-              <Nav.Link className="d-none d-lg-block" as={NavLink} to={"/login"}>
+              <Nav.Link className="d-none d-xl-block" as={NavLink} to={"/login"}>
                 Login
               </Nav.Link>
             )}
