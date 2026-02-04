@@ -1,153 +1,560 @@
-import React, { useState, useEffect } from "react";
+import SectionCard from "../components/card/SectionCard";
 
-export default function GameKeysHomepage() {
-  const [countdown, setCountdown] = useState({
-    hours: 23,
-    minutes: 45,
-    seconds: 30,
-  });
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCountdown((prev) => {
-        let { hours, minutes, seconds } = prev;
-        if (seconds > 0) {
-          seconds--;
-        } else {
-          seconds = 59;
-          if (minutes > 0) {
-            minutes--;
-          } else {
-            minutes = 59;
-            if (hours > 0) {
-              hours--;
-            }
-          }
-        }
-        return { hours, minutes, seconds };
-      });
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
+const Home = () => {
   const featuredGames = [
-    {
-      title: "Cyberpunk 2077",
-      price: 29.99,
-      oldPrice: 59.99,
-      discount: 50,
+    { 
+      title: "Spider-Man 2", 
+      price: 54.99, 
+      oldPrice: 54.99, 
+      discount: 0, 
       platform: "Steam",
-      rating: 4.5,
-    },
-    {
-      title: "Elden Ring",
-      price: 39.99,
-      oldPrice: 59.99,
-      discount: 33,
-      platform: "Steam",
-      rating: 4.8,
-    },
-    {
-      title: "Baldur's Gate 3",
-      price: 44.99,
-      oldPrice: 69.99,
-      discount: 36,
-      platform: "Steam",
+      seller: "ProGamer_88",
       rating: 4.9,
+      stock: 15,
+      region: "Global"
     },
-    {
-      title: "Starfield",
-      price: 69.99,
-      oldPrice: 69.99,
-      discount: 0,
-      platform: "Steam",
-      rating: 4.2,
+    { 
+      title: "God of War Ragnarök", 
+      price: 44.99, 
+      oldPrice: 69.99, 
+      discount: 35, 
+      platform: "PS4/PS5",
+      seller: "GameHunter",
+      rating: 4.8,
+      stock: 23,
+      region: "Global"
+    },
+    { 
+      title: "Forza Horizon 5", 
+      price: 39.99, 
+      oldPrice: 59.99, 
+      discount: 33, 
+      platform: "Xbox One/Series",
+      seller: "KeyMaster_Pro",
+      rating: 4.7,
+      stock: 8,
+      region: "US/EU"
+    },
+    { 
+      title: "The Last of Us Part II", 
+      price: 29.99, 
+      oldPrice: 49.99, 
+      discount: 40, 
+      platform: "PS4",
+      seller: "TrustedKeys",
+      rating: 4.6,
+      stock: 31,
+      region: "Global"
+    },
+    { 
+      title: "Gran Turismo 7", 
+      price: 49.99, 
+      oldPrice: 69.99, 
+      discount: 28, 
+      platform: "PS5",
+      seller: "SpeedRacer",
+      rating: 4.5,
+      stock: 12,
+      region: "Global"
+    },
+    { 
+      title: "Ratchet & Clank: Rift Apart", 
+      price: 34.99, 
+      oldPrice: 59.99, 
+      discount: 41, 
+      platform: "PS5",
+      seller: "GameVault",
+      rating: 4.7,
+      stock: 19,
+      region: "Global"
+    },
+    { 
+      title: "Ghost of Tsushima Director's Cut", 
+      price: 44.99, 
+      oldPrice: 69.99, 
+      discount: 35, 
+      platform: "PS4/PS5",
+      seller: "SamuraiKeys",
+      rating: 4.9,
+      stock: 7,
+      region: "Global"
+    },
+    { 
+      title: "Returnal", 
+      price: 24.99, 
+      oldPrice: 49.99, 
+      discount: 50, 
+      platform: "PS5",
+      seller: "KeysExpress",
+      rating: 4.4,
+      stock: 25,
+      region: "US/EU"
     },
   ];
 
   const hotDeals = [
-    {
-      title: "Call of Duty MW3",
-      price: 54.99,
-      oldPrice: 49.99,
-      discount: 10,
-      platform: "Battle.net",
+    { 
+      title: "Spider-Man 2", 
+      price: 54.99, 
+      oldPrice: 69.99, 
+      discount: 21, 
+      platform: "PS5",
+      seller: "ProGamer_88",
+      rating: 4.9,
+      stock: 15,
+      region: "Global"
     },
-    { title: "FIFA 24", price: 39.99, oldPrice: 20, discount: 40, platform: "Origin" },
-    { title: "Hogwarts Legacy", price: 34.99, oldPrice: 20, discount: 42, platform: "Steam" },
-    { title: "Red Dead 2", price: 24.99, oldPrice: 20, discount: 58, platform: "Rockstar" },
-    {
-      title: "GTA V Premium",
-      price: 14.99,
-      oldPrice: 20,
-      discount: 70,
-      platform: "Rockstar",
+    { 
+      title: "God of War Ragnarök", 
+      price: 44.99, 
+      oldPrice: 69.99, 
+      discount: 35, 
+      platform: "PS4/PS5",
+      seller: "GameHunter",
+      rating: 4.8,
+      stock: 23,
+      region: "Global"
     },
-    { title: "The Witcher 3", price: 9.99, oldPrice: 20, discount: 75, platform: "GOG" },
+    { 
+      title: "Horizon Forbidden West", 
+      price: 39.99, 
+      oldPrice: 59.99, 
+      discount: 33, 
+      platform: "PS5",
+      seller: "KeyMaster_Pro",
+      rating: 4.7,
+      stock: 8,
+      region: "US/EU"
+    },
+    { 
+      title: "The Last of Us Part II", 
+      price: 29.99, 
+      oldPrice: 49.99, 
+      discount: 40, 
+      platform: "PS4",
+      seller: "TrustedKeys",
+      rating: 4.6,
+      stock: 31,
+      region: "Global"
+    },
+    { 
+      title: "Gran Turismo 7", 
+      price: 49.99, 
+      oldPrice: 69.99, 
+      discount: 28, 
+      platform: "PS5",
+      seller: "SpeedRacer",
+      rating: 4.5,
+      stock: 12,
+      region: "Global"
+    },
+    { 
+      title: "Ratchet & Clank: Rift Apart", 
+      price: 34.99, 
+      oldPrice: 59.99, 
+      discount: 41, 
+      platform: "PS5",
+      seller: "GameVault",
+      rating: 4.7,
+      stock: 19,
+      region: "Global"
+    },
+    { 
+      title: "Ghost of Tsushima Director's Cut", 
+      price: 44.99, 
+      oldPrice: 69.99, 
+      discount: 35, 
+      platform: "PS4/PS5",
+      seller: "SamuraiKeys",
+      rating: 4.9,
+      stock: 7,
+      region: "Global"
+    },
+    { 
+      title: "Returnal", 
+      price: 24.99, 
+      oldPrice: 49.99, 
+      discount: 50, 
+      platform: "PS5",
+      seller: "KeysExpress",
+      rating: 4.4,
+      stock: 25,
+      region: "US/EU"
+    },
   ];
 
   const playStation = [
-    {
-      title: "Call of Duty MW3",
-      price: 54.99,
-      oldPrice: 49.99,
-      discount: 10,
-      platform: "Battle.net",
+    { 
+      title: "Spider-Man 2", 
+      price: 54.99, 
+      oldPrice: 69.99, 
+      discount: 21, 
+      platform: "PS5",
+      seller: "ProGamer_88",
+      rating: 4.9,
+      stock: 15,
+      region: "Global"
     },
-    { title: "FIFA 24", price: 39.99, oldPrice: 20, discount: 40, platform: "Origin" },
-    { title: "Hogwarts Legacy", price: 34.99, oldPrice: 20, discount: 42, platform: "Steam" },
-    { title: "Red Dead 2", price: 24.99, oldPrice: 20, discount: 58, platform: "Rockstar" },
-    {
-      title: "GTA V Premium",
-      price: 14.99,
-      oldPrice: 20,
-      discount: 70,
-      platform: "Rockstar",
+    { 
+      title: "God of War Ragnarök", 
+      price: 44.99, 
+      oldPrice: 69.99, 
+      discount: 35, 
+      platform: "PS4/PS5",
+      seller: "GameHunter",
+      rating: 4.8,
+      stock: 23,
+      region: "Global"
     },
-    { title: "The Witcher 3", price: 9.99, oldPrice: 20, discount: 75, platform: "GOG" },
+    { 
+      title: "Horizon Forbidden West", 
+      price: 39.99, 
+      oldPrice: 59.99, 
+      discount: 33, 
+      platform: "PS5",
+      seller: "KeyMaster_Pro",
+      rating: 4.7,
+      stock: 8,
+      region: "US/EU"
+    },
+    { 
+      title: "The Last of Us Part II", 
+      price: 29.99, 
+      oldPrice: 49.99, 
+      discount: 40, 
+      platform: "PS4",
+      seller: "TrustedKeys",
+      rating: 4.6,
+      stock: 31,
+      region: "Global"
+    },
+    { 
+      title: "Gran Turismo 7", 
+      price: 49.99, 
+      oldPrice: 69.99, 
+      discount: 28, 
+      platform: "PS5",
+      seller: "SpeedRacer",
+      rating: 4.5,
+      stock: 12,
+      region: "Global"
+    },
+    { 
+      title: "Ratchet & Clank: Rift Apart", 
+      price: 34.99, 
+      oldPrice: 59.99, 
+      discount: 41, 
+      platform: "PS5",
+      seller: "GameVault",
+      rating: 4.7,
+      stock: 19,
+      region: "Global"
+    },
+    { 
+      title: "Ghost of Tsushima Director's Cut", 
+      price: 44.99, 
+      oldPrice: 69.99, 
+      discount: 35, 
+      platform: "PS4/PS5",
+      seller: "SamuraiKeys",
+      rating: 4.9,
+      stock: 7,
+      region: "Global"
+    },
+    { 
+      title: "Returnal", 
+      price: 24.99, 
+      oldPrice: 49.99, 
+      discount: 50, 
+      platform: "PS5",
+      seller: "KeysExpress",
+      rating: 4.4,
+      stock: 25,
+      region: "US/EU"
+    },
   ];
 
   const xbox = [
-    {
-      title: "Call of Duty MW3",
-      price: 54.99,
-      oldPrice: 49.99,
-      discount: 10,
-      platform: "Battle.net",
+    { 
+      title: "Starfield Premium Edition", 
+      price: 54.99, 
+      oldPrice: 99.99, 
+      discount: 45, 
+      platform: "Xbox Series X/S",
+      seller: "SpaceKeys_Pro",
+      rating: 4.3,
+      stock: 18,
+      region: "Global",
+      gamePass: true
     },
-    { title: "FIFA 24", price: 39.99, oldPrice: 20, discount: 40, platform: "Origin" },
-    { title: "Hogwarts Legacy", price: 34.99, oldPrice: 20, discount: 42, platform: "Steam" },
-    { title: "Red Dead 2", price: 24.99, oldPrice: 20, discount: 58, platform: "Rockstar" },
-    {
-      title: "GTA V Premium",
-      price: 14.99,
-      oldPrice: 20,
-      discount: 70,
-      platform: "Rockstar",
+    { 
+      title: "Forza Horizon 5", 
+      price: 39.99, 
+      oldPrice: 59.99, 
+      discount: 33, 
+      platform: "Xbox One/Series",
+      seller: "RacingMaster",
+      rating: 4.8,
+      stock: 31,
+      region: "Global",
+      gamePass: true
     },
-    { title: "The Witcher 3", price: 9.99, oldPrice: 20, discount: 75, platform: "GOG" },
+    { 
+      title: "Halo Infinite Campaign", 
+      price: 34.99, 
+      oldPrice: 59.99, 
+      discount: 42, 
+      platform: "Xbox Series X/S",
+      seller: "SpartanKeys",
+      rating: 4.5,
+      stock: 24,
+      region: "Global",
+      gamePass: true
+    },
+    { 
+      title: "Sea of Thieves", 
+      price: 29.99, 
+      oldPrice: 49.99, 
+      discount: 40, 
+      platform: "Xbox One/Series",
+      seller: "PirateVault",
+      rating: 4.6,
+      stock: 42,
+      region: "Global",
+      gamePass: true
+    },
+    { 
+      title: "Cyberpunk 2077", 
+      price: 29.99, 
+      oldPrice: 59.99, 
+      discount: 50, 
+      platform: "Xbox Series X/S",
+      seller: "CyberGamer",
+      rating: 4.4,
+      stock: 15,
+      region: "Global",
+      gamePass: false
+    },
+    { 
+      title: "Red Dead Redemption 2", 
+      price: 24.99, 
+      oldPrice: 59.99, 
+      discount: 58, 
+      platform: "Xbox One",
+      seller: "WildWestXbox",
+      rating: 4.8,
+      stock: 9,
+      region: "Global",
+      gamePass: true
+    },
+    { 
+      title: "Call of Duty: MW3", 
+      price: 54.99, 
+      oldPrice: 69.99, 
+      discount: 21, 
+      platform: "Xbox Series X/S",
+      seller: "CODExpress",
+      rating: 4.3,
+      stock: 28,
+      region: "Global",
+      gamePass: false
+    },
+    { 
+      title: "Minecraft Deluxe", 
+      price: 19.99, 
+      oldPrice: 29.99, 
+      discount: 33, 
+      platform: "Xbox One/Series",
+      seller: "BlockBuster",
+      rating: 4.9,
+      stock: 67,
+      region: "Global",
+      gamePass: true
+    },
+    { 
+      title: "FIFA 24", 
+      price: 39.99, 
+      oldPrice: 69.99, 
+      discount: 43, 
+      platform: "Xbox Series X/S",
+      seller: "SportsKeys",
+      rating: 4.2,
+      stock: 21,
+      region: "Global",
+      gamePass: true
+    },
+    { 
+      title: "Gears 5 Ultimate", 
+      price: 29.99, 
+      oldPrice: 59.99, 
+      discount: 50, 
+      platform: "Xbox One/Series",
+      seller: "GearsVault",
+      rating: 4.6,
+      stock: 19,
+      region: "Global",
+      gamePass: true
+    },
+    { 
+      title: "Assassin's Creed Valhalla", 
+      price: 34.99, 
+      oldPrice: 59.99, 
+      discount: 42, 
+      platform: "Xbox Series X/S",
+      seller: "VikingKeys",
+      rating: 4.5,
+      stock: 13,
+      region: "Global",
+      gamePass: false
+    },
+    { 
+      title: "Elden Ring", 
+      price: 39.99, 
+      oldPrice: 59.99, 
+      discount: 33, 
+      platform: "Xbox One/Series",
+      seller: "SoulsKeys",
+      rating: 4.8,
+      stock: 8,
+      region: "Global",
+      gamePass: false
+    },
   ];
 
 
   const pc = [
-    {
-      title: "Call of Duty MW3",
-      price: 54.99,
-      oldPrice: 49.99,
-      discount: 10,
-      platform: "Battle.net",
+    { 
+      title: "Cyberpunk 2077", 
+      price: 29.99, 
+      oldPrice: 59.99, 
+      discount: 50, 
+      platform: "Steam",
+      seller: "CyberKeys_Pro",
+      rating: 4.5,
+      stock: 42,
+      region: "Global"
     },
-    { title: "FIFA 24", price: 39.99, oldPrice: 20, discount: 40, platform: "Origin" },
-    { title: "Hogwarts Legacy", price: 34.99, oldPrice: 20, discount: 42, platform: "Steam" },
-    { title: "Red Dead 2", price: 24.99, oldPrice: 20, discount: 58, platform: "Rockstar" },
-    {
-      title: "GTA V Premium",
-      price: 14.99,
-      oldPrice: 20,
-      discount: 70,
+    { 
+      title: "Baldur's Gate 3", 
+      price: 44.99, 
+      oldPrice: 69.99, 
+      discount: 36, 
+      platform: "Steam",
+      seller: "RPGMaster",
+      rating: 4.9,
+      stock: 28,
+      region: "Global"
+    },
+    { 
+      title: "Starfield", 
+      price: 49.99, 
+      oldPrice: 69.99, 
+      discount: 29, 
+      platform: "Steam",
+      seller: "SpaceGamer_88",
+      rating: 4.2,
+      stock: 15,
+      region: "Global"
+    },
+    { 
+      title: "Elden Ring", 
+      price: 39.99, 
+      oldPrice: 59.99, 
+      discount: 33, 
+      platform: "Steam",
+      seller: "SoulsVault",
+      rating: 4.8,
+      stock: 7,
+      region: "Global"
+    },
+    { 
+      title: "Red Dead Redemption 2", 
+      price: 24.99, 
+      oldPrice: 59.99, 
+      discount: 58, 
       platform: "Rockstar",
+      seller: "WildWestKeys",
+      rating: 4.7,
+      stock: 33,
+      region: "Global"
     },
-    { title: "The Witcher 3", price: 9.99, oldPrice: 20, discount: 75, platform: "GOG" },
+    { 
+      title: "GTA V Premium Edition", 
+      price: 14.99, 
+      oldPrice: 49.99, 
+      discount: 70, 
+      platform: "Rockstar",
+      seller: "GTAExpress",
+      rating: 4.6,
+      stock: 51,
+      region: "Global"
+    },
+    { 
+      title: "Hogwarts Legacy", 
+      price: 34.99, 
+      oldPrice: 59.99, 
+      discount: 42, 
+      platform: "Steam",
+      seller: "MagicKeys",
+      rating: 4.5,
+      stock: 19,
+      region: "Global"
+    },
+    { 
+      title: "The Witcher 3 GOTY", 
+      price: 9.99, 
+      oldPrice: 39.99, 
+      discount: 75, 
+      platform: "GOG",
+      seller: "CDProjektFan",
+      rating: 4.9,
+      stock: 8,
+      region: "Global"
+    },
+    { 
+      title: "Counter-Strike 2", 
+      price: 0.00, 
+      oldPrice: 0.00, 
+      discount: 0, 
+      platform: "Steam",
+      seller: "ValveOfficial",
+      rating: 4.6,
+      stock: 0,
+      region: "Global"
+    },
+    { 
+      title: "Palworld", 
+      price: 24.99, 
+      oldPrice: 29.99, 
+      discount: 17, 
+      platform: "Steam",
+      seller: "PocketpairKeys",
+      rating: 4.4,
+      stock: 62,
+      region: "Global"
+    },
+    { 
+      title: "Call of Duty: MW3", 
+      price: 54.99, 
+      oldPrice: 69.99, 
+      discount: 21, 
+      platform: "Battle.net",
+      seller: "CODMaster",
+      rating: 4.3,
+      stock: 25,
+      region: "Global"
+    },
+    { 
+      title: "Resident Evil 4 Remake", 
+      price: 39.99, 
+      oldPrice: 59.99, 
+      discount: 33, 
+      platform: "Steam",
+      seller: "HorrorKeys",
+      rating: 4.8,
+      stock: 14,
+      region: "Global"
+    },
   ];
 
   return (
@@ -276,87 +683,6 @@ export default function GameKeysHomepage() {
           color: #000000;
         }
 
-        /* Game Card */
-        .game-card {
-          background: linear-gradient(135deg, #1e2329 0%, #2a313d 100%);
-          border: 2px solid #353d4a;
-          border-radius: 12px;
-          overflow: hidden;
-          transition: all 0.3s ease;
-          position: relative;
-        }
-
-        .game-card::before {
-          content: '';
-          position: absolute;
-          top: -2px;
-          left: -2px;
-          right: -2px;
-          bottom: -2px;
-          border-radius: 12px;
-          opacity: 0;
-          transition: opacity 0.3s ease;
-          z-index: -1;
-        }
-
-        .game-card:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 15px 40px rgba(189, 155, 82, 0.3);
-          border: 1px solid #BD9B52;
-        }
-
-        .game-card:hover::before {
-          opacity: 1;
-        }
-
-        .game-img {
-          width: 100%;
-          height: 200px;
-          object-fit: cover;
-          background: linear-gradient(135deg, #2a313d 0%, #1e2329 100%);
-        }
-
-        .discount-badge {
-          position: absolute;
-          top: 12px;
-          right: 12px;
-          background: linear-gradient(135deg, #ff0080 0%, #ff8c00 100%);
-          color: white;
-          font-family: 'Orbitron', sans-serif;
-          font-weight: 700;
-          padding: 6px 12px;
-          border-radius: 8px;
-          font-size: 14px;
-          letter-spacing: 1px;
-          box-shadow: 0 4px 15px rgba(255, 0, 128, 0.4);
-        }
-
-        .platform-badge {
-          display: inline-block;
-          background: rgba(189, 155, 82, 0.2);
-          border: 1px solid rgba(189, 155, 82, 0.4);
-          color: #BD9B52;
-          font-size: 11px;
-          padding: 4px 10px;
-          border-radius: 6px;
-          font-weight: 700;
-          letter-spacing: 1px;
-        }
-
-        .price-tag {
-          font-family: 'Orbitron', sans-serif;
-          font-weight: 700;
-          font-size: 28px;
-          color: #BD9B52;
-          text-shadow: 0 0 20px rgba(189, 155, 82, 0.5);
-        }
-
-        .old-price {
-          text-decoration: line-through;
-          color: #5a6270;
-          font-size: 16px;
-        }
-
         /* Section Title */
         .section-title {
           font-family: 'Orbitron', sans-serif;
@@ -378,40 +704,6 @@ export default function GameKeysHomepage() {
           width: 100px;
           height: 4px;
           background: linear-gradient(90deg, #BD9B52 0%, transparent 100%);
-        }
-
-        /* Countdown Timer */
-        .countdown-timer {
-          display: flex;
-          gap: 16px;
-          justify-content: center;
-          margin-top: 24px;
-        }
-
-        .countdown-item {
-          background: linear-gradient(135deg, #1e2329 0%, #2a313d 100%);
-          border: 2px solid #353d4a;
-          border-radius: 12px;
-          padding: 16px 24px;
-          text-align: center;
-          min-width: 80px;
-        }
-
-        .countdown-number {
-          font-family: 'Orbitron', sans-serif;
-          font-weight: 900;
-          font-size: 32px;
-          color: #BD9B52;
-          display: block;
-          text-shadow: 0 0 20px rgba(189, 155, 82, 0.5);
-        }
-
-        .countdown-label {
-          font-size: 12px;
-          color: #8b95a5;
-          text-transform: uppercase;
-          letter-spacing: 1px;
-          margin-top: 4px;
         }
 
         /* Stats */
@@ -439,12 +731,6 @@ export default function GameKeysHomepage() {
           font-weight: 600;
           letter-spacing: 1px;
           margin-top: 8px;
-        }
-
-        /* Rating Stars */
-        .rating-stars {
-          color: #ffd700;
-          font-size: 14px;
         }
 
         /* Search Bar */
@@ -513,44 +799,6 @@ export default function GameKeysHomepage() {
                   <i className="bi bi-search me-2"></i>Browse Games
                 </button>
               </div>
-
-              {/* Countdown Timer */}
-              <div className="mt-5 px-3 px-lg-0">
-                <h5
-                  style={{
-                    color: "#8b95a5",
-                    fontWeight: 700,
-                    letterSpacing: "2px",
-                    marginBottom: "16px",
-                  }}
-                >
-                  <i
-                    className="bi bi-clock-fill me-2"
-                    style={{ color: "#ff0080" }}
-                  ></i>
-                  FLASH SALE ENDS IN
-                </h5>
-                <div className="countdown-timer">
-                  <div className="countdown-item">
-                    <span className="countdown-number">
-                      {String(countdown.hours).padStart(2, "0")}
-                    </span>
-                    <div className="countdown-label">Hours</div>
-                  </div>
-                  <div className="countdown-item">
-                    <span className="countdown-number">
-                      {String(countdown.minutes).padStart(2, "0")}
-                    </span>
-                    <div className="countdown-label">Minutes</div>
-                  </div>
-                  <div className="countdown-item">
-                    <span className="countdown-number">
-                      {String(countdown.seconds).padStart(2, "0")}
-                    </span>
-                    <div className="countdown-label">Seconds</div>
-                  </div>
-                </div>
-              </div>
             </div>
 
             <div className="col-lg-6">
@@ -586,378 +834,19 @@ export default function GameKeysHomepage() {
       </section>
 
       {/* Featured Games Section */}
-      <section className="gaming-bg py-5 px-3 px-lg-0">
-        <div className="container py-4">
-          <h2 className="section-title" style={{ color: "#ffd700" }}><i className="bi bi-star-fill"></i> Featured Games</h2>
-          <div className="row g-4">
-            {featuredGames.map((game, index) => (
-              <div key={index} className="col-lg-3 col-md-6">
-                <div className="game-card">
-                  <div style={{ position: "relative" }}>
-                    <div className="game-img d-flex align-items-center justify-content-center">
-                      <i
-                        className="bi bi-controller"
-                        style={{ fontSize: "64px", color: "#353d4a" }}
-                      ></i>
-                    </div>
-                    {game.discount !== 0 && <span className="discount-badge">-{game.discount}%</span>}
-                  </div>
-                  <div className="p-3">
-                    <h5
-                      style={{
-                        color: "#fff",
-                        fontWeight: 700,
-                        fontSize: "18px",
-                        marginBottom: "8px",
-                      }}
-                    >
-                      {game.title}
-                    </h5>
-                    <div className="mb-2">
-                      <span className="platform-badge">{game.platform}</span>
-                    </div>
-                    <div className="rating-stars mb-2">
-                      {[...Array(5)].map((_, i) => (
-                        <i
-                          key={i}
-                          className={`bi bi-star${i < Math.floor(game.rating) ? "-fill" : ""}`}
-                        ></i>
-                      ))}
-                      <span
-                        style={{
-                          color: "#8b95a5",
-                          fontSize: "13px",
-                          marginLeft: "8px",
-                        }}
-                      >
-                        ({game.rating})
-                      </span>
-                    </div>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div>
-                        <div className="price-tag">${game.price}</div>
-                        <div className="old-price" style={{color: "#8b95a5", visibility: `${game.oldPrice === game.price ? "hidden" : ""}`}}>${game.oldPrice}</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <SectionCard section_data={featuredGames} section_title={"Featured Games"} section_icon={"bi-star-fill"} section_style={"#ffd700"} />
 
       {/* Hot Deals Section */}
-      <section className="gaming-bg py-5 px-3 px-lg-0">
-        <div className="container py-4">
-          <div className="d-flex align-items-center justify-content-between mb-4">
-            <h2 className="section-title mb-0" style={{ color: "#ff0080" }}>
-              <i className="bi bi-fire me-3"></i>
-              Hot Deals
-            </h2>
-            <a
-              href="#"
-              style={{
-                color: "#BD9B52",
-                textDecoration: "none",
-                fontWeight: 700,
-                fontSize: "16px",
-              }}
-            >
-              View All <i className="bi bi-arrow-right"></i>
-            </a>
-          </div>
-          <div className="row g-3">
-            {hotDeals.map((game, index) => (
-              <div key={index} className="col-lg-2 col-md-4 col-6">
-                <div className="game-card">
-                  <div style={{ position: "relative" }}>
-                    <div className="game-img d-flex align-items-center justify-content-center">
-                      <i
-                        className="bi bi-controller"
-                        style={{ fontSize: "48px", color: "#353d4a" }}
-                      ></i>
-                    </div>
-                    {game.discount !== 0 && <span className="discount-badge">-{game.discount}%</span>}
-                  </div>
-                  <div className="p-3">
-                    <h6
-                      style={{
-                        color: "#fff",
-                        fontWeight: 700,
-                        fontSize: "14px",
-                        marginBottom: "6px",
-                      }}
-                    >
-                      {game.title}
-                    </h6>
-                    <div className="mb-2">
-                      <span className="platform-badge" style={{fontSize: '9px', padding: '3px 6px'}}>{game.platform}</span>
-                    </div>
-                    <div className="rating-stars mb-2">
-                      {[...Array(5)].map((_, i) => (
-                        <i
-                          key={i}
-                          className={`bi bi-star${i < Math.floor(game.rating) ? "-fill" : ""}`}
-                        ></i>
-                      ))}
-                      <span
-                        style={{
-                          color: "#8b95a5",
-                          fontSize: "13px",
-                          marginLeft: "8px",
-                        }}
-                      >
-                        ({game.rating || 0})
-                      </span>
-                    </div>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div>
-                        <div className="price-tag" style={{fontSize: '20px'}}>${game.price}</div>
-                        <div className="old-price" style={{fontSize: '14px', color: "#8b95a5", visibility: `${game.oldPrice === game.price ? "hidden" : ""}`}}>${game.oldPrice}</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <SectionCard section_data={hotDeals} section_title={"Hot Deals"} section_icon={"bi-fire"} section_style={"#ff0080"} section_link={"/hot-deals"} />
 
       {/* Play Station Section */}
-      <section className="gaming-bg py-5 px-3 px-lg-0">
-        <div className="container py-4">
-          <div className="d-flex align-items-center justify-content-between mb-4">
-            <h2 className="section-title mb-0" style={{ color: "#003791" }}>
-              <i className="bi bi-playstation me-3"></i>
-              Play Station
-            </h2>
-            <a
-              href="#"
-              style={{
-                color: "#BD9B52",
-                textDecoration: "none",
-                fontWeight: 700,
-                fontSize: "16px",
-              }}
-            >
-              View All <i className="bi bi-arrow-right"></i>
-            </a>
-          </div>
-          <div className="row g-3">
-            {hotDeals.map((game, index) => (
-              <div key={index} className="col-lg-2 col-md-4 col-6">
-                <div className="game-card">
-                  <div style={{ position: "relative" }}>
-                    <div className="game-img d-flex align-items-center justify-content-center">
-                      <i
-                        className="bi bi-controller"
-                        style={{ fontSize: "48px", color: "#353d4a" }}
-                      ></i>
-                    </div>
-                    {game.discount !== 0 && <span className="discount-badge">-{game.discount}%</span>}
-                  </div>
-                  <div className="p-3">
-                    <h6
-                      style={{
-                        color: "#fff",
-                        fontWeight: 700,
-                        fontSize: "14px",
-                        marginBottom: "6px",
-                      }}
-                    >
-                      {game.title}
-                    </h6>
-                    <div className="mb-2">
-                      <span className="platform-badge" style={{fontSize: '9px', padding: '3px 6px'}}>{game.platform}</span>
-                    </div>
-                    <div className="rating-stars mb-2">
-                      {[...Array(5)].map((_, i) => (
-                        <i
-                          key={i}
-                          className={`bi bi-star${i < Math.floor(game.rating) ? "-fill" : ""}`}
-                        ></i>
-                      ))}
-                      <span
-                        style={{
-                          color: "#8b95a5",
-                          fontSize: "13px",
-                          marginLeft: "8px",
-                        }}
-                      >
-                        ({game.rating || 0})
-                      </span>
-                    </div>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div>
-                        <div className="price-tag" style={{fontSize: '20px'}}>${game.price}</div>
-                        <div className="old-price" style={{fontSize: '14px', color: "#8b95a5", visibility: `${game.oldPrice === game.price ? "hidden" : ""}`}}>${game.oldPrice}</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <SectionCard section_data={playStation} section_title={"Play Station"} section_icon={"bi-playstation"} section_style={"#0059B4"} section_link={"/play-station"} />
 
       {/* Xbox Section */}
-      <section className="gaming-bg py-5 px-3 px-lg-0">
-        <div className="container py-4">
-          <div className="d-flex align-items-center justify-content-between mb-4">
-            <h2 className="section-title mb-0" style={{color: "#107C10"}}>
-              <i className="bi bi-xbox me-3"></i>
-              Xbox
-            </h2>
-            <a
-              href="#"
-              style={{
-                color: "#BD9B52",
-                textDecoration: "none",
-                fontWeight: 700,
-                fontSize: "16px",
-              }}
-            >
-              View All <i className="bi bi-arrow-right"></i>
-            </a>
-          </div>
-          <div className="row g-3">
-            {hotDeals.map((game, index) => (
-              <div key={index} className="col-lg-2 col-md-4 col-6">
-                <div className="game-card">
-                  <div style={{ position: "relative" }}>
-                    <div className="game-img d-flex align-items-center justify-content-center">
-                      <i
-                        className="bi bi-controller"
-                        style={{ fontSize: "48px", color: "#353d4a" }}
-                      ></i>
-                    </div>
-                    {game.discount !== 0 && <span className="discount-badge">-{game.discount}%</span>}
-                  </div>
-                  <div className="p-3">
-                    <h6
-                      style={{
-                        color: "#fff",
-                        fontWeight: 700,
-                        fontSize: "14px",
-                        marginBottom: "6px",
-                      }}
-                    >
-                      {game.title}
-                    </h6>
-                    <div className="mb-2">
-                      <span className="platform-badge" style={{fontSize: '9px', padding: '3px 6px'}}>{game.platform}</span>
-                    </div>
-                    <div className="rating-stars mb-2">
-                      {[...Array(5)].map((_, i) => (
-                        <i
-                          key={i}
-                          className={`bi bi-star${i < Math.floor(game.rating) ? "-fill" : ""}`}
-                        ></i>
-                      ))}
-                      <span
-                        style={{
-                          color: "#8b95a5",
-                          fontSize: "13px",
-                          marginLeft: "8px",
-                        }}
-                      >
-                        ({game.rating || 0})
-                      </span>
-                    </div>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div>
-                        <div className="price-tag" style={{fontSize: '20px'}}>${game.price}</div>
-                        <div className="old-price" style={{fontSize: '14px', color: "#8b95a5", visibility: `${game.oldPrice === game.price ? "hidden" : ""}`}}>${game.oldPrice}</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <SectionCard section_data={xbox} section_title={"Xbox"} section_icon={"bi-xbox"} section_style={"#0F730F"} section_link={"/xbox"} />
 
       {/* PC Section */}
-      <section className="gaming-bg py-5 px-3 px-lg-0">
-        <div className="container py-4">
-          <div className="d-flex align-items-center justify-content-between mb-4">
-            <h2 className="section-title mb-0" style={{ color: "#FF0000" }}>
-              <i className="bi bi-pc-display me-3"></i>
-              PC
-            </h2>
-            <a
-              href="#"
-              style={{
-                color: "#BD9B52",
-                textDecoration: "none",
-                fontWeight: 700,
-                fontSize: "16px",
-              }}
-            >
-              View All <i className="bi bi-arrow-right"></i>
-            </a>
-          </div>
-          <div className="row g-3">
-            {hotDeals.map((game, index) => (
-              <div key={index} className="col-lg-2 col-md-4 col-6">
-                <div className="game-card">
-                  <div style={{ position: "relative" }}>
-                    <div className="game-img d-flex align-items-center justify-content-center">
-                      <i
-                        className="bi bi-controller"
-                        style={{ fontSize: "48px", color: "#353d4a" }}
-                      ></i>
-                    </div>
-                    {game.discount !== 0 && <span className="discount-badge">-{game.discount}%</span>}
-                  </div>
-                  <div className="p-3">
-                    <h6
-                      style={{
-                        color: "#fff",
-                        fontWeight: 700,
-                        fontSize: "14px",
-                        marginBottom: "6px",
-                      }}
-                    >
-                      {game.title}
-                    </h6>
-                    <div className="mb-2">
-                      <span className="platform-badge" style={{fontSize: '9px', padding: '3px 6px'}}>{game.platform}</span>
-                    </div>
-                    <div className="rating-stars mb-2">
-                      {[...Array(5)].map((_, i) => (
-                        <i
-                          key={i}
-                          className={`bi bi-star${i < Math.floor(game.rating) ? "-fill" : ""}`}
-                        ></i>
-                      ))}
-                      <span
-                        style={{
-                          color: "#8b95a5",
-                          fontSize: "13px",
-                          marginLeft: "8px",
-                        }}
-                      >
-                        ({game.rating || 0})
-                      </span>
-                    </div>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div>
-                        <div className="price-tag" style={{fontSize: '20px'}}>${game.price}</div>
-                        <div className="old-price" style={{fontSize: '14px', color: "#8b95a5", visibility: `${game.oldPrice === game.price ? "hidden" : ""}`}}>${game.oldPrice}</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <SectionCard section_data={pc} section_title={"PC"} section_icon={"bi-pc-display"} section_style={"#FF0000"} section_link={"/pc"} />
 
       {/* Why Choose Us Section */}
       <section className="gaming-bg py-5 px-3 px-lg-0">
@@ -1084,3 +973,5 @@ export default function GameKeysHomepage() {
     </>
   );
 }
+
+export default Home;
