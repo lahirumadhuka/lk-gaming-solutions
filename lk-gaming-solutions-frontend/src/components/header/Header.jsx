@@ -38,7 +38,7 @@ const Header = () => {
             <Nav.Link className="mx-auto me-xl-3" as={NavLink} to={"/xbox"}>
               <i className="bi bi-xbox me-1"></i>Xbox
             </Nav.Link>
-            <Nav.Link as={NavLink} to={"/pc"} className="mx-auto">
+            <Nav.Link as={NavLink} to={"/pc"} className="mx-auto me-xl-3">
               <i className="bi bi-pc-display me-1"></i>PC
             </Nav.Link>
             <Nav.Link as={NavLink} to={"/hot-deals"} className="mx-auto">
