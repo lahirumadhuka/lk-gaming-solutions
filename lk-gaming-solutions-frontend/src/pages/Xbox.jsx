@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import GamingCard from "../components/card/GamingCard";
 import FilterSidebar from "../components/filter/FilterSidebar";
+import SortingSelect from "../components/filter/SortingSelect";
+import UseTitleName from "../utils/UseTitleName";
 
 const Xbox = () => {
-  const [sortBy, setSortBy] = useState("popular");
+  UseTitleName("Xbox");
+
+  const [sortBy, setSortBy] = useState("newest");
   const [gamesCount, setGamesCount] = useState();
   const [platform, setPlatform] = useState("All");
   const [price, setPrice] = useState("All");
@@ -383,29 +387,7 @@ const Xbox = () => {
                     ? "No Games Found"
                     : `${gamesCount} Game${gamesCount > 1 ? "s" : ""} Found`}
                 </h5>
-                <div className="d-flex align-items-center gap-3">
-                  <span
-                    style={{
-                      color: "#8b95a5",
-                      fontSize: "14px",
-                      fontWeight: 600,
-                    }}
-                  >
-                    Sort by:
-                  </span>
-                  <select
-                    className="sort-select"
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
-                  >
-                    <option value="popular">Most Popular</option>
-                    <option value="price-low">Price: Low to High</option>
-                    <option value="price-high">Price: High to Low</option>
-                    <option value="newest">Newest First</option>
-                    <option value="discount">Biggest Discount</option>
-                    <option value="rating">Highest Rated</option>
-                  </select>
-                </div>
+                <SortingSelect sortBy={sortBy} setSortBy={setSortBy} />
               </div>
 
               {/* Games Grid */}
@@ -417,6 +399,7 @@ const Xbox = () => {
                 price={price}
                 genre={genre}
                 region={region}
+                sortBy={sortBy}
               />
 
               {/* Pagination */}

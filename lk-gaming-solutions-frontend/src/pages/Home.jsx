@@ -1,6 +1,9 @@
 import SectionCard from "../components/card/SectionCard";
+import UseTitleName from "../utils/UseTitleName";
 
 const Home = () => {
+  UseTitleName("");
+
   const featuredGames = [
     { 
       title: "Spider-Man 2", 

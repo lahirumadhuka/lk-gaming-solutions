@@ -7,14 +7,48 @@ const GamingCard = ({
   price = "All",
   genre = "All",
   region = "All",
+  sortBy,
 }) => {
   // Filter games
   const games = card_data
     .filter((c) => platform === "All" || c.platform === platform)
-    .filter((c) => discount === "All" || c.discount >= discount || (c.discount >= discount[0] && c.discount < discount[1]))
-    .filter((c) => price === "All" || c.price >= price || (c.price >= price[0] && c.price < price[1]))
+    .filter(
+      (c) =>
+        discount === "All" ||
+        c.discount >= discount ||
+        (c.discount >= discount[0] && c.discount < discount[1]),
+    )
+    .filter(
+      (c) =>
+        price === "All" ||
+        c.price >= price ||
+        (c.price >= price[0] && c.price < price[1]),
+    )
     .filter((c) => genre === "All" || c.genre === genre)
-    .filter((c) => region === "All" || c.region === region);
+    .filter((c) => region === "All" || c.region === region)
+    .sort((a, b) => {
+      if (sortBy === "newest") {
+        return new Date(b.date) - new Date(a.date);
+      }
+
+      if (sortBy === "price-low") {
+        return a.price - b.price;
+      }
+
+      if (sortBy === "price-high") {
+        return b.price - a.price;
+      }
+
+      if (sortBy === "discount") {
+        return b.discount - a.discount;
+      }
+
+      if (sortBy === "rating") {
+        return parseFloat(b.rating) - parseFloat(a.rating);
+      }
+
+      return 0;
+    });
 
   // Get games count
   setGamesCount(games.length);
