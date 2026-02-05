@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import GamingCard from "../components/card/GamingCard";
 import FilterSidebar from "../components/filter/FilterSidebar";
+import SortingSelect from "../components/filter/SortingSelect";
+import UseTitleName from "../utils/UseTitleName";
 
 const HotDeals = () => {
-  const [sortBy, setSortBy] = useState("discount");
+  UseTitleName("Hot Deals");
+  
+  const [sortBy, setSortBy] = useState("newest");
   const [gamesCount, setGamesCount] = useState();
   const [platform, setPlatform] = useState("All");
   const [discount, setDiscount] = useState("All");
@@ -433,29 +437,7 @@ const HotDeals = () => {
                     ? "No Hot Deals Available"
                     : `${gamesCount} Hot Deal${gamesCount > 1 ? "s" : ""} Available`}
                 </h5>
-                <div className="d-flex align-items-center gap-3">
-                  <span
-                    style={{
-                      color: "#8b95a5",
-                      fontSize: "14px",
-                      fontWeight: 600,
-                    }}
-                  >
-                    Sort by:
-                  </span>
-                  <select
-                    className="sort-select"
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
-                  >
-                    <option value="discount">Biggest Discount</option>
-                    <option value="price-low">Price: Low to High</option>
-                    <option value="price-high">Price: High to Low</option>
-                    <option value="ending-soon">Ending Soon</option>
-                    <option value="popular">Most Popular</option>
-                    <option value="rating">Highest Rated</option>
-                  </select>
-                </div>
+                <SortingSelect sortBy={sortBy} setSortBy={setSortBy} />
               </div>
 
               {/* Games Grid */}
@@ -466,6 +448,7 @@ const HotDeals = () => {
                 platform={platform}
                 discount={discount}
                 price={price}
+                sortBy={sortBy}
               />
 
               {/* Pagination */}

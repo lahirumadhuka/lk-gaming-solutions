@@ -184,16 +184,66 @@ const FilterSidebar = ({
       {genre && (
         <div className="filter-section">
           <h6 className="filter-title">Genre</h6>
-          <button className="filter-option active">All Genre</button>
-          <button className="filter-option">Action</button>
-          <button className="filter-option">Adventure</button>
-          <button className="filter-option">RPG</button>
-          <button className="filter-option">Strategy</button>
-          <button className="filter-option">Simulation</button>
-          <button className="filter-option">Shooter</button>
-          <button className="filter-option">Sports</button>
-          <button className="filter-option">Racing</button>
-          <button className="filter-option">Indie</button>
+          <button
+            className={`filter-option ${genre === "All" ? "active" : ""}`}
+            onClick={() => setGenre("All")}
+          >
+            All Genre
+          </button>
+          <button
+            className={`filter-option ${genre === "Action" ? "active" : ""}`}
+            onClick={() => setGenre("Action")}
+          >
+            Action
+          </button>
+          <button
+            className={`filter-option ${genre === "Adventure" ? "active" : ""}`}
+            onClick={() => setGenre("Adventure")}
+          >
+            Adventure
+          </button>
+          <button
+            className={`filter-option ${genre === "RPG" ? "active" : ""}`}
+            onClick={() => setGenre("RPG")}
+          >
+            RPG
+          </button>
+          <button
+            className={`filter-option ${genre === "Strategy" ? "active" : ""}`}
+            onClick={() => setGenre("Strategy")}
+          >
+            Strategy
+          </button>
+          <button
+            className={`filter-option ${genre === "Simulation" ? "active" : ""}`}
+            onClick={() => setGenre("Simulation")}
+          >
+            Simulation
+          </button>
+          <button
+            className={`filter-option ${genre === "Shooter" ? "active" : ""}`}
+            onClick={() => setGenre("Shooter")}
+          >
+            Shooter
+          </button>
+          <button
+            className={`filter-option ${genre === "Sports" ? "active" : ""}`}
+            onClick={() => setGenre("Sports")}
+          >
+            Sports
+          </button>
+          <button
+            className={`filter-option ${genre === "Racing" ? "active" : ""}`}
+            onClick={() => setGenre("Racing")}
+          >
+            Racing
+          </button>
+          <button
+            className={`filter-option ${genre === "Indie" ? "active" : ""}`}
+            onClick={() => setGenre("Indie")}
+          >
+            Indie
+          </button>
         </div>
       )}
 

@@ -44,19 +44,19 @@ const Footer = () => {
                 The trusted marketplace where gamers buy and sell digital game keys. Find the best deals from verified sellers or list your unused keys for instant cash.
               </p>
               <div className="d-flex gap-3 mt-4 fs-5">
-                <a href="#" aria-label="Discord">
+                <a aria-label="Discord">
                   <i className="bi bi-discord text-white"></i>
                 </a>
-                <a href="#" aria-label="Twitter">
+                <a aria-label="Twitter">
                   <i className="bi bi-twitter-x text-white"></i>
                 </a>
-                <a href="#" aria-label="Facebook">
+                <a aria-label="Facebook">
                   <i className="bi bi-facebook text-white"></i>
                 </a>
-                <a href="#" aria-label="Reddit">
+                <a aria-label="Reddit">
                   <i className="bi bi-reddit text-white"></i>
                 </a>
-                <a href="#" aria-label="YouTube">
+                <a aria-label="YouTube">
                   <i className="bi bi-youtube text-white"></i>
                 </a>
               </div>
