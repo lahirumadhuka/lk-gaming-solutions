@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import SectionCard from "../components/card/SectionCard";
 import UseTitleName from "../utils/UseTitleName";
 
 const Home = () => {
   UseTitleName("");
+
+  const navigate = useNavigate();
 
   const featuredGames = [
     { 
@@ -798,7 +801,7 @@ const Home = () => {
                 worldwide.
               </p>
               <div className="d-flex justify-content-center">
-                <button className="btn btn-browse-games">
+                <button className="btn btn-browse-games" onClick={() => navigate("/browse-games")}>
                   <i className="bi bi-search me-2"></i>Browse Games
                 </button>
               </div>

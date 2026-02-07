@@ -7,7 +7,7 @@ import UseTitleName from "../utils/UseTitleName";
 const HotDeals = () => {
   UseTitleName("Hot Deals");
   
-  const [sortBy, setSortBy] = useState("newest");
+  const [sortBy, setSortBy] = useState("name");
   const [gamesCount, setGamesCount] = useState();
   const [platform, setPlatform] = useState("All");
   const [discount, setDiscount] = useState("All");
@@ -184,37 +184,6 @@ const HotDeals = () => {
     },
   ];
 
-  const flashDeals = [
-    {
-      title: "Among Us",
-      price: 2.99,
-      discount: 70,
-      timeLeft: "45m",
-      platform: "PC",
-    },
-    {
-      title: "Stardew Valley",
-      price: 4.99,
-      discount: 67,
-      timeLeft: "1h 20m",
-      platform: "PC",
-    },
-    {
-      title: "Hollow Knight",
-      price: 5.99,
-      discount: 60,
-      timeLeft: "2h 10m",
-      platform: "PC",
-    },
-    {
-      title: "Terraria",
-      price: 3.99,
-      discount: 60,
-      timeLeft: "3h 30m",
-      platform: "PC",
-    },
-  ];
-
   return (
     <>
       <style>{`
@@ -331,65 +300,6 @@ const HotDeals = () => {
           letter-spacing: 2px;
         }
 
-        /* Filter Sidebar */
-        .filter-section {
-          background: linear-gradient(135deg, #1e2329 0%, #2a313d 100%);
-          border: 2px solid #353d4a;
-          border-radius: 12px;
-          padding: 24px;
-          margin-bottom: 24px;
-        }
-
-        .filter-title {
-          font-family: 'Orbitron', sans-serif;
-          font-weight: 700;
-          font-size: 16px;
-          color: #BD9B52;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-          margin-bottom: 16px;
-        }
-
-        .filter-option {
-          background: transparent;
-          border: 2px solid #353d4a;
-          color: #8b95a5;
-          font-family: 'Rajdhani', sans-serif;
-          font-weight: 600;
-          letter-spacing: 1px;
-          padding: 10px 16px;
-          border-radius: 8px;
-          transition: all 0.3s ease;
-          width: 100%;
-          text-align: left;
-          margin-bottom: 8px;
-          cursor: pointer;
-        }
-
-        .filter-option:hover,
-        .filter-option.active {
-          border-color: #BD9B52;
-          color: #BD9B52;
-          background: rgba(189, 155, 82, 0.1);
-        }
-
-        /* Sort Dropdown */
-        .sort-select {
-          background: #1e2329;
-          border: 2px solid #353d4a;
-          border-radius: 8px;
-          padding: 10px 16px;
-          color: #fff;
-          font-family: 'Rajdhani', sans-serif;
-          font-weight: 600;
-          cursor: pointer;
-        }
-
-        .sort-select:focus {
-          border-color: #BD9B52;
-          outline: none;
-        }
-
         @media (max-width: 768px) {
           .deals-title {
             font-size: 36px;
@@ -419,7 +329,6 @@ const HotDeals = () => {
           <div className="row">
             {/* Filters Sidebar */}
             <FilterSidebar
-              platformType={"All"}
               platform={platform}
               setPlatform={setPlatform}
               discount={discount}

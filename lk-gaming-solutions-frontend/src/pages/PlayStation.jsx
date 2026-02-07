@@ -7,8 +7,9 @@ import UseTitleName from "../utils/UseTitleName";
 const PlayStation = () => {
   UseTitleName("PlayStation");
   
-  const [sortBy, setSortBy] = useState("newest");
+  const [sortBy, setSortBy] = useState("name");
   const [gamesCount, setGamesCount] = useState();
+  const [isStockAvailable, setIsStockAvailable] = useState();
   const [platform, setPlatform] = useState("All");
   const [price, setPrice] = useState("All");
   const [genre, setGenre] = useState("All");
@@ -204,65 +205,6 @@ const PlayStation = () => {
           letter-spacing: 2px;
         }
 
-        /* Filter Sidebar */
-        .filter-section {
-          background: linear-gradient(135deg, #1e2329 0%, #2a313d 100%);
-          border: 2px solid #353d4a;
-          border-radius: 12px;
-          padding: 24px;
-          margin-bottom: 24px;
-        }
-
-        .filter-title {
-          font-family: 'Orbitron', sans-serif;
-          font-weight: 700;
-          font-size: 16px;
-          color: #BD9B52;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-          margin-bottom: 16px;
-        }
-
-        .filter-option {
-          background: transparent;
-          border: 2px solid #353d4a;
-          color: #8b95a5;
-          font-family: 'Rajdhani', sans-serif;
-          font-weight: 600;
-          letter-spacing: 1px;
-          padding: 10px 16px;
-          border-radius: 8px;
-          transition: all 0.3s ease;
-          width: 100%;
-          text-align: left;
-          margin-bottom: 8px;
-          cursor: pointer;
-        }
-
-        .filter-option:hover,
-        .filter-option.active {
-          border-color: #BD9B52;
-          color: #BD9B52;
-          background: rgba(189, 155, 82, 0.1);
-        }
-
-        /* Sort Dropdown */
-        .sort-select {
-          background: #1e2329;
-          border: 2px solid #353d4a;
-          border-radius: 8px;
-          padding: 10px 16px;
-          color: #fff;
-          font-family: 'Rajdhani', sans-serif;
-          font-weight: 600;
-          cursor: pointer;
-        }
-
-        .sort-select:focus {
-          border-color: #BD9B52;
-          outline: none;
-        }
-
         @media (max-width: 768px) {
           .ps-title {
             font-size: 36px;
@@ -293,7 +235,8 @@ const PlayStation = () => {
           <div className="row">
             {/* Filters Sidebar */}
             <FilterSidebar
-              platformType={"PlayStation"}
+              isStockAvailable={isStockAvailable}
+              setIsStockAvailable={setIsStockAvailable}
               platform={platform}
               setPlatform={setPlatform}
               price={price}
@@ -321,6 +264,7 @@ const PlayStation = () => {
                 card_data={playstationGames}
                 card_icon={"bi-playstation"}
                 setGamesCount={setGamesCount}
+                isStockAvailable={isStockAvailable}
                 platform={platform}
                 price={price}
                 genre={genre}

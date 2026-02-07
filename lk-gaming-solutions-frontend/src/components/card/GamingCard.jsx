@@ -2,15 +2,18 @@ const GamingCard = ({
   card_data,
   card_icon,
   setGamesCount,
+  isStockAvailable = "",
   platform,
   discount = "All",
   price = "All",
   genre = "All",
   region = "All",
   sortBy,
+  searchValue = "",
 }) => {
   // Filter games
   const games = card_data
+    .filter((c) => isStockAvailable === "" || isStockAvailable === true ? c.stock > 0 : c.stock === 0)
     .filter((c) => platform === "All" || c.platform === platform)
     .filter(
       (c) =>
@@ -26,9 +29,10 @@ const GamingCard = ({
     )
     .filter((c) => genre === "All" || c.genre === genre)
     .filter((c) => region === "All" || c.region === region)
+    .filter((c) => searchValue === "" || c.title.toLowerCase().includes(searchValue.toLowerCase()))
     .sort((a, b) => {
-      if (sortBy === "newest") {
-        return new Date(b.date) - new Date(a.date);
+      if (sortBy === "name") {
+        return a.title.localeCompare(b.title);
       }
 
       if (sortBy === "price-low") {
