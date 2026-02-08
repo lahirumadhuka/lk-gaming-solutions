@@ -12,6 +12,7 @@ import Xbox from './pages/Xbox';
 import HotDeals from './pages/HotDeals';
 import ScrollToTop from "./utils/ScrollToTop";
 import BrowseGames from "./pages/BrowseGames";
+import Cart from "./pages/Cart";
 
 const App = () => {
   ScrollToTop();
@@ -31,6 +32,7 @@ const App = () => {
             <Route path="/pc" element={<PC />} />
             <Route path="/hot-deals" element={<HotDeals />} />
             <Route path="/browse-games" element={<BrowseGames />} />
+            <Route path="/cart" element={<Cart />} />
           </Route>
         </Routes>
       </main>

@@ -9,7 +9,7 @@ const PC = () => {
   
   const [sortBy, setSortBy] = useState("name");
   const [gamesCount, setGamesCount] = useState();
-  const [isStockAvailable, setIsStockAvailable] = useState();
+  const [isStockAvailable, setIsStockAvailable] = useState("All");
   const [platform, setPlatform] = useState("All");
   const [price, setPrice] = useState("All");
   const [genre, setGenre] = useState("All");
@@ -115,7 +115,7 @@ const PC = () => {
       platform: "Steam",
       seller: "ValveOfficial",
       rating: 4.6,
-      stock: 999,
+      stock: 0,
       region: "Global",
       isFree: true,
     },

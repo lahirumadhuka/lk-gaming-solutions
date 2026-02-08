@@ -9,7 +9,7 @@ const PlayStation = () => {
   
   const [sortBy, setSortBy] = useState("name");
   const [gamesCount, setGamesCount] = useState();
-  const [isStockAvailable, setIsStockAvailable] = useState();
+  const [isStockAvailable, setIsStockAvailable] = useState("All");
   const [platform, setPlatform] = useState("All");
   const [price, setPrice] = useState("All");
   const [genre, setGenre] = useState("All");

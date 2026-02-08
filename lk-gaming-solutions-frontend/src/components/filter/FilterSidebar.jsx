@@ -68,6 +68,12 @@ const FilterSidebar = ({
           <div className="filter-section">
             <h6 className="filter-title">Stock</h6>
             <button
+              className={`filter-option ${isStockAvailable === "All" ? "active" : ""}`}
+              onClick={() => setIsStockAvailable("All")}
+            >
+              All
+            </button>
+            <button
               className={`filter-option ${isStockAvailable === true ? "active" : ""}`}
               onClick={() => setIsStockAvailable(true)}
             >
