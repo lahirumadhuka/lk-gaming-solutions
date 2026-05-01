@@ -362,11 +362,10 @@ const BrowseGames = () => {
 
         .search-input {
           width: 100%;
-          background: rgba(30, 35, 41, 0.8);
           border: 2px solid #353d4a;
           border-radius: 50px;
           padding: 16px 60px 16px 24px;
-          color: #fff;
+          
           font-family: 'Rajdhani', sans-serif;
           font-weight: 600;
           font-size: 16px;
@@ -374,7 +373,6 @@ const BrowseGames = () => {
         }
 
         .search-input:focus {
-          background: rgba(30, 35, 41, 0.95);
           border-color: #BD9B52;
           box-shadow: 0 0 20px rgba(189, 155, 82, 0.3);
           outline: none;
