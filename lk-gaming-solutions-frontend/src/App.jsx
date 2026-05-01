@@ -13,6 +13,10 @@ import HotDeals from './pages/HotDeals';
 import ScrollToTop from "./utils/ScrollToTop";
 import BrowseGames from "./pages/BrowseGames";
 import Cart from "./pages/Cart";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
+import Profile from "./pages/Profile";
 
 const App = () => {
   ScrollToTop();
@@ -33,6 +37,10 @@ const App = () => {
             <Route path="/hot-deals" element={<HotDeals />} />
             <Route path="/browse-games" element={<BrowseGames />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
         </Routes>
       </main>

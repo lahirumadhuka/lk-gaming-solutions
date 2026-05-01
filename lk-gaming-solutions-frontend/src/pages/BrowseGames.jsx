@@ -362,11 +362,10 @@ const BrowseGames = () => {
 
         .search-input {
           width: 100%;
-          background: rgba(30, 35, 41, 0.8);
           border: 2px solid #353d4a;
           border-radius: 50px;
           padding: 16px 60px 16px 24px;
-          color: #fff;
+          
           font-family: 'Rajdhani', sans-serif;
           font-weight: 600;
           font-size: 16px;
@@ -374,7 +373,6 @@ const BrowseGames = () => {
         }
 
         .search-input:focus {
-          background: rgba(30, 35, 41, 0.95);
           border-color: #BD9B52;
           box-shadow: 0 0 20px rgba(189, 155, 82, 0.3);
           outline: none;
@@ -466,85 +464,6 @@ const BrowseGames = () => {
                 sortBy={sortBy}
                 searchValue={searchValue}
               />
-
-              {/* Pagination */}
-              <div className="d-flex justify-content-center mt-5">
-                <nav>
-                  <ul className="pagination">
-                    <li className="page-item">
-                      <a
-                        className="page-link"
-                        href="#"
-                        style={{
-                          background: "#1e2329",
-                          border: "2px solid #353d4a",
-                          color: "#8b95a5",
-                          fontWeight: 600,
-                        }}
-                      >
-                        Previous
-                      </a>
-                    </li>
-                    <li className="page-item active">
-                      <a
-                        className="page-link"
-                        href="#"
-                        style={{
-                          background:
-                            "linear-gradient(135deg, #BD9B52 0%, #D4AF6A 100%)",
-                          border: "none",
-                          color: "#000",
-                          fontWeight: 700,
-                        }}
-                      >
-                        1
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a
-                        className="page-link"
-                        href="#"
-                        style={{
-                          background: "#1e2329",
-                          border: "2px solid #353d4a",
-                          color: "#8b95a5",
-                          fontWeight: 600,
-                        }}
-                      >
-                        2
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a
-                        className="page-link"
-                        href="#"
-                        style={{
-                          background: "#1e2329",
-                          border: "2px solid #353d4a",
-                          color: "#8b95a5",
-                          fontWeight: 600,
-                        }}
-                      >
-                        3
-                      </a>
-                    </li>
-                    <li className="page-item">
-                      <a
-                        className="page-link"
-                        href="#"
-                        style={{
-                          background: "#1e2329",
-                          border: "2px solid #353d4a",
-                          color: "#8b95a5",
-                          fontWeight: 600,
-                        }}
-                      >
-                        Next
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
             </div>
           </div>
         </div>
