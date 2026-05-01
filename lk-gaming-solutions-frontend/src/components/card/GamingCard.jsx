@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+
 const GamingCard = ({
   card_data,
   card_icon,
@@ -66,7 +69,42 @@ const GamingCard = ({
     });
 
   // Get games count
-  setGamesCount(games.length);
+  useEffect(() => {
+    setGamesCount(games.length);
+  }, [games, setGamesCount]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 12;
+  const lastIndex = currentPage * postsPerPage;
+  const firstIndex = lastIndex - postsPerPage;
+  const currentGames = games.slice(firstIndex, lastIndex);
+  const npage = Math.ceil(games.length / postsPerPage);
+  const numbers = [...Array(npage).keys()].map((n) => n + 1);
+
+  // Reset page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [platform, price, genre, region, discount, searchValue]);
+
+  // Pagination Buttons Functions
+  const prePage = () => {
+    if (currentPage !== 1) {
+      setCurrentPage(currentPage - 1);
+      window.scrollTo(0, 0);
+    }
+  };
+
+  const changeCPage = (id) => {
+    setCurrentPage(id);
+    window.scrollTo(0, 0);
+  };
+
+  const nextPage = () => {
+    if (currentPage !== npage) {
+      setCurrentPage(currentPage + 1);
+      window.scrollTo(0, 0);
+    }
+  };
 
   return (
     <>
@@ -292,7 +330,7 @@ const GamingCard = ({
       `}</style>
 
       <div className="row g-4">
-        {games.map((game, index) => (
+        {currentGames.map((game, index) => (
           <div key={index} className="col-lg-4 col-md-6">
             <div className="game-card">
               <div style={{ position: "relative" }}>
@@ -400,6 +438,61 @@ const GamingCard = ({
             </div>
           </div>
         ))}
+
+        {/* Pagination */}
+        {games.length > 0 && (
+          <div className="d-flex justify-content-center mt-5">
+            <nav>
+              <ul className="pagination">
+                <li className="page-item">
+                  <NavLink
+                    className="page-link"
+                    style={{
+                      background: "#1e2329",
+                      border: "2px solid #353d4a",
+                      color: "#8b95a5",
+                      fontWeight: 600,
+                    }}
+                    onClick={prePage}
+                  >
+                    <span className="bi bi-chevron-left"></span>
+                  </NavLink>
+                </li>
+                {numbers.map((no, index) => (
+                  <li className="page-item active">
+                    <NavLink
+                      className="page-link"
+                      style={{
+                        background: `${currentPage === no ? "linear-gradient(135deg, #BD9B52 0%, #D4AF6A 100%)" : "#1e2329"}`,
+                        border: "2px solid #353d4a",
+                        color: `${currentPage === no ? "#000" : "#8b95a5"}`,
+                        fontWeight: 700,
+                      }}
+                      key={index}
+                      onClick={() => changeCPage(no)}
+                    >
+                      {no}
+                    </NavLink>
+                  </li>
+                ))}
+                <li className="page-item">
+                  <NavLink
+                    className="page-link"
+                    style={{
+                      background: "#1e2329",
+                      border: "2px solid #353d4a",
+                      color: "#8b95a5",
+                      fontWeight: 600,
+                    }}
+                    onClick={nextPage}
+                  >
+                    <span className="bi bi-chevron-right"></span>
+                  </NavLink>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        )}
       </div>
     </>
   );
