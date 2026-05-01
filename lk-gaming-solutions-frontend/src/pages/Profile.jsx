@@ -8,15 +8,15 @@ const Profile = () => {
     username: "Lahiru",
   };
 
-  // 🎮 Games Bought (static)
+  // 🎮 Games Bought
   const boughtGames = [
-    { id: 1, title: "Elden Ring", price: 39.99 },
-    { id: 2, title: "Cyberpunk 2077", price: 29.99 },
+    { id: 1, title: "Elden Ring", price: 39.99, rating: 4.5 },
+    { id: 2, title: "Cyberpunk 2077", price: 29.99, rating: 4.0 },
   ];
 
-  // 💰 Games Sold (NOW DYNAMIC)
+  // 💰 Games Sold
   const [soldGames, setSoldGames] = useState([
-    { id: 1, title: "FIFA 24 Account", price: 19.99 },
+    { id: 1, title: "FIFA 24 Account", price: 19.99, rating: 3.5, stock: 42 },
   ]);
 
   // ➕ Sell form state
@@ -110,13 +110,6 @@ const Profile = () => {
 
         .info h3 {
           font-family: 'Orbitron', sans-serif;
-        }
-
-        .grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 20px;
-          margin-top: 30px;
         }
 
         .box {
@@ -240,7 +233,9 @@ const Profile = () => {
             PROFILE
           </h1>
 
-          <div className="avatar">{user.username.charAt(0).toUpperCase()}</div>
+          <div className="avatar" style={{ userSelect: "none" }}>
+            {user.username.charAt(0).toUpperCase()}
+          </div>
 
           <div className="info">
             <h3>{user.username}</h3>
@@ -264,34 +259,76 @@ const Profile = () => {
             </div>
           </div>
 
-          {/* Bought + Sold */}
-          <div className="grid">
-            <div className="box">
-              <h4>🎮 Bought Games</h4>
-              {boughtGames.map((g) => (
-                <div className="item" key={g.id}>
-                  <span>{g.title}</span>
-                  <span>${g.price}</span>
-                </div>
-              ))}
-              <div className="summary">
-                <span>Total Earned</span>
-                <span>${totalSpent.toFixed(2)}</span>
+          {/* Bought */}
+          <div className="box mt-4">
+            <h4>🎮 Bought Games</h4>
+            {boughtGames.map((g) => (
+              <div className="item" key={g.id}>
+                <span>{g.title}</span>
+                <span className="bi bi-star-fill text-warning">
+                  {" "}
+                  {g.rating}
+                </span>
+                <span>${g.price}</span>
               </div>
+            ))}
+            <div className="summary">
+              <span>Total Earned</span>
+              <span>${totalSpent.toFixed(2)}</span>
             </div>
+          </div>
 
-            <div className="box">
-              <h4>💰 Games For Sale</h4>
-              {soldGames.map((g) => (
-                <div className="item" key={g.id}>
-                  <span>{g.title}</span>
-                  <span>${g.price}</span>
-                </div>
-              ))}
-              <div className="summary">
-                <span>Total Earned</span>
-                <span>${totalEarned.toFixed(2)}</span>
+          {/* Sale */}
+          <div className="box mt-4">
+            <h4>💰 Games For Sale</h4>
+            {soldGames.map((g) => (
+              <div className="item" key={g.id}>
+                <span>{g.title}</span>
+                <span className="bi bi-star-fill text-warning">
+                  {" "}
+                  {g.rating}
+                </span>
+                <span>{g.stock ? `${g.stock} in stock` : "Out of stock"}</span>
+                <span>${g.price}</span>
+                <span>
+                  {/* EDIT */}
+                  <button
+                    className="me-3"
+                    style={{
+                      background: "#BD9B52",
+                      border: "none",
+                      padding: "5px 10px",
+                      borderRadius: "6px",
+                      cursor: "pointer",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      color: "#fff",
+                    }}
+                  >
+                    <i className="bi bi-pencil-fill"></i>
+                  </button>
+
+                  {/* DELETE */}
+                  <button
+                    style={{
+                      background: "#ff4d4f",
+                      border: "none",
+                      padding: "5px 10px",
+                      borderRadius: "6px",
+                      cursor: "pointer",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      color: "#fff",
+                    }}
+                  >
+                    <i className="bi bi-trash3-fill"></i>
+                  </button>
+                </span>
               </div>
+            ))}
+            <div className="summary">
+              <span>Total Earned</span>
+              <span>${totalEarned.toFixed(2)}</span>
             </div>
           </div>
 
@@ -311,7 +348,9 @@ const Profile = () => {
 
               <div className="select-wrapper">
                 <select className="gaming-select">
-                  <option value="" selected hidden>Select Platform</option>
+                  <option value="" selected hidden>
+                    Select Platform
+                  </option>
                   <option value="Steam">Steam</option>
                   <option value="Epic Games">Epic Games</option>
                   <option value="GOG">GOG</option>
@@ -330,7 +369,9 @@ const Profile = () => {
 
               <div className="select-wrapper">
                 <select className="gaming-select">
-                  <option value="" selected hidden>Select Genre</option>
+                  <option value="" selected hidden>
+                    Select Genre
+                  </option>
                   <option value="Action">Action</option>
                   <option value="Adventure">Adventure</option>
                   <option value="RPG">RPG</option>
@@ -345,7 +386,9 @@ const Profile = () => {
 
               <div className="select-wrapper">
                 <select className="gaming-select">
-                  <option value="" selected hidden>Select Region</option>
+                  <option value="" selected hidden>
+                    Select Region
+                  </option>
                   <option value="Global">Global</option>
                   <option value="EU">EU</option>
                   <option value="US">US</option>
