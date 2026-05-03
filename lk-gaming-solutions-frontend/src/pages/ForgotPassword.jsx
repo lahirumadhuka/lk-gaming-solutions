@@ -183,7 +183,7 @@ const ForgotPassword = () => {
               <input
                 type={showPassword.password ? "text" : "password"}
                 name="password"
-                placeholder="Password"
+                placeholder="New Password"
                 className="form-control mt-3"
                 value={formData.password}
                 onChange={handleChange}
@@ -211,7 +211,7 @@ const ForgotPassword = () => {
               <input
                 type={showPassword.confirmPassword ? "text" : "password"}
                 name="confirmPassword"
-                placeholder="Confirm Password"
+                placeholder="Confirm New Password"
                 className="form-control mt-3"
                 value={formData.confirmPassword}
                 onChange={handleChange}
