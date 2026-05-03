@@ -10,6 +10,7 @@ const SaleForm = ({
   getImage,
   formTitle,
   buttonType,
+  handleClose,
 }) => {
   return (
     <>
@@ -223,6 +224,12 @@ const SaleForm = ({
           <button className="btn-gaming" type="submit">
             {buttonType}
           </button>
+
+          {handleClose && (
+            <button className="btn-cancel mt-2 w-100" onClick={handleClose}>
+              CANCEL
+            </button>
+          )}
         </form>
       </div>
 

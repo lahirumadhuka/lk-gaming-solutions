@@ -130,7 +130,7 @@ const EditModal = ({
         <div className="gaming-modal">
           <Modal.Body>
             <SaleForm
-              formTitle={"✏ Edit Game"}
+              formTitle={"📝 Edit Game"}
               buttonType={"UPDATE GAME"}
               handleSubmit={handleEditGame}
               handleSellChange={handleSellChange}
@@ -141,13 +141,8 @@ const EditModal = ({
               setNoOfKeys={setNoOfKeys}
               image={image}
               getImage={getImage}
+              handleClose={handleClose}
             />
-
-            <div className="px-4">
-              <button className="btn-cancel mt-2 w-100" onClick={handleClose}>
-                CANCEL
-              </button>
-            </div>
           </Modal.Body>
         </div>
       </Modal>

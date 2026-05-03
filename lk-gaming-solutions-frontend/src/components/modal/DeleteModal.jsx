@@ -29,7 +29,7 @@ const DeleteModal = ({
         <div className="gaming-modal">
           <Modal.Header className="border-0">
             <Modal.Title className="modal-title-gaming">
-              ⚠ DELETE GAME
+              <i className="bi bi-exclamation-triangle"></i> DELETE GAME
             </Modal.Title>
           </Modal.Header>
 

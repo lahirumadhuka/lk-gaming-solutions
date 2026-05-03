@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import UseTitleName from "../utils/UseTitleName";
+import ProfileModal from "../components/modal/ProfileModal";
 
 const Settings = () => {
   UseTitleName("Settings");
@@ -17,6 +18,7 @@ const Settings = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   const handleChange = (e) => {
     setForm({
@@ -47,7 +49,7 @@ const Settings = () => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      return
+      return;
     }
   };
 
@@ -140,6 +142,20 @@ const Settings = () => {
           font-size: 13px;
           margin-bottom: 10px;
         }
+
+        .avatar {
+          width: 160px;
+          height: 160px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #BD9B52, #D4AF6A);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 60px;
+          font-weight: bold;
+          color: #000;
+          margin: auto;
+        }
       `}</style>
 
       <section className="gaming-bg">
@@ -150,6 +166,12 @@ const Settings = () => {
             {/* PROFILE */}
             <h5 className="section-title">👤 Profile Info</h5>
 
+            <ProfileModal
+              isModalOpen={isProfileModalOpen}
+              setIsModalOpen={setIsProfileModalOpen}
+              username={form.username}
+            />
+
             <input
               type="text"
               name="username"
@@ -158,7 +180,11 @@ const Settings = () => {
               value={form.username}
               onChange={handleChange}
             />
-            {errors.username && <p className="error"><i class="bi bi-exclamation-circle"></i> {errors.username}</p>}
+            {errors.username && (
+              <p className="error">
+                <i class="bi bi-exclamation-circle"></i> {errors.username}
+              </p>
+            )}
 
             <input
               type="email"
@@ -168,7 +194,11 @@ const Settings = () => {
               value={form.email}
               onChange={handleChange}
             />
-            {errors.email && <p className="error"><i class="bi bi-exclamation-circle"></i> {errors.email}</p>}
+            {errors.email && (
+              <p className="error">
+                <i class="bi bi-exclamation-circle"></i> {errors.email}
+              </p>
+            )}
 
             {/* PASSWORD */}
             <h5 className="section-title">🔒 Change Password</h5>
@@ -191,7 +221,9 @@ const Settings = () => {
               onChange={handleChange}
             />
             {errors.newPassword && (
-              <p className="error"><i class="bi bi-exclamation-circle"></i> {errors.newPassword}</p>
+              <p className="error">
+                <i class="bi bi-exclamation-circle"></i> {errors.newPassword}
+              </p>
             )}
 
             <input
@@ -203,7 +235,10 @@ const Settings = () => {
               onChange={handleChange}
             />
             {errors.confirmPassword && (
-              <p className="error"><i class="bi bi-exclamation-circle"></i> {errors.confirmPassword}</p>
+              <p className="error">
+                <i class="bi bi-exclamation-circle"></i>{" "}
+                {errors.confirmPassword}
+              </p>
             )}
 
             {/* PAYMENT */}
@@ -232,7 +267,9 @@ const Settings = () => {
                   onChange={handleChange}
                 />
                 {errors.cardNumber && (
-                  <p className="error"><i class="bi bi-exclamation-circle"></i> {errors.cardNumber}</p>
+                  <p className="error">
+                    <i class="bi bi-exclamation-circle"></i> {errors.cardNumber}
+                  </p>
                 )}
 
                 <input
@@ -247,7 +284,9 @@ const Settings = () => {
 
               {/* PAYPAL */}
               <div className="payment-box mt-3">
-                <h6 className="payment-title"><i className="bi bi-paypal"></i> PayPal</h6>
+                <h6 className="payment-title">
+                  <i className="bi bi-paypal"></i> PayPal
+                </h6>
 
                 <input
                   type="email"
