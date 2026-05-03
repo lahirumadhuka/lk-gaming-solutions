@@ -17,6 +17,12 @@ const Settings = () => {
     paypal: "",
   });
 
+  const [showPassword, setShowPassword] = useState({
+    currentPassword: false,
+    newPassword: false,
+    confirmPassword: false,
+  });
+
   const [errors, setErrors] = useState({});
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
@@ -27,17 +33,35 @@ const Settings = () => {
     });
   };
 
+  const handleShowPWChange = (field) => {
+    setShowPassword((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     let newErrors = {};
+
+    // Test Password
+    const checkCurrentPW = "Password123";
 
     // Profile validation
     if (!form.username) newErrors.username = "Username is required";
     if (!form.email) newErrors.email = "Email is required";
 
     // Password validation
-    if (form.newPassword !== form.confirmPassword) {
+    if (form.currentPassword && form.currentPassword !== checkCurrentPW) {
+      newErrors.currentPassword = "Invalid current password";
+    }
+
+    if (!form.currentPassword && form.newPassword !== form.confirmPassword) {
+      newErrors.currentPassword = "Current password is required";
+    }
+
+    if (form.currentPassword && form.newPassword !== form.confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match";
     }
 
@@ -202,38 +226,81 @@ const Settings = () => {
 
             {/* PASSWORD */}
             <h5 className="section-title">🔒 Change Password</h5>
+            <div className="position-relative">
+              <input
+                type={showPassword.currentPassword ? "text" : "password"}
+                name="currentPassword"
+                placeholder="Current Password"
+                className="form-control"
+                value={form.currentPassword}
+                onChange={handleChange}
+              />
+              <span
+                onClick={() => handleShowPWChange("currentPassword")}
+                className="position-absolute top-50 end-0 translate-middle-y me-3 text-black"
+                style={{ cursor: "pointer", userSelect: "none" }}
+              >
+                {showPassword.currentPassword ? (
+                  <i className="bi bi-eye-fill"></i>
+                ) : (
+                  <i className="bi bi-eye-slash-fill"></i>
+                )}
+              </span>
+            </div>
+            {errors.currentPassword && (
+              <p className="error">
+                <i class="bi bi-exclamation-circle"></i> {errors.currentPassword}
+              </p>
+            )}
 
-            <input
-              type="password"
-              name="currentPassword"
-              placeholder="Current Password"
-              className="form-control"
-              value={form.currentPassword}
-              onChange={handleChange}
-            />
-
-            <input
-              type="password"
-              name="newPassword"
-              placeholder="New Password"
-              className="form-control"
-              value={form.newPassword}
-              onChange={handleChange}
-            />
+            <div className="position-relative">
+              <input
+                type={showPassword.newPassword ? "text" : "password"}
+                name="newPassword"
+                placeholder="New Password"
+                className="form-control"
+                value={form.newPassword}
+                onChange={handleChange}
+              />
+              <span
+                onClick={() => handleShowPWChange("newPassword")}
+                className="position-absolute top-50 end-0 translate-middle-y me-3 text-black"
+                style={{ cursor: "pointer", userSelect: "none" }}
+              >
+                {showPassword.newPassword ? (
+                  <i className="bi bi-eye-fill"></i>
+                ) : (
+                  <i className="bi bi-eye-slash-fill"></i>
+                )}
+              </span>
+            </div>
             {errors.newPassword && (
               <p className="error">
                 <i class="bi bi-exclamation-circle"></i> {errors.newPassword}
               </p>
             )}
 
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              className="form-control"
-              value={form.confirmPassword}
-              onChange={handleChange}
-            />
+            <div className="position-relative">
+              <input
+                type={showPassword.confirmPassword ? "text" : "password"}
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                className="form-control"
+                value={form.confirmPassword}
+                onChange={handleChange}
+              />
+              <span
+                onClick={() => handleShowPWChange("confirmPassword")}
+                className="position-absolute top-50 end-0 translate-middle-y me-3 text-black"
+                style={{ cursor: "pointer", userSelect: "none" }}
+              >
+                {showPassword.confirmPassword ? (
+                  <i className="bi bi-eye-fill"></i>
+                ) : (
+                  <i className="bi bi-eye-slash-fill"></i>
+                )}
+              </span>
+            </div>
             {errors.confirmPassword && (
               <p className="error">
                 <i class="bi bi-exclamation-circle"></i>{" "}
