@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import UseTitleName from "../utils/UseTitleName";
-import SaleForm from "../components/Sale Form/SaleForm";
+import SaleForm from "../components/form/SaleForm";
 import DeleteModal from "../components/modal/DeleteModal";
 import EditModal from "../components/modal/EditModal";
 

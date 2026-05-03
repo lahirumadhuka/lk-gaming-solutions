@@ -5,17 +5,32 @@ import ProfileModal from "../components/modal/ProfileModal";
 const Settings = () => {
   UseTitleName("Settings");
 
-  const [form, setForm] = useState({
+  const user = {
+    id: 1,
     username: "Lahiru",
     email: "lahiru@example.com",
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
+    password: "Password123",
     cardName: "",
     cardNumber: "",
     expiry: "",
     paypal: "",
+    profileImage: 1,
+  };
+
+  const [form, setForm] = useState({
+    username: user.username,
+    email: user.email,
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+    cardName: user.cardName,
+    cardNumber: user.cardNumber,
+    expiry: user.expiry,
+    paypal: user.paypal,
+    profileImage: user.profileImage,
   });
+
+  const [hasChanged, setHasChanged] = useState(false);
 
   const [showPassword, setShowPassword] = useState({
     currentPassword: false,
@@ -31,6 +46,8 @@ const Settings = () => {
       ...form,
       [e.target.name]: e.target.value,
     });
+
+    if (form.username === form.username) setHasChanged(true);
   };
 
   const handleShowPWChange = (field) => {
@@ -45,15 +62,12 @@ const Settings = () => {
 
     let newErrors = {};
 
-    // Test Password
-    const checkCurrentPW = "Password123";
-
     // Profile validation
     if (!form.username) newErrors.username = "Username is required";
     if (!form.email) newErrors.email = "Email is required";
 
     // Password validation
-    if (form.currentPassword && form.currentPassword !== checkCurrentPW) {
+    if (form.currentPassword && form.currentPassword !== user.password) {
       newErrors.currentPassword = "Invalid current password";
     }
 
@@ -161,6 +175,13 @@ const Settings = () => {
           box-shadow: 0 8px 25px rgba(189,155,82,0.5);
         }
 
+        .btn-gaming:disabled {
+          opacity: 0.5;
+          transform: none;
+          box-shadow: none;
+          background: linear-gradient(135deg, #b8b8b8, #d0d0d0);
+        }
+
         .error {
           color: #ff4d4f;
           font-size: 13px;
@@ -194,6 +215,7 @@ const Settings = () => {
               isModalOpen={isProfileModalOpen}
               setIsModalOpen={setIsProfileModalOpen}
               username={form.username}
+              modal_image={form.profileImage}
             />
 
             <input
@@ -249,7 +271,8 @@ const Settings = () => {
             </div>
             {errors.currentPassword && (
               <p className="error">
-                <i class="bi bi-exclamation-circle"></i> {errors.currentPassword}
+                <i class="bi bi-exclamation-circle"></i>{" "}
+                {errors.currentPassword}
               </p>
             )}
 
@@ -366,7 +389,7 @@ const Settings = () => {
               </div>
             </div>
 
-            <button type="submit" className="btn-gaming">
+            <button type="submit" className="btn-gaming" disabled={!hasChanged}>
               SAVE CHANGES
             </button>
           </form>
