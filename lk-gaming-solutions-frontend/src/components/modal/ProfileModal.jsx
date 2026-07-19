@@ -2,10 +2,13 @@ import { Modal } from "react-bootstrap";
 import ImageGrid from "../grid/ImageGrid";
 import { useState } from "react";
 
-const ProfileModal = ({ isModalOpen, setIsModalOpen, username }) => {
+const ProfileModal = ({
+  isModalOpen,
+  setIsModalOpen,
+  username,
+  modal_image,
+}) => {
   const handleClose = () => setIsModalOpen(false);
-  const [selectedImage, setSelectedImage] = useState("");
-  const [profileImage, setProfileImage] = useState("");
 
   const images = [
     {
@@ -33,6 +36,13 @@ const ProfileModal = ({ isModalOpen, setIsModalOpen, username }) => {
         "https://m.media-amazon.com/images/I/31LoLnTU56L._AC_UF1000,1000_QL80_.jpg",
     },
   ];
+
+  const [selectedImage, setSelectedImage] = useState(
+    modal_image ? modal_image : "",
+  );
+  const [profileImage, setProfileImage] = useState(
+    modal_image ? images.find((i) => i.id === modal_image).image : "",
+  );
 
   const handleSubmit = () => {
     const selected = images.find((i) => i.id === selectedImage);

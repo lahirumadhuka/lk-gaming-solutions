@@ -7,559 +7,390 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  const featuredGames = [
-    { 
-      title: "Spider-Man 2", 
-      price: 54.99, 
-      oldPrice: 54.99, 
-      discount: 0, 
+  const games = [
+    {
+      title: "Spider-Man 2",
+      price: 54.99,
+      oldPrice: 69.99,
+      discount: 21,
+      genre: "Action",
+      platform: "PS5",
+      seller: "ProGamer_88",
+      rating: 4.9,
+      stock: 15,
+      region: "Global",
+    },
+    {
+      title: "God of War Ragnarök",
+      price: 44.99,
+      oldPrice: 69.99,
+      discount: 35,
+      genre: "Adventure",
+      platform: "PS4/PS5",
+      seller: "GameHunter",
+      rating: 4.8,
+      stock: 23,
+      region: "Global",
+    },
+    {
+      title: "Horizon Forbidden West",
+      price: 39.99,
+      oldPrice: 59.99,
+      discount: 33,
+      genre: "Racing",
+      platform: "PS5",
+      seller: "KeyMaster_Pro",
+      rating: 4.7,
+      stock: 8,
+      region: "EU",
+    },
+    {
+      title: "The Last of Us Part II",
+      price: 29.99,
+      oldPrice: 49.99,
+      discount: 40,
+      genre: "Adventure",
+      platform: "PS4",
+      seller: "TrustedKeys",
+      rating: 4.6,
+      stock: 31,
+      region: "Global",
+    },
+    {
+      title: "Gran Turismo 7",
+      price: 49.99,
+      oldPrice: 69.99,
+      discount: 28,
+      genre: "Racing",
+      platform: "PS5",
+      seller: "SpeedRacer",
+      rating: 4.5,
+      stock: 12,
+      region: "Global",
+    },
+    {
+      title: "Ratchet & Clank: Rift Apart",
+      price: 34.99,
+      oldPrice: 59.99,
+      discount: 41,
+      genre: "Action",
+      platform: "PS5",
+      seller: "GameVault",
+      rating: 4.7,
+      stock: 19,
+      region: "Global",
+    },
+    {
+      title: "Ghost of Tsushima Director's Cut",
+      price: 44.99,
+      oldPrice: 69.99,
+      discount: 35,
+      genre: "Action",
+      platform: "PS4/PS5",
+      seller: "SamuraiKeys",
+      rating: 4.9,
+      stock: 7,
+      region: "Global",
+    },
+    {
+      title: "Returnal",
+      price: 24.99,
+      oldPrice: 49.99,
+      discount: 50,
+      genre: "Action",
+      platform: "PS5",
+      seller: "KeysExpress",
+      rating: 4.4,
+      stock: 25,
+      region: "US/EU",
+    },
+    {
+      title: "Cyberpunk 2077",
+      price: 29.99,
+      oldPrice: 59.99,
+      discount: 50,
+      genre: "Adventure",
+      platform: "Ubisoft Connect",
+      seller: "CyberKeys_Pro",
+      rating: 4.5,
+      stock: 42,
+      region: "Global",
+    },
+    {
+      title: "Baldur's Gate 3",
+      price: 44.99,
+      oldPrice: 69.99,
+      discount: 36,
+      genre: "Strategy",
       platform: "Steam",
-      seller: "ProGamer_88",
+      seller: "RPGMaster",
       rating: 4.9,
+      stock: 28,
+      region: "Global",
+    },
+    {
+      title: "Starfield",
+      price: 49.99,
+      oldPrice: 69.99,
+      discount: 29,
+      genre: "Simulation",
+      platform: "Steam",
+      seller: "SpaceGamer_88",
+      rating: 4.2,
       stock: 15,
-      region: "Global"
+      region: "Global",
     },
-    { 
-      title: "God of War Ragnarök", 
-      price: 44.99, 
-      oldPrice: 69.99, 
-      discount: 35, 
-      platform: "PS4/PS5",
-      seller: "GameHunter",
+    {
+      title: "Elden Ring",
+      price: 39.99,
+      oldPrice: 59.99,
+      discount: 33,
+      platform: "Steam",
+      genre: "RPG",
+      seller: "SoulsVault",
       rating: 4.8,
-      stock: 23,
-      region: "Global"
-    },
-    { 
-      title: "Forza Horizon 5", 
-      price: 39.99, 
-      oldPrice: 59.99, 
-      discount: 33, 
-      platform: "Xbox One/Series",
-      seller: "KeyMaster_Pro",
-      rating: 4.7,
-      stock: 8,
-      region: "US/EU"
-    },
-    { 
-      title: "The Last of Us Part II", 
-      price: 29.99, 
-      oldPrice: 49.99, 
-      discount: 40, 
-      platform: "PS4",
-      seller: "TrustedKeys",
-      rating: 4.6,
-      stock: 31,
-      region: "Global"
-    },
-    { 
-      title: "Gran Turismo 7", 
-      price: 49.99, 
-      oldPrice: 69.99, 
-      discount: 28, 
-      platform: "PS5",
-      seller: "SpeedRacer",
-      rating: 4.5,
-      stock: 12,
-      region: "Global"
-    },
-    { 
-      title: "Ratchet & Clank: Rift Apart", 
-      price: 34.99, 
-      oldPrice: 59.99, 
-      discount: 41, 
-      platform: "PS5",
-      seller: "GameVault",
-      rating: 4.7,
-      stock: 19,
-      region: "Global"
-    },
-    { 
-      title: "Ghost of Tsushima Director's Cut", 
-      price: 44.99, 
-      oldPrice: 69.99, 
-      discount: 35, 
-      platform: "PS4/PS5",
-      seller: "SamuraiKeys",
-      rating: 4.9,
       stock: 7,
-      region: "Global"
+      region: "Global",
     },
-    { 
-      title: "Returnal", 
-      price: 24.99, 
-      oldPrice: 49.99, 
-      discount: 50, 
-      platform: "PS5",
-      seller: "KeysExpress",
-      rating: 4.4,
-      stock: 25,
-      region: "US/EU"
+    {
+      title: "Red Dead Redemption 2",
+      price: 24.99,
+      oldPrice: 59.99,
+      discount: 58,
+      genre: "Action",
+      platform: "Rockstar",
+      seller: "WildWestKeys",
+      rating: 4.7,
+      stock: 33,
+      region: "Global",
     },
-  ];
-
-  const hotDeals = [
-    { 
-      title: "Spider-Man 2", 
-      price: 54.99, 
-      oldPrice: 69.99, 
-      discount: 21, 
-      platform: "PS5",
-      seller: "ProGamer_88",
+    {
+      title: "GTA V Premium Edition",
+      price: 14.99,
+      oldPrice: 49.99,
+      discount: 70,
+      genre: "Action",
+      platform: "Rockstar",
+      seller: "GTAExpress",
+      rating: 4.6,
+      stock: 51,
+      region: "Global",
+    },
+    {
+      title: "Hogwarts Legacy",
+      price: 34.99,
+      oldPrice: 59.99,
+      discount: 42,
+      genre: "Adventure",
+      platform: "Steam",
+      seller: "MagicKeys",
+      rating: 4.5,
+      stock: 19,
+      region: "Global",
+    },
+    {
+      title: "The Witcher 3 GOTY",
+      price: 9.99,
+      oldPrice: 39.99,
+      discount: 75,
+      genre: "Adventure",
+      platform: "GOG",
+      seller: "CDProjektFan",
       rating: 4.9,
-      stock: 15,
-      region: "Global"
+      stock: 8,
+      region: "Global",
     },
-    { 
-      title: "God of War Ragnarök", 
-      price: 44.99, 
-      oldPrice: 69.99, 
-      discount: 35, 
-      platform: "PS4/PS5",
-      seller: "GameHunter",
+    {
+      title: "Counter-Strike 2",
+      price: 10.0,
+      oldPrice: 10.0,
+      discount: 0,
+      genre: "Shooter",
+      platform: "Steam",
+      seller: "ValveOfficial",
+      rating: 4.6,
+      stock: 0,
+      region: "Global",
+    },
+    {
+      title: "Palworld",
+      price: 24.99,
+      oldPrice: 29.99,
+      discount: 17,
+      genre: "RPG",
+      platform: "Steam",
+      seller: "PocketpairKeys",
+      rating: 4.4,
+      stock: 62,
+      region: "Global",
+    },
+    {
+      title: "Call of Duty: MW3",
+      price: 54.99,
+      oldPrice: 69.99,
+      discount: 21,
+      genre: "Shooter",
+      platform: "Battle.net",
+      seller: "CODMaster",
+      rating: 4.3,
+      stock: 25,
+      region: "Global",
+    },
+    {
+      title: "Resident Evil 4 Remake",
+      price: 39.99,
+      oldPrice: 59.99,
+      discount: 33,
+      genre: "Action",
+      platform: "Steam",
+      seller: "HorrorKeys",
       rating: 4.8,
-      stock: 23,
-      region: "Global"
+      stock: 14,
+      region: "Global",
     },
-    { 
-      title: "Horizon Forbidden West", 
-      price: 39.99, 
-      oldPrice: 59.99, 
-      discount: 33, 
-      platform: "PS5",
-      seller: "KeyMaster_Pro",
-      rating: 4.7,
-      stock: 8,
-      region: "US/EU"
-    },
-    { 
-      title: "The Last of Us Part II", 
-      price: 29.99, 
-      oldPrice: 49.99, 
-      discount: 40, 
-      platform: "PS4",
-      seller: "TrustedKeys",
-      rating: 4.6,
-      stock: 31,
-      region: "Global"
-    },
-    { 
-      title: "Gran Turismo 7", 
-      price: 49.99, 
-      oldPrice: 69.99, 
-      discount: 28, 
-      platform: "PS5",
-      seller: "SpeedRacer",
-      rating: 4.5,
-      stock: 12,
-      region: "Global"
-    },
-    { 
-      title: "Ratchet & Clank: Rift Apart", 
-      price: 34.99, 
-      oldPrice: 59.99, 
-      discount: 41, 
-      platform: "PS5",
-      seller: "GameVault",
-      rating: 4.7,
-      stock: 19,
-      region: "Global"
-    },
-    { 
-      title: "Ghost of Tsushima Director's Cut", 
-      price: 44.99, 
-      oldPrice: 69.99, 
-      discount: 35, 
-      platform: "PS4/PS5",
-      seller: "SamuraiKeys",
-      rating: 4.9,
-      stock: 7,
-      region: "Global"
-    },
-    { 
-      title: "Returnal", 
-      price: 24.99, 
-      oldPrice: 49.99, 
-      discount: 50, 
-      platform: "PS5",
-      seller: "KeysExpress",
-      rating: 4.4,
-      stock: 25,
-      region: "US/EU"
-    },
-  ];
-
-  const playStation = [
-    { 
-      title: "Spider-Man 2", 
-      price: 54.99, 
-      oldPrice: 69.99, 
-      discount: 21, 
-      platform: "PS5",
-      seller: "ProGamer_88",
-      rating: 4.9,
-      stock: 15,
-      region: "Global"
-    },
-    { 
-      title: "God of War Ragnarök", 
-      price: 44.99, 
-      oldPrice: 69.99, 
-      discount: 35, 
-      platform: "PS4/PS5",
-      seller: "GameHunter",
-      rating: 4.8,
-      stock: 23,
-      region: "Global"
-    },
-    { 
-      title: "Horizon Forbidden West", 
-      price: 39.99, 
-      oldPrice: 59.99, 
-      discount: 33, 
-      platform: "PS5",
-      seller: "KeyMaster_Pro",
-      rating: 4.7,
-      stock: 8,
-      region: "US/EU"
-    },
-    { 
-      title: "The Last of Us Part II", 
-      price: 29.99, 
-      oldPrice: 49.99, 
-      discount: 40, 
-      platform: "PS4",
-      seller: "TrustedKeys",
-      rating: 4.6,
-      stock: 31,
-      region: "Global"
-    },
-    { 
-      title: "Gran Turismo 7", 
-      price: 49.99, 
-      oldPrice: 69.99, 
-      discount: 28, 
-      platform: "PS5",
-      seller: "SpeedRacer",
-      rating: 4.5,
-      stock: 12,
-      region: "Global"
-    },
-    { 
-      title: "Ratchet & Clank: Rift Apart", 
-      price: 34.99, 
-      oldPrice: 59.99, 
-      discount: 41, 
-      platform: "PS5",
-      seller: "GameVault",
-      rating: 4.7,
-      stock: 19,
-      region: "Global"
-    },
-    { 
-      title: "Ghost of Tsushima Director's Cut", 
-      price: 44.99, 
-      oldPrice: 69.99, 
-      discount: 35, 
-      platform: "PS4/PS5",
-      seller: "SamuraiKeys",
-      rating: 4.9,
-      stock: 7,
-      region: "Global"
-    },
-    { 
-      title: "Returnal", 
-      price: 24.99, 
-      oldPrice: 49.99, 
-      discount: 50, 
-      platform: "PS5",
-      seller: "KeysExpress",
-      rating: 4.4,
-      stock: 25,
-      region: "US/EU"
-    },
-  ];
-
-  const xbox = [
-    { 
-      title: "Starfield Premium Edition", 
-      price: 54.99, 
-      oldPrice: 99.99, 
-      discount: 45, 
+    {
+      title: "Starfield Premium Edition",
+      price: 54.99,
+      oldPrice: 99.99,
+      discount: 45,
+      genre: "Simulation",
       platform: "Xbox Series X/S",
       seller: "SpaceKeys_Pro",
       rating: 4.3,
       stock: 18,
       region: "Global",
-      gamePass: true
     },
-    { 
-      title: "Forza Horizon 5", 
-      price: 39.99, 
-      oldPrice: 59.99, 
-      discount: 33, 
+    {
+      title: "Forza Horizon 5",
+      price: 39.99,
+      oldPrice: 59.99,
+      discount: 33,
+      genre: "Racing",
       platform: "Xbox One/Series",
       seller: "RacingMaster",
       rating: 4.8,
       stock: 31,
       region: "Global",
-      gamePass: true
     },
-    { 
-      title: "Halo Infinite Campaign", 
-      price: 34.99, 
-      oldPrice: 59.99, 
-      discount: 42, 
+    {
+      title: "Halo Infinite Campaign",
+      price: 34.99,
+      oldPrice: 59.99,
+      discount: 42,
+      genre: "Action",
       platform: "Xbox Series X/S",
       seller: "SpartanKeys",
       rating: 4.5,
       stock: 24,
       region: "Global",
-      gamePass: true
     },
-    { 
-      title: "Sea of Thieves", 
-      price: 29.99, 
-      oldPrice: 49.99, 
-      discount: 40, 
+    {
+      title: "Sea of Thieves",
+      price: 29.99,
+      oldPrice: 49.99,
+      discount: 40,
+      genre: "Adventure",
       platform: "Xbox One/Series",
       seller: "PirateVault",
       rating: 4.6,
       stock: 42,
       region: "Global",
-      gamePass: true
     },
-    { 
-      title: "Cyberpunk 2077", 
-      price: 29.99, 
-      oldPrice: 59.99, 
-      discount: 50, 
+    {
+      title: "Cyberpunk 2077",
+      price: 29.99,
+      oldPrice: 59.99,
+      discount: 50,
+      genre: "Action",
       platform: "Xbox Series X/S",
       seller: "CyberGamer",
       rating: 4.4,
       stock: 15,
       region: "Global",
-      gamePass: false
     },
-    { 
-      title: "Red Dead Redemption 2", 
-      price: 24.99, 
-      oldPrice: 59.99, 
-      discount: 58, 
+    {
+      title: "Red Dead Redemption 2",
+      price: 24.99,
+      oldPrice: 59.99,
+      discount: 58,
+      genre: "Action",
       platform: "Xbox One",
       seller: "WildWestXbox",
       rating: 4.8,
       stock: 9,
       region: "Global",
-      gamePass: true
     },
-    { 
-      title: "Call of Duty: MW3", 
-      price: 54.99, 
-      oldPrice: 69.99, 
-      discount: 21, 
+    {
+      title: "Call of Duty: MW3",
+      price: 54.99,
+      oldPrice: 69.99,
+      discount: 21,
+      genre: "Shooter",
       platform: "Xbox Series X/S",
       seller: "CODExpress",
       rating: 4.3,
       stock: 28,
       region: "Global",
-      gamePass: false
     },
-    { 
-      title: "Minecraft Deluxe", 
-      price: 19.99, 
-      oldPrice: 29.99, 
-      discount: 33, 
+    {
+      title: "Minecraft Deluxe",
+      price: 19.99,
+      oldPrice: 29.99,
+      discount: 33,
+      genre: "Adventure",
       platform: "Xbox One/Series",
       seller: "BlockBuster",
       rating: 4.9,
       stock: 67,
       region: "Global",
-      gamePass: true
     },
-    { 
-      title: "FIFA 24", 
-      price: 39.99, 
-      oldPrice: 69.99, 
-      discount: 43, 
+    {
+      title: "FIFA 24",
+      price: 39.99,
+      oldPrice: 69.99,
+      discount: 43,
+      genre: "Sports",
       platform: "Xbox Series X/S",
       seller: "SportsKeys",
       rating: 4.2,
       stock: 21,
       region: "Global",
-      gamePass: true
     },
-    { 
-      title: "Gears 5 Ultimate", 
-      price: 29.99, 
-      oldPrice: 59.99, 
-      discount: 50, 
+    {
+      title: "Gears 5 Ultimate",
+      price: 29.99,
+      oldPrice: 59.99,
+      discount: 50,
+      genre: "Action",
       platform: "Xbox One/Series",
       seller: "GearsVault",
       rating: 4.6,
       stock: 19,
       region: "Global",
-      gamePass: true
     },
-    { 
-      title: "Assassin's Creed Valhalla", 
-      price: 34.99, 
-      oldPrice: 59.99, 
-      discount: 42, 
+    {
+      title: "Assassin's Creed Valhalla",
+      price: 34.99,
+      oldPrice: 59.99,
+      discount: 42,
+      genre: "Adventure",
       platform: "Xbox Series X/S",
       seller: "VikingKeys",
       rating: 4.5,
       stock: 13,
       region: "Global",
-      gamePass: false
     },
-    { 
-      title: "Elden Ring", 
-      price: 39.99, 
-      oldPrice: 59.99, 
-      discount: 33, 
+    {
+      title: "Elden Ring",
+      price: 39.99,
+      oldPrice: 59.99,
+      discount: 33,
+      genre: "RPG",
       platform: "Xbox One/Series",
       seller: "SoulsKeys",
       rating: 4.8,
       stock: 8,
       region: "Global",
-      gamePass: false
-    },
-  ];
-
-
-  const pc = [
-    { 
-      title: "Cyberpunk 2077", 
-      price: 29.99, 
-      oldPrice: 59.99, 
-      discount: 50, 
-      platform: "Steam",
-      seller: "CyberKeys_Pro",
-      rating: 4.5,
-      stock: 42,
-      region: "Global"
-    },
-    { 
-      title: "Baldur's Gate 3", 
-      price: 44.99, 
-      oldPrice: 69.99, 
-      discount: 36, 
-      platform: "Steam",
-      seller: "RPGMaster",
-      rating: 4.9,
-      stock: 28,
-      region: "Global"
-    },
-    { 
-      title: "Starfield", 
-      price: 49.99, 
-      oldPrice: 69.99, 
-      discount: 29, 
-      platform: "Steam",
-      seller: "SpaceGamer_88",
-      rating: 4.2,
-      stock: 15,
-      region: "Global"
-    },
-    { 
-      title: "Elden Ring", 
-      price: 39.99, 
-      oldPrice: 59.99, 
-      discount: 33, 
-      platform: "Steam",
-      seller: "SoulsVault",
-      rating: 4.8,
-      stock: 7,
-      region: "Global"
-    },
-    { 
-      title: "Red Dead Redemption 2", 
-      price: 24.99, 
-      oldPrice: 59.99, 
-      discount: 58, 
-      platform: "Rockstar",
-      seller: "WildWestKeys",
-      rating: 4.7,
-      stock: 33,
-      region: "Global"
-    },
-    { 
-      title: "GTA V Premium Edition", 
-      price: 14.99, 
-      oldPrice: 49.99, 
-      discount: 70, 
-      platform: "Rockstar",
-      seller: "GTAExpress",
-      rating: 4.6,
-      stock: 51,
-      region: "Global"
-    },
-    { 
-      title: "Hogwarts Legacy", 
-      price: 34.99, 
-      oldPrice: 59.99, 
-      discount: 42, 
-      platform: "Steam",
-      seller: "MagicKeys",
-      rating: 4.5,
-      stock: 19,
-      region: "Global"
-    },
-    { 
-      title: "The Witcher 3 GOTY", 
-      price: 9.99, 
-      oldPrice: 39.99, 
-      discount: 75, 
-      platform: "GOG",
-      seller: "CDProjektFan",
-      rating: 4.9,
-      stock: 8,
-      region: "Global"
-    },
-    { 
-      title: "Counter-Strike 2", 
-      price: 0.00, 
-      oldPrice: 0.00, 
-      discount: 0, 
-      platform: "Steam",
-      seller: "ValveOfficial",
-      rating: 4.6,
-      stock: 0,
-      region: "Global"
-    },
-    { 
-      title: "Palworld", 
-      price: 24.99, 
-      oldPrice: 29.99, 
-      discount: 17, 
-      platform: "Steam",
-      seller: "PocketpairKeys",
-      rating: 4.4,
-      stock: 62,
-      region: "Global"
-    },
-    { 
-      title: "Call of Duty: MW3", 
-      price: 54.99, 
-      oldPrice: 69.99, 
-      discount: 21, 
-      platform: "Battle.net",
-      seller: "CODMaster",
-      rating: 4.3,
-      stock: 25,
-      region: "Global"
-    },
-    { 
-      title: "Resident Evil 4 Remake", 
-      price: 39.99, 
-      oldPrice: 59.99, 
-      discount: 33, 
-      platform: "Steam",
-      seller: "HorrorKeys",
-      rating: 4.8,
-      stock: 14,
-      region: "Global"
     },
   ];
 
@@ -792,16 +623,16 @@ const Home = () => {
                 Your Marketplace for Digital Game Keys • Best Prices • Safe
                 Trading
               </p>
-              <p
-                className="mb-4"
-                style={{ fontSize: "18px", fontWeight: 600 }}
-              >
+              <p className="mb-4" style={{ fontSize: "18px", fontWeight: 600 }}>
                 Join over 100,000+ gamers buying and selling game keys. List
                 your unused keys or find the best deals from trusted sellers
                 worldwide.
               </p>
               <div className="d-flex justify-content-center">
-                <button className="btn btn-browse-games" onClick={() => navigate("/browse-games")}>
+                <button
+                  className="btn btn-browse-games"
+                  onClick={() => navigate("/browse-games")}
+                >
                   <i className="bi bi-search me-2"></i>Browse Games
                 </button>
               </div>
@@ -840,19 +671,48 @@ const Home = () => {
       </section>
 
       {/* Featured Games Section */}
-      <SectionCard section_data={featuredGames} section_title={"Featured Games"} section_icon={"bi-star-fill"} section_style={"#ffd700"} />
+      <SectionCard
+        section_data={games}
+        section_title={"Featured Games"}
+        section_icon={"bi-star-fill"}
+        section_style={"#ffd700"}
+      />
 
       {/* Hot Deals Section */}
-      <SectionCard section_data={hotDeals} section_title={"Hot Deals"} section_icon={"bi-fire"} section_style={"#ff0080"} section_link={"/hot-deals"} />
+      <SectionCard
+        section_data={games}
+        section_title={"Hot Deals"}
+        section_icon={"bi-fire"}
+        section_style={"#ff0080"}
+        section_link={"/hot-deals"}
+      />
 
       {/* Play Station Section */}
-      <SectionCard section_data={playStation} section_title={"Play Station"} section_icon={"bi-playstation"} section_style={"#0059B4"} section_link={"/play-station"} />
+      <SectionCard
+        section_data={games}
+        section_title={"Play Station"}
+        section_icon={"bi-playstation"}
+        section_style={"#0059B4"}
+        section_link={"/play-station"}
+      />
 
       {/* Xbox Section */}
-      <SectionCard section_data={xbox} section_title={"Xbox"} section_icon={"bi-xbox"} section_style={"#0F730F"} section_link={"/xbox"} />
+      <SectionCard
+        section_data={games}
+        section_title={"Xbox"}
+        section_icon={"bi-xbox"}
+        section_style={"#0F730F"}
+        section_link={"/xbox"}
+      />
 
       {/* PC Section */}
-      <SectionCard section_data={pc} section_title={"PC"} section_icon={"bi-pc-display"} section_style={"#FF0000"} section_link={"/pc"} />
+      <SectionCard
+        section_data={games}
+        section_title={"PC"}
+        section_icon={"bi-pc-display"}
+        section_style={"#FF0000"}
+        section_link={"/pc"}
+      />
 
       {/* Why Choose Us Section */}
       <section className="gaming-bg py-5 px-3 px-lg-0">
@@ -978,6 +838,6 @@ const Home = () => {
       </section>
     </>
   );
-}
+};
 
 export default Home;

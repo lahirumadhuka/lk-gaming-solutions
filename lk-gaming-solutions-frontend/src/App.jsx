@@ -18,6 +18,7 @@ import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
+import Games from "./pages/Games";
 
 const App = () => {
   ScrollToTop();
@@ -32,9 +33,9 @@ const App = () => {
         <Routes>
           <Route>
             <Route path="/" element={<Home />} />
-            <Route path="/play-station" element={<PlayStation />} />
-            <Route path="/xbox" element={<Xbox />} />
-            <Route path="/pc" element={<PC />} />
+            <Route path="/play-station" element={<Games pathname={"PlayStation"} />} />
+            <Route path="/xbox" element={<Games pathname={"Xbox"} />} />
+            <Route path="/pc" element={<Games pathname={"PC"} />} />
             <Route path="/hot-deals" element={<HotDeals />} />
             <Route path="/browse-games" element={<BrowseGames />} />
             <Route path="/cart" element={<Cart />} />

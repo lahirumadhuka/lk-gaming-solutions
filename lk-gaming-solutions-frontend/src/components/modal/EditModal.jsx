@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
-import SaleForm from "../Sale Form/SaleForm";
+import SaleForm from "../form/SaleForm";
 
 const EditModal = ({
   game_id,
