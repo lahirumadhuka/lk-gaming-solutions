@@ -3,7 +3,8 @@ import { NavLink } from "react-router-dom";
 
 const GamingCard = ({
   card_data,
-  card_icon,
+  pathname,
+  setGamesPlatformCount,
   setGamesCount,
   isStockAvailable = "All",
   platform,
@@ -14,8 +15,25 @@ const GamingCard = ({
   sortBy,
   searchValue = "",
 }) => {
+  // Filter Platform Type
+  const gamePlatformType = card_data.filter((game) => {
+    const platform = game.platform.toLowerCase();
+
+    return pathname === "PlayStation"
+      ? platform.includes("ps")
+      : pathname === "Xbox"
+        ? platform.includes("xbox")
+        : pathname === "PC"
+          ? !platform.includes("ps") && !platform.includes("xbox")
+          : true;
+  });
+
+  useEffect(() => {
+    setGamesPlatformCount && setGamesPlatformCount(gamePlatformType.length)
+  }, [gamePlatformType])
+
   // Filter games
-  const games = card_data
+  const games = gamePlatformType
     .filter(
       (c) =>
         isStockAvailable === "All" ||
@@ -338,7 +356,7 @@ const GamingCard = ({
                   className={`game-img ${game.platform.toLowerCase().replace(/\//g, " ")} d-flex align-items-center justify-content-center`}
                 >
                   <i
-                    className={`bi ${card_icon}`}
+                    className={`bi bi-${game.platform.toLowerCase().includes("xbox") ? "xbox" : game.platform.toLowerCase().includes("ps") ? "playstation" : "pc"}`}
                     style={{ fontSize: "48px", color: "#353d4a" }}
                   ></i>
                 </div>
