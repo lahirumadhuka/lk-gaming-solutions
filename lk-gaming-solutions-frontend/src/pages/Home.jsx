@@ -10,8 +10,7 @@ const Home = () => {
   const games = [
     {
       title: "Spider-Man 2",
-      price: 54.99,
-      oldPrice: 69.99,
+      price: 15299,
       discount: 21,
       genre: "Action",
       platform: "PS5",
@@ -22,8 +21,7 @@ const Home = () => {
     },
     {
       title: "God of War Ragnarök",
-      price: 44.99,
-      oldPrice: 69.99,
+      price: 14999,
       discount: 35,
       genre: "Adventure",
       platform: "PS4/PS5",
@@ -34,8 +32,7 @@ const Home = () => {
     },
     {
       title: "Horizon Forbidden West",
-      price: 39.99,
-      oldPrice: 59.99,
+      price: 13999,
       discount: 33,
       genre: "Racing",
       platform: "PS5",
@@ -46,8 +43,7 @@ const Home = () => {
     },
     {
       title: "The Last of Us Part II",
-      price: 29.99,
-      oldPrice: 49.99,
+      price: 12999,
       discount: 40,
       genre: "Adventure",
       platform: "PS4",
@@ -58,8 +54,7 @@ const Home = () => {
     },
     {
       title: "Gran Turismo 7",
-      price: 49.99,
-      oldPrice: 69.99,
+      price: 14999,
       discount: 28,
       genre: "Racing",
       platform: "PS5",
@@ -70,8 +65,7 @@ const Home = () => {
     },
     {
       title: "Ratchet & Clank: Rift Apart",
-      price: 34.99,
-      oldPrice: 59.99,
+      price: 13499,
       discount: 41,
       genre: "Action",
       platform: "PS5",
@@ -82,8 +76,7 @@ const Home = () => {
     },
     {
       title: "Ghost of Tsushima Director's Cut",
-      price: 44.99,
-      oldPrice: 69.99,
+      price: 14499,
       discount: 35,
       genre: "Action",
       platform: "PS4/PS5",
@@ -94,8 +87,7 @@ const Home = () => {
     },
     {
       title: "Returnal",
-      price: 24.99,
-      oldPrice: 49.99,
+      price: 12499,
       discount: 50,
       genre: "Action",
       platform: "PS5",
@@ -106,8 +98,7 @@ const Home = () => {
     },
     {
       title: "Cyberpunk 2077",
-      price: 29.99,
-      oldPrice: 59.99,
+      price: 12999,
       discount: 50,
       genre: "Adventure",
       platform: "Ubisoft Connect",
@@ -118,8 +109,7 @@ const Home = () => {
     },
     {
       title: "Baldur's Gate 3",
-      price: 44.99,
-      oldPrice: 69.99,
+      price: 14499,
       discount: 36,
       genre: "Strategy",
       platform: "Steam",
@@ -130,8 +120,7 @@ const Home = () => {
     },
     {
       title: "Starfield",
-      price: 49.99,
-      oldPrice: 69.99,
+      price: 14999,
       discount: 29,
       genre: "Simulation",
       platform: "Steam",
@@ -142,8 +131,7 @@ const Home = () => {
     },
     {
       title: "Elden Ring",
-      price: 39.99,
-      oldPrice: 59.99,
+      price: 13999,
       discount: 33,
       platform: "Steam",
       genre: "RPG",
@@ -154,8 +142,7 @@ const Home = () => {
     },
     {
       title: "Red Dead Redemption 2",
-      price: 24.99,
-      oldPrice: 59.99,
+      price: 12499,
       discount: 58,
       genre: "Action",
       platform: "Rockstar",
@@ -166,8 +153,7 @@ const Home = () => {
     },
     {
       title: "GTA V Premium Edition",
-      price: 14.99,
-      oldPrice: 49.99,
+      price: 11499,
       discount: 70,
       genre: "Action",
       platform: "Rockstar",
@@ -178,8 +164,7 @@ const Home = () => {
     },
     {
       title: "Hogwarts Legacy",
-      price: 34.99,
-      oldPrice: 59.99,
+      price: 13499,
       discount: 42,
       genre: "Adventure",
       platform: "Steam",
@@ -190,8 +175,7 @@ const Home = () => {
     },
     {
       title: "The Witcher 3 GOTY",
-      price: 9.99,
-      oldPrice: 39.99,
+      price: 11999,
       discount: 75,
       genre: "Adventure",
       platform: "GOG",
@@ -202,8 +186,7 @@ const Home = () => {
     },
     {
       title: "Counter-Strike 2",
-      price: 10.0,
-      oldPrice: 10.0,
+      price: 10000,
       discount: 0,
       genre: "Shooter",
       platform: "Steam",
@@ -214,8 +197,7 @@ const Home = () => {
     },
     {
       title: "Palworld",
-      price: 24.99,
-      oldPrice: 29.99,
+      price: 12499,
       discount: 17,
       genre: "RPG",
       platform: "Steam",
@@ -226,8 +208,7 @@ const Home = () => {
     },
     {
       title: "Call of Duty: MW3",
-      price: 54.99,
-      oldPrice: 69.99,
+      price: 15499,
       discount: 21,
       genre: "Shooter",
       platform: "Battle.net",
@@ -238,8 +219,7 @@ const Home = () => {
     },
     {
       title: "Resident Evil 4 Remake",
-      price: 39.99,
-      oldPrice: 59.99,
+      price: 13999,
       discount: 33,
       genre: "Action",
       platform: "Steam",
@@ -250,8 +230,7 @@ const Home = () => {
     },
     {
       title: "Starfield Premium Edition",
-      price: 54.99,
-      oldPrice: 99.99,
+      price: 15499,
       discount: 45,
       genre: "Simulation",
       platform: "Xbox Series X/S",
@@ -262,8 +241,7 @@ const Home = () => {
     },
     {
       title: "Forza Horizon 5",
-      price: 39.99,
-      oldPrice: 59.99,
+      price: 13999,
       discount: 33,
       genre: "Racing",
       platform: "Xbox One/Series",
@@ -274,8 +252,7 @@ const Home = () => {
     },
     {
       title: "Halo Infinite Campaign",
-      price: 34.99,
-      oldPrice: 59.99,
+      price: 13499,
       discount: 42,
       genre: "Action",
       platform: "Xbox Series X/S",
@@ -286,8 +263,7 @@ const Home = () => {
     },
     {
       title: "Sea of Thieves",
-      price: 29.99,
-      oldPrice: 49.99,
+      price: 12999,
       discount: 40,
       genre: "Adventure",
       platform: "Xbox One/Series",
@@ -298,8 +274,7 @@ const Home = () => {
     },
     {
       title: "Cyberpunk 2077",
-      price: 29.99,
-      oldPrice: 59.99,
+      price: 12999,
       discount: 50,
       genre: "Action",
       platform: "Xbox Series X/S",
@@ -310,8 +285,7 @@ const Home = () => {
     },
     {
       title: "Red Dead Redemption 2",
-      price: 24.99,
-      oldPrice: 59.99,
+      price: 12499,
       discount: 58,
       genre: "Action",
       platform: "Xbox One",
@@ -322,8 +296,7 @@ const Home = () => {
     },
     {
       title: "Call of Duty: MW3",
-      price: 54.99,
-      oldPrice: 69.99,
+      price: 15499,
       discount: 21,
       genre: "Shooter",
       platform: "Xbox Series X/S",
@@ -334,8 +307,7 @@ const Home = () => {
     },
     {
       title: "Minecraft Deluxe",
-      price: 19.99,
-      oldPrice: 29.99,
+      price: 11999,
       discount: 33,
       genre: "Adventure",
       platform: "Xbox One/Series",
@@ -346,8 +318,7 @@ const Home = () => {
     },
     {
       title: "FIFA 24",
-      price: 39.99,
-      oldPrice: 69.99,
+      price: 13999,
       discount: 43,
       genre: "Sports",
       platform: "Xbox Series X/S",
@@ -358,8 +329,7 @@ const Home = () => {
     },
     {
       title: "Gears 5 Ultimate",
-      price: 29.99,
-      oldPrice: 59.99,
+      price: 12999,
       discount: 50,
       genre: "Action",
       platform: "Xbox One/Series",
@@ -370,8 +340,7 @@ const Home = () => {
     },
     {
       title: "Assassin's Creed Valhalla",
-      price: 34.99,
-      oldPrice: 59.99,
+      price: 13499,
       discount: 42,
       genre: "Adventure",
       platform: "Xbox Series X/S",
@@ -382,8 +351,8 @@ const Home = () => {
     },
     {
       title: "Elden Ring",
-      price: 39.99,
-      oldPrice: 59.99,
+      price: 13999,
+      oldPrice: 15999,
       discount: 33,
       genre: "RPG",
       platform: "Xbox One/Series",
@@ -672,7 +641,7 @@ const Home = () => {
 
       {/* Featured Games Section */}
       <SectionCard
-        section_data={games}
+        section_data={games.filter((g) => g.stock > 0)}
         section_title={"Featured Games"}
         section_icon={"bi-star-fill"}
         section_style={"#ffd700"}
@@ -680,7 +649,7 @@ const Home = () => {
 
       {/* Hot Deals Section */}
       <SectionCard
-        section_data={games}
+        section_data={games.filter((g) => g.stock > 0 || g.discount > 0)}
         section_title={"Hot Deals"}
         section_icon={"bi-fire"}
         section_style={"#ff0080"}
@@ -689,7 +658,7 @@ const Home = () => {
 
       {/* Play Station Section */}
       <SectionCard
-        section_data={games}
+        section_data={games.filter((g) => g.stock > 0)}
         section_title={"Play Station"}
         section_icon={"bi-playstation"}
         section_style={"#0059B4"}
@@ -698,7 +667,7 @@ const Home = () => {
 
       {/* Xbox Section */}
       <SectionCard
-        section_data={games}
+        section_data={games.filter((g) => g.stock > 0)}
         section_title={"Xbox"}
         section_icon={"bi-xbox"}
         section_style={"#0F730F"}
@@ -707,7 +676,7 @@ const Home = () => {
 
       {/* PC Section */}
       <SectionCard
-        section_data={games}
+        section_data={games.filter((g) => g.stock > 0)}
         section_title={"PC"}
         section_icon={"bi-pc-display"}
         section_style={"#FF0000"}

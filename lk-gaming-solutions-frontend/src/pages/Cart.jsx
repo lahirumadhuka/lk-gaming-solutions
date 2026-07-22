@@ -1,65 +1,73 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import UseTitleName from '../utils/UseTitleName';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import UseTitleName from "../utils/UseTitleName";
 
 const Cart = () => {
-  UseTitleName("Cart")
+  UseTitleName("Cart");
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([
     {
       id: 1,
-      title: "Cyberpunk 2077",
-      price: 59.99,
-      oldPrice: 59.99,
-      discount: 50,
-      platform: "Steam",
-      seller: "CyberKeys_Pro",
-      rating: 4.5,
+      title: "Spider-Man 2",
+      price: 15299,
+      discount: 21,
+      genre: "Action",
+      platform: "PS5",
+      seller: "ProGamer_88",
+      rating: 4.9,
+      stock: 15,
       region: "Global",
-      genre: "RPG",
-      quantity: 1
+      quantity: 1,
     },
     {
       id: 2,
-      title: "Baldur's Gate 3",
-      price: 44.99,
-      oldPrice: 69.99,
-      discount: 36,
-      platform: "Steam",
-      seller: "RPGMaster",
-      rating: 4.9,
+      title: "God of War Ragnarök",
+      price: 14999,
+      discount: 35,
+      genre: "Adventure",
+      platform: "PS4/PS5",
+      seller: "GameHunter",
+      rating: 4.8,
+      stock: 23,
       region: "Global",
-      genre: "RPG",
-      quantity: 1
+      quantity: 1,
     },
     {
       id: 3,
-      title: "Elden Ring",
-      price: 39.99,
-      oldPrice: 59.99,
+      title: "Horizon Forbidden West",
+      price: 13999,
       discount: 33,
-      platform: "Steam",
-      seller: "SoulsVault",
-      rating: 4.8,
-      region: "Global",
-      genre: "Action",
-      quantity: 2
-    }
+      genre: "Racing",
+      platform: "PS5",
+      seller: "KeyMaster_Pro",
+      rating: 4.7,
+      stock: 8,
+      region: "EU",
+      quantity: 1,
+    },
   ]);
 
-  const updateQuantity = (id, newQuantity) => {
-    if (newQuantity < 1) return;
-    setCartItems(cartItems.map(item => 
-      item.id === id ? { ...item, quantity: newQuantity } : item
-    ));
+  const updateQuantity = (id, newQuantity, noOfStock) => {
+    if (newQuantity < 1 || newQuantity > noOfStock) return;
+    setCartItems(
+      cartItems.map((item) =>
+        item.id === id ? { ...item, quantity: newQuantity } : item,
+      ),
+    );
   };
 
   const removeItem = (id) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
+    setCartItems(cartItems.filter((item) => item.id !== id));
   };
 
-  const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const savings = cartItems.reduce((sum, item) => sum + ((item.oldPrice - item.price) * item.quantity), 0);
+  const total = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0,
+  );
+  const savings = cartItems.reduce(
+    (sum, item) => sum + (item.oldPrice - item.price) * item.quantity,
+    0,
+  );
 
   return (
     <>
@@ -483,7 +491,9 @@ const Cart = () => {
                           {item.title}
                         </h4>
                         <div className="mb-2 d-flex gap-2 align-items-center flex-wrap">
-                          <span className={`platform-badge ${item.platform.toLowerCase().replace(/\//g, " ")}`}>
+                          <span
+                            className={`platform-badge ${item.platform.toLowerCase().replace(/\//g, " ")}`}
+                          >
                             {item.platform}
                           </span>
                           <span className="genre-badge">{item.genre}</span>
@@ -529,11 +539,17 @@ const Cart = () => {
                       <div className="col-md-4">
                         <div className="text-md-end">
                           <div className="price-display mb-2">
-                            ${(item.price * item.quantity).toFixed(2)}
+                            LKR{" "}
+                            {(
+                              (item.discount > 0
+                                ? item.price -
+                                  (item.price * item.discount) / 100
+                                : item.price) * item.quantity
+                            ).toFixed(2)}
                           </div>
-                          {item.price !== item.oldPrice && (
+                          {item.discount > 0 && (
                             <div className="old-price mb-3">
-                              ${(item.oldPrice * item.quantity).toFixed(2)}
+                              LKR {(item.price * item.quantity).toFixed(2)}
                             </div>
                           )}
 
@@ -541,7 +557,7 @@ const Cart = () => {
                             <button
                               className="quantity-btn"
                               onClick={() =>
-                                updateQuantity(item.id, item.quantity - 1)
+                                updateQuantity(item.id, item.quantity - 1, item.stock)
                               }
                             >
                               <i className="bi bi-dash"></i>
@@ -552,7 +568,7 @@ const Cart = () => {
                             <button
                               className="quantity-btn"
                               onClick={() =>
-                                updateQuantity(item.id, item.quantity + 1)
+                                updateQuantity(item.id, item.quantity + 1, item.stock)
                               }
                             >
                               <i className="bi bi-plus"></i>
@@ -682,6 +698,6 @@ const Cart = () => {
       </section>
     </>
   );
-}
+};
 
 export default Cart;

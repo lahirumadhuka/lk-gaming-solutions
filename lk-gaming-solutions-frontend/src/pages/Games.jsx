@@ -29,8 +29,7 @@ const Games = ({ pathname }) => {
   const games = [
     {
       title: "Spider-Man 2",
-      price: 54.99,
-      oldPrice: 69.99,
+      price: 15299,
       discount: 21,
       genre: "Action",
       platform: "PS5",
@@ -41,8 +40,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "God of War Ragnarök",
-      price: 44.99,
-      oldPrice: 69.99,
+      price: 14999,
       discount: 35,
       genre: "Adventure",
       platform: "PS4/PS5",
@@ -53,8 +51,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Horizon Forbidden West",
-      price: 39.99,
-      oldPrice: 59.99,
+      price: 13999,
       discount: 33,
       genre: "Racing",
       platform: "PS5",
@@ -65,8 +62,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "The Last of Us Part II",
-      price: 29.99,
-      oldPrice: 49.99,
+      price: 12999,
       discount: 40,
       genre: "Adventure",
       platform: "PS4",
@@ -77,8 +73,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Gran Turismo 7",
-      price: 49.99,
-      oldPrice: 69.99,
+      price: 14999,
       discount: 28,
       genre: "Racing",
       platform: "PS5",
@@ -89,8 +84,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Ratchet & Clank: Rift Apart",
-      price: 34.99,
-      oldPrice: 59.99,
+      price: 13499,
       discount: 41,
       genre: "Action",
       platform: "PS5",
@@ -101,8 +95,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Ghost of Tsushima Director's Cut",
-      price: 44.99,
-      oldPrice: 69.99,
+      price: 14499,
       discount: 35,
       genre: "Action",
       platform: "PS4/PS5",
@@ -113,8 +106,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Returnal",
-      price: 24.99,
-      oldPrice: 49.99,
+      price: 12499,
       discount: 50,
       genre: "Action",
       platform: "PS5",
@@ -125,8 +117,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Cyberpunk 2077",
-      price: 29.99,
-      oldPrice: 59.99,
+      price: 12999,
       discount: 50,
       genre: "Adventure",
       platform: "Ubisoft Connect",
@@ -137,8 +128,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Baldur's Gate 3",
-      price: 44.99,
-      oldPrice: 69.99,
+      price: 14499,
       discount: 36,
       genre: "Strategy",
       platform: "Steam",
@@ -149,8 +139,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Starfield",
-      price: 49.99,
-      oldPrice: 69.99,
+      price: 14999,
       discount: 29,
       genre: "Simulation",
       platform: "Steam",
@@ -161,8 +150,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Elden Ring",
-      price: 39.99,
-      oldPrice: 59.99,
+      price: 13999,
       discount: 33,
       platform: "Steam",
       genre: "RPG",
@@ -173,8 +161,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Red Dead Redemption 2",
-      price: 24.99,
-      oldPrice: 59.99,
+      price: 12499,
       discount: 58,
       genre: "Action",
       platform: "Rockstar",
@@ -185,8 +172,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "GTA V Premium Edition",
-      price: 14.99,
-      oldPrice: 49.99,
+      price: 11499,
       discount: 70,
       genre: "Action",
       platform: "Rockstar",
@@ -197,8 +183,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Hogwarts Legacy",
-      price: 34.99,
-      oldPrice: 59.99,
+      price: 13499,
       discount: 42,
       genre: "Adventure",
       platform: "Steam",
@@ -209,8 +194,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "The Witcher 3 GOTY",
-      price: 9.99,
-      oldPrice: 39.99,
+      price: 11999,
       discount: 75,
       genre: "Adventure",
       platform: "GOG",
@@ -221,8 +205,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Counter-Strike 2",
-      price: 10.0,
-      oldPrice: 10.0,
+      price: 10000,
       discount: 0,
       genre: "Shooter",
       platform: "Steam",
@@ -233,8 +216,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Palworld",
-      price: 24.99,
-      oldPrice: 29.99,
+      price: 12499,
       discount: 17,
       genre: "RPG",
       platform: "Steam",
@@ -245,8 +227,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Call of Duty: MW3",
-      price: 54.99,
-      oldPrice: 69.99,
+      price: 15499,
       discount: 21,
       genre: "Shooter",
       platform: "Battle.net",
@@ -257,8 +238,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Resident Evil 4 Remake",
-      price: 39.99,
-      oldPrice: 59.99,
+      price: 13999,
       discount: 33,
       genre: "Action",
       platform: "Steam",
@@ -269,8 +249,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Starfield Premium Edition",
-      price: 54.99,
-      oldPrice: 99.99,
+      price: 15499,
       discount: 45,
       genre: "Simulation",
       platform: "Xbox Series X/S",
@@ -281,8 +260,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Forza Horizon 5",
-      price: 39.99,
-      oldPrice: 59.99,
+      price: 13999,
       discount: 33,
       genre: "Racing",
       platform: "Xbox One/Series",
@@ -293,8 +271,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Halo Infinite Campaign",
-      price: 34.99,
-      oldPrice: 59.99,
+      price: 13499,
       discount: 42,
       genre: "Action",
       platform: "Xbox Series X/S",
@@ -305,8 +282,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Sea of Thieves",
-      price: 29.99,
-      oldPrice: 49.99,
+      price: 12999,
       discount: 40,
       genre: "Adventure",
       platform: "Xbox One/Series",
@@ -317,8 +293,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Cyberpunk 2077",
-      price: 29.99,
-      oldPrice: 59.99,
+      price: 12999,
       discount: 50,
       genre: "Action",
       platform: "Xbox Series X/S",
@@ -329,8 +304,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Red Dead Redemption 2",
-      price: 24.99,
-      oldPrice: 59.99,
+      price: 12499,
       discount: 58,
       genre: "Action",
       platform: "Xbox One",
@@ -341,8 +315,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Call of Duty: MW3",
-      price: 54.99,
-      oldPrice: 69.99,
+      price: 15499,
       discount: 21,
       genre: "Shooter",
       platform: "Xbox Series X/S",
@@ -353,8 +326,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Minecraft Deluxe",
-      price: 19.99,
-      oldPrice: 29.99,
+      price: 11999,
       discount: 33,
       genre: "Adventure",
       platform: "Xbox One/Series",
@@ -365,8 +337,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "FIFA 24",
-      price: 39.99,
-      oldPrice: 69.99,
+      price: 13999,
       discount: 43,
       genre: "Sports",
       platform: "Xbox Series X/S",
@@ -377,8 +348,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Gears 5 Ultimate",
-      price: 29.99,
-      oldPrice: 59.99,
+      price: 12999,
       discount: 50,
       genre: "Action",
       platform: "Xbox One/Series",
@@ -389,8 +359,7 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Assassin's Creed Valhalla",
-      price: 34.99,
-      oldPrice: 59.99,
+      price: 13499,
       discount: 42,
       genre: "Adventure",
       platform: "Xbox Series X/S",
@@ -401,8 +370,8 @@ const Games = ({ pathname }) => {
     },
     {
       title: "Elden Ring",
-      price: 39.99,
-      oldPrice: 59.99,
+      price: 13999,
+      oldPrice: 15999,
       discount: 33,
       genre: "RPG",
       platform: "Xbox One/Series",
