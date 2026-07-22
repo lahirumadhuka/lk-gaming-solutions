@@ -6,9 +6,6 @@ import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home"
-import PlayStation from './pages/PlayStation';
-import PC from './pages/PC';
-import Xbox from './pages/Xbox';
 import HotDeals from './pages/HotDeals';
 import ScrollToTop from "./utils/ScrollToTop";
 import BrowseGames from "./pages/BrowseGames";
