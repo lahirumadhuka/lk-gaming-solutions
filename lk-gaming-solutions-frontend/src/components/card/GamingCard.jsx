@@ -29,8 +29,8 @@ const GamingCard = ({
   });
 
   useEffect(() => {
-    setGamesPlatformCount && setGamesPlatformCount(gamePlatformType.length)
-  }, [gamePlatformType])
+    setGamesPlatformCount && setGamesPlatformCount(gamePlatformType.length);
+  }, [gamePlatformType]);
 
   // Filter games
   const games = gamePlatformType
@@ -435,10 +435,14 @@ const GamingCard = ({
                 </div>
                 <div className="d-flex align-items-center justify-content-between mb-3">
                   <div>
-                    <div className="price-tag">${game.price}</div>
-                    {game.price !== game.oldPrice && (
+                    <div className="price-tag">
+                      LKR{" "}
+                      {(game.discount > 0 ?
+                        game.price - (game.price * game.discount) / 100 : game.price).toFixed(2)}
+                    </div>
+                    {game.discount > 0 && (
                       <div className="old-price" style={{ color: "#8b95a5" }}>
-                        ${game.oldPrice}
+                        LKR {game.price.toFixed(2)}
                       </div>
                     )}
                   </div>
@@ -447,6 +451,7 @@ const GamingCard = ({
                   <button
                     className="btn btn-gaming flex-grow-1"
                     style={{ padding: "10px", fontSize: "13px" }}
+                    disabled={game.stock === 0}
                   >
                     <i className="bi bi-cart-plus me-1"></i>
                     Add to Cart

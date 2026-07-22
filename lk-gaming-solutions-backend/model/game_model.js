@@ -9,11 +9,9 @@ const GamesSchema = mongoose.Schema({
     type: Number,
     required: [true, "Please enter the game price!"],
   },
-  oldPrice: {
-    type: Number,
-  },
   discount: {
     type: Number,
+    default: 0,
   },
   genre: {
     type: String,
@@ -37,6 +35,9 @@ const GamesSchema = mongoose.Schema({
     type: String,
     required: [true, "Please enter region name!"],
   },
+  imgUrl: {
+    type: String
+  }
 });
 
 const Games = mongoose.model("Games", GamesSchema);
