@@ -146,8 +146,6 @@ const SectionCard = ({
 
         .game-img {
           width: 100%;
-          height: 200px;
-          object-fit: cover;
           background: linear-gradient(135deg, #800000 0%, #FF0000 100%);
         }
         
@@ -173,21 +171,6 @@ const SectionCard = ({
           font-size: 14px;
           letter-spacing: 1px;
           box-shadow: 0 4px 15px rgba(255, 0, 128, 0.4);
-        }
-
-        .free-badge {
-          position: absolute;
-          top: 12px;
-          right: 12px;
-          background: linear-gradient(135deg, #00ff88 0%, #00ccaa 100%);
-          color: #000;
-          font-family: 'Orbitron', sans-serif;
-          font-weight: 700;
-          padding: 6px 12px;
-          border-radius: 8px;
-          font-size: 14px;
-          letter-spacing: 1px;
-          box-shadow: 0 4px 15px rgba(0, 255, 136, 0.4);
         }
 
         .stock-badge {
@@ -326,12 +309,17 @@ const SectionCard = ({
                 <div className="game-card">
                   <div style={{ position: "relative" }}>
                     <div
-                      className={`game-img ${game.platform.toLowerCase().replace(/\//g, " ")} d-flex align-items-center justify-content-center`}
+                      className={`game-img ${game.platform.toLowerCase().replace(/\//g, " ")}`}
+                      style={{ aspectRatio: "4/3" }}
                     >
-                      <i
-                        className={`bi ${section_icon}`}
-                        style={{ fontSize: "48px", color: "#353d4a" }}
-                      ></i>
+                      <img
+                        src={game.imgUrl}
+                        className="img-fluid w-100 h-100"
+                        style={{ objectFit: "cover" }}
+                        onError={(e) => {
+                          e.target.style.display = "none";
+                        }}
+                      />
                     </div>
                     {game.discount !== 0 && (
                       <span className="discount-badge">-{game.discount}%</span>
