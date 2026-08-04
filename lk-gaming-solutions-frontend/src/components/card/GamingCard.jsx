@@ -352,14 +352,18 @@ const GamingCard = ({
           <div key={index} className="col-lg-4 col-md-6">
             <div className="game-card">
               <div style={{ position: "relative" }}>
-                <div
-                  className={`game-img ${game.platform.toLowerCase().replace(/\//g, " ")} d-flex align-items-center justify-content-center`}
-                >
-                  <i
-                    className={`bi bi-${game.platform.toLowerCase().includes("xbox") ? "xbox" : game.platform.toLowerCase().includes("ps") ? "playstation" : "pc"}`}
-                    style={{ fontSize: "48px", color: "#353d4a" }}
-                  ></i>
-                </div>
+                {game.imgUrl ? (
+                  <img src={game.imgUrl} className="img-fluid" />
+                ) : (
+                  <div
+                    className={`game-img ${game.platform.toLowerCase().replace(/\//g, " ")} d-flex align-items-center justify-content-center`}
+                  >
+                    <i
+                      className={`bi bi-${game.platform.toLowerCase().includes("xbox") ? "xbox" : game.platform.toLowerCase().includes("ps") ? "playstation" : "pc"}`}
+                      style={{ fontSize: "48px", color: "#353d4a" }}
+                    ></i>
+                  </div>
+                )}
                 {game.discount !== 0 && (
                   <span className="discount-badge">-{game.discount}%</span>
                 )}
@@ -437,8 +441,10 @@ const GamingCard = ({
                   <div>
                     <div className="price-tag">
                       LKR{" "}
-                      {(game.discount > 0 ?
-                        game.price - (game.price * game.discount) / 100 : game.price).toFixed(2)}
+                      {(game.discount > 0
+                        ? game.price - (game.price * game.discount) / 100
+                        : game.price
+                      ).toFixed(2)}
                     </div>
                     {game.discount > 0 && (
                       <div className="old-price" style={{ color: "#8b95a5" }}>

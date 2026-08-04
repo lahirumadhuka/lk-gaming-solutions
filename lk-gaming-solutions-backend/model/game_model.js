@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const GameSchema = mongoose.Schema({
   title: {
@@ -42,7 +42,7 @@ const GameSchema = mongoose.Schema({
   imgUrl: {
     type: String,
     required: [true, "Please upload an image!"],
-  }
+  },
 });
 
 const Game = mongoose.model("Game", GameSchema);
