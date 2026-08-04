@@ -1,27 +1,19 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const gameRoutes = require("./routes/game_route");
 
 const app = express();
-require('dotenv').config();
+require("dotenv").config();
 
 //middlewares
 app.use(cors());
-app.use(express.urlencoded({extended:true}));
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 const PORT = process.env.PORT || 8000;
 const HOST = process.env.HOST;
 const MONGOURL = process.env.MONGO_URL;
-
-app.get("/", (req, res) => {
-    res.send("LK Gaming Solutions Server Updated")
-})
-
-app.post("/api/playstation", (req, res) => {
-    console.log(req.body)
-    res.send(req.body)
-})
 
 mongoose
   .connect(MONGOURL)
@@ -34,3 +26,10 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
+
+// Routes
+app.get("/", (req, res) => {
+  res.send("LK Gaming Solutions Server Updated");
+});
+
+app.use("/api/games", gameRoutes);

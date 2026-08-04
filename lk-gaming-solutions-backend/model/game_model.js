@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
-const GamesSchema = mongoose.Schema({
+const GameSchema = mongoose.Schema({
   title: {
     type: String,
     required: [true, "Please enter the game title!"],
@@ -11,6 +11,7 @@ const GamesSchema = mongoose.Schema({
   },
   discount: {
     type: Number,
+    required: true,
     default: 0,
   },
   genre: {
@@ -23,9 +24,12 @@ const GamesSchema = mongoose.Schema({
   },
   seller: {
     type: String,
+    required: true,
   },
   rating: {
     type: Number,
+    required: true,
+    default: 0,
   },
   stock: {
     type: Number,
@@ -36,10 +40,11 @@ const GamesSchema = mongoose.Schema({
     required: [true, "Please enter region name!"],
   },
   imgUrl: {
-    type: String
-  }
+    type: String,
+    required: [true, "Please upload an image!"],
+  },
 });
 
-const Games = mongoose.model("Games", GamesSchema);
+const Game = mongoose.model("Game", GameSchema);
 
-module.exports = Games;
+module.exports = Game;
