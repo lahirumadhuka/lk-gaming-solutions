@@ -5,8 +5,11 @@ import SortingSelect from "../components/filter/SortingSelect";
 import UseTitleName from "../utils/UseTitleName";
 import { useEffect } from "react";
 import axios from "axios";
+import { useData } from "../utils/DataContext";
 
 const Games = ({ pathname }) => {
+  const { games } = useData();
+
   const [sortBy, setSortBy] = useState("name");
   const [gamesPlatformCount, setGamesPlatformCount] = useState();
   const [gamesCount, setGamesCount] = useState();
@@ -15,8 +18,6 @@ const Games = ({ pathname }) => {
   const [price, setPrice] = useState("All");
   const [genre, setGenre] = useState("All");
   const [region, setRegion] = useState("All");
-
-  const [games, setGames] = useState([]);
 
   UseTitleName(pathname);
 
@@ -27,10 +28,6 @@ const Games = ({ pathname }) => {
     setPrice("All");
     setGenre("All");
     setRegion("All");
-
-    axios.get("http://localhost:3001/api/games").then((res) => {
-      setGames(res.data?.response || []);
-    });
   }, [pathname]);
 
   return (
