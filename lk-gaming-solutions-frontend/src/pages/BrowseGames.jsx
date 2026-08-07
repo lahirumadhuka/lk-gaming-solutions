@@ -4,6 +4,7 @@ import FilterSidebar from "../components/filter/FilterSidebar";
 import SortingSelect from "../components/filter/SortingSelect";
 import UseTitleName from "../utils/UseTitleName";
 import axios from "axios";
+import { useData } from "../utils/DataContext";
 
 const BrowseGames = () => {
   UseTitleName("Browse Games");
@@ -18,13 +19,7 @@ const BrowseGames = () => {
   const [region, setRegion] = useState("All");
   const [searchValue, setSearchValue] = useState("");
 
-  const [games, setGames] = useState([]);
-
-  useEffect(() => {
-    axios.get("http://localhost:3001/api/games").then((res) => {
-      setGames(res.data?.response || []);
-    });
-  }, []);
+  const { games } = useData();;
 
   return (
     <>

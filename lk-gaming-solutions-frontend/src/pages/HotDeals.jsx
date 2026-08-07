@@ -4,6 +4,7 @@ import FilterSidebar from "../components/filter/FilterSidebar";
 import SortingSelect from "../components/filter/SortingSelect";
 import UseTitleName from "../utils/UseTitleName";
 import axios from "axios";
+import { useData } from "../utils/DataContext";
 
 const HotDeals = () => {
   UseTitleName("Hot Deals");
@@ -14,13 +15,7 @@ const HotDeals = () => {
   const [discount, setDiscount] = useState("All");
   const [price, setPrice] = useState("All");
 
-  const [games, setGames] = useState([]);
-
-  useEffect(() => {
-    axios.get("http://localhost:3001/api/games").then((res) => {
-      setGames(res.data?.response || []);
-    });
-  }, [])
+  const { games } = useData();
 
   return (
     <>

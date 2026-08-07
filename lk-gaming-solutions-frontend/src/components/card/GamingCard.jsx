@@ -343,9 +343,6 @@ const GamingCard = ({
                     src={game.imgUrl}
                     className="img-fluid w-100 h-100"
                     style={{ objectFit: "cover" }}
-                    onError={(e) => {
-                      e.target.style.display = "none";
-                    }}
                   />
                 </div>
                 {game.discount !== 0 && (
