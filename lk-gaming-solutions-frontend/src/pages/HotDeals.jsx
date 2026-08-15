@@ -4,18 +4,37 @@ import FilterSidebar from "../components/filter/FilterSidebar";
 import SortingSelect from "../components/filter/SortingSelect";
 import UseTitleName from "../utils/UseTitleName";
 import axios from "axios";
-import { useData } from "../utils/DataContext";
 
 const HotDeals = () => {
   UseTitleName("Hot Deals");
-  
+
+  const [games, setGames] = useState([]);
+  const [isPendingGames, setIsPendingGames] = useState(true);
+  const [errorGames, setErrorGames] = useState(null);
+
+  const [gamesCount, setGamesCount] = useState(0);
+
   const [sortBy, setSortBy] = useState("name");
-  const [gamesCount, setGamesCount] = useState();
   const [platform, setPlatform] = useState("All");
   const [discount, setDiscount] = useState("All");
   const [price, setPrice] = useState("All");
 
-  const { games } = useData();
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:3001/api/v1/games?platform=${platform}&price=${price}&stock=true&sort=${sortBy}`,
+      )
+      .then((res) => {
+        setGames(res.data?.response || []);
+        setGamesCount(res.data?.gamesCount || 0);
+      })
+      .catch((err) => {
+        setErrorGames(err.message);
+      })
+      .finally(() => {
+        setIsPendingGames(false);
+      });
+  }, [platform, sortBy, price]);
 
   return (
     <>
@@ -133,6 +152,31 @@ const HotDeals = () => {
           letter-spacing: 2px;
         }
 
+        /* Loader */
+        .loader-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 220px;
+        }
+
+        .loader {
+          width: 70px;
+          height: 70px;
+          border: 8px dotted transparent;
+          border-left-color: #BD9B52;
+          border-top-color: #BD9B52;
+          border-right-color: #BD9B52;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
         @media (max-width: 768px) {
           .deals-title {
             font-size: 36px;
@@ -172,25 +216,28 @@ const HotDeals = () => {
 
             {/* Games Grid */}
             <div className="col-lg-9">
-              {/* Sort Bar */}
-              <div className="d-flex justify-content-between align-items-center mb-4">
-                <h5 style={{ color: "#fff", fontWeight: 700, margin: 0 }}>
-                  {gamesCount === 0
-                    ? "No Hot Deals Available"
-                    : `${gamesCount} Hot Deal${gamesCount > 1 ? "s" : ""} Available`}
-                </h5>
-                <SortingSelect sortBy={sortBy} setSortBy={setSortBy} />
-              </div>
+              {isPendingGames ? (
+                <div className="loader-container">
+                  <div className="loader"></div>
+                </div>
+              ) : errorGames ? (
+                <div>Something Went Wrong!</div>
+              ) : (
+                <>
+                  {/* Sort Bar */}
+                  <div className="d-flex justify-content-between align-items-center mb-4">
+                    <h5 style={{ color: "#fff", fontWeight: 700, margin: 0 }}>
+                      {gamesCount === 0
+                        ? "No Hot Deals Available"
+                        : `${gamesCount} Hot Deal${gamesCount > 1 ? "s" : ""} Available`}
+                    </h5>
+                    <SortingSelect sortBy={sortBy} setSortBy={setSortBy} />
+                  </div>
 
-              {/* Games Grid */}
-              <GamingCard
-                card_data={games.filter((g) => g.stock > 0 || g.discount > 0)}
-                setGamesCount={setGamesCount}
-                platform={platform}
-                discount={discount}
-                price={price}
-                sortBy={sortBy}
-              />
+                  {/* Games Grid */}
+                  <GamingCard card_data={games} />
+                </>
+              )}
             </div>
           </div>
         </div>

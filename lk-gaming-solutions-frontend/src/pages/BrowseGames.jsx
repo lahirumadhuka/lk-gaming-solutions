@@ -4,22 +4,40 @@ import FilterSidebar from "../components/filter/FilterSidebar";
 import SortingSelect from "../components/filter/SortingSelect";
 import UseTitleName from "../utils/UseTitleName";
 import axios from "axios";
-import { useData } from "../utils/DataContext";
 
 const BrowseGames = () => {
   UseTitleName("Browse Games");
 
-  const [sortBy, setSortBy] = useState("name");
-  const [gamesCount, setGamesCount] = useState();
+  const [games, setGames] = useState([]);
+  const [isPendingGames, setIsPendingGames] = useState(true);
+  const [errorGames, setErrorGames] = useState(null);
+
+  const [gamesCount, setGamesCount] = useState(0);
+
+  const [sortBy, setSortBy] = useState("title");
   const [isStockAvailable, setIsStockAvailable] = useState("All");
   const [platform, setPlatform] = useState("All");
-  const [discount, setDiscount] = useState("All");
   const [price, setPrice] = useState("All");
   const [genre, setGenre] = useState("All");
   const [region, setRegion] = useState("All");
   const [searchValue, setSearchValue] = useState("");
 
-  const { games } = useData();;
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:3001/api/v1/games?search=${searchValue}&platform=${platform}&genre=${genre}&region=${region}&stock=${isStockAvailable}&price=${price}&sort=${sortBy}`,
+      )
+      .then((res) => {
+        setGames(res.data?.response || []);
+        setGamesCount(res.data?.gamesCount || 0);
+      })
+      .catch((err) => {
+        setErrorGames(err.message);
+      })
+      .finally(() => {
+        setIsPendingGames(false);
+      });
+  }, [searchValue, platform, genre, region, isStockAvailable, sortBy, price]);
 
   return (
     <>
@@ -159,6 +177,31 @@ const BrowseGames = () => {
           color: #5a6270;
         }
 
+        /* Loader */
+        .loader-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 220px;
+        }
+
+        .loader {
+          width: 70px;
+          height: 70px;
+          border: 8px dotted transparent;
+          border-left-color: #BD9B52;
+          border-top-color: #BD9B52;
+          border-right-color: #BD9B52;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
         @media (max-width: 768px) {
           .browse-title {
             font-size: 36px;
@@ -175,8 +218,7 @@ const BrowseGames = () => {
                 <i className="bi bi-grid-3x3-gap-fill me-3"></i>BROWSE GAMES
               </h1>
               <p className="browse-subtitle mb-4 text-center">
-                Discover {games.length} game keys across all platforms from
-                trusted sellers
+                Discover game keys across all platforms from trusted sellers
               </p>
 
               {/* Search Bar */}
@@ -207,8 +249,6 @@ const BrowseGames = () => {
               setPlatform={setPlatform}
               price={price}
               setPrice={setPrice}
-              discount={discount}
-              setDiscount={setDiscount}
               genre={genre}
               setGenre={setGenre}
               region={region}
@@ -217,30 +257,31 @@ const BrowseGames = () => {
 
             {/* Games Grid */}
             <div className="col-lg-9">
-              {/* Sort Bar */}
-              <div className="d-flex justify-content-between align-items-center mb-4">
-                <h5 style={{ color: "#fff", fontWeight: 700, margin: 0 }}>
-                  {gamesCount === 0
-                    ? "No Games Found"
-                    : `${gamesCount} Game${gamesCount > 1 ? "s" : ""} Found`}
-                </h5>
-                <SortingSelect sortBy={sortBy} setSortBy={setSortBy} />
-              </div>
+              {isPendingGames ? (
+                <div className="loader-container">
+                  <div className="loader"></div>
+                </div>
+              ) : errorGames ? (
+                <div>Something Went Wrong!</div>
+              ) : (
+                <>
+                  {/* Sort Bar */}
+                  <div className="d-flex justify-content-between align-items-center mb-4">
+                    <h5 style={{ color: "#fff", fontWeight: 700, margin: 0 }}>
+                      {gamesCount === 0
+                        ? "No Games Found"
+                        : `${gamesCount} Game${gamesCount > 1 ? "s" : ""} Found`}
+                    </h5>
+                    <SortingSelect sortBy={sortBy} setSortBy={setSortBy} />
+                  </div>
 
-              {/* Games Grid */}
-              <GamingCard
-                card_data={games}
-                card_icon={"bi-grid-3x3-gap-fill"}
-                setGamesCount={setGamesCount}
-                isStockAvailable={isStockAvailable}
-                platform={platform}
-                price={price}
-                discount={discount}
-                genre={genre}
-                region={region}
-                sortBy={sortBy}
-                searchValue={searchValue}
-              />
+                  {/* Games Grid */}
+                  <GamingCard
+                    card_data={games}
+                    card_icon={"bi-grid-3x3-gap-fill"}
+                  />
+                </>
+              )}
             </div>
           </div>
         </div>

@@ -6,6 +6,7 @@ const SectionCard = ({
   section_title,
   section_icon,
   section_link,
+  isPendingGames,
 }) => {
   // Filter Data by Section Type
   const sectionDataType =
@@ -304,128 +305,141 @@ const SectionCard = ({
             )}
           </div>
           <div className="row g-4">
-            {sectionDataType.slice(0, 8).map((game, index) => (
-              <div key={index} className="col-lg-3 col-md-6">
-                <div className="game-card">
-                  <div style={{ position: "relative" }}>
-                    <div
-                      className={`game-img ${game.platform.toLowerCase().replace(/\//g, " ")}`}
-                      style={{ aspectRatio: "4/3" }}
-                    >
-                      <img
-                        src={game.imgUrl}
-                        className="img-fluid w-100 h-100"
-                        style={{ objectFit: "cover" }}
-                      />
-                    </div>
-                    {game.discount !== 0 && (
-                      <span className="discount-badge">-{game.discount}%</span>
-                    )}
-                    <span
-                      className={`stock-badge ${game.stock === 0 ? "bg-danger" : "bg-success"}`}
-                    >
-                      {game.stock === 0
-                        ? `Out of stock`
-                        : `${game.stock} in stock`}
-                    </span>
-                  </div>
-                  <div className="p-3">
-                    <h5
-                      style={{
-                        color: "#fff",
-                        fontWeight: 700,
-                        fontSize: "18px",
-                        marginBottom: "8px",
-                      }}
-                    >
-                      {game.title}
-                    </h5>
-                    <div className="mb-2 d-flex gap-2 align-items-center flex-wrap">
-                      <span
-                        className={`platform-badge ${game.platform.toLowerCase().replace(/\//g, " ")}`}
-                      >
-                        {game.platform}
-                      </span>
-                      <span
-                        style={{
-                          display: "inline-block",
-                          background: "rgba(189, 155, 82, 0.15)",
-                          border: "1px solid rgba(189, 155, 82, 0.3)",
-                          color: "#BD9B52",
-                          fontSize: "10px",
-                          padding: "3px 8px",
-                          borderRadius: "4px",
-                          fontWeight: 600,
-                          letterSpacing: "0.5px",
-                        }}
-                      >
-                        {game.genre}
-                      </span>
-                      <span
-                        style={{
-                          color: "#8b95a5",
-                          fontSize: "10px",
-                          fontWeight: 600,
-                        }}
-                      >
-                        {game.region}
-                      </span>
-                    </div>
-                    <div className="seller-info mb-2">
-                      <i className="bi bi-person-check verified-seller me-1"></i>
-                      Sold by:{" "}
-                      <span style={{ color: "#BD9B52" }}>{game.seller}</span>
-                    </div>
-                    <div className="rating-stars mb-3">
-                      {[...Array(5)].map((_, i) => (
-                        <i
-                          key={i}
-                          className={`bi bi-star${i < Math.floor(game.rating) ? "-fill" : ""}`}
-                        ></i>
-                      ))}
-                      <span
-                        style={{
-                          color: "#8b95a5",
-                          fontSize: "13px",
-                          marginLeft: "8px",
-                        }}
-                      >
-                        ({game.rating})
-                      </span>
-                    </div>
-                    <div className="d-flex align-items-center justify-content-between mb-3">
-                      <div>
-                        <div className="price-tag">
-                          LKR{" "}
-                          {(game.discount > 0
-                            ? game.price - (game.price * game.discount) / 100
-                            : game.price
-                          ).toFixed(2)}
+            {isPendingGames ? (
+              <div className="loader-container">
+                <div className="loader"></div>
+              </div>
+            ) : (
+              <>
+                {sectionDataType.slice(0, 8).map((game, index) => (
+                  <div key={index} className="col-lg-3 col-md-6">
+                    <div className="game-card">
+                      <div style={{ position: "relative" }}>
+                        <div
+                          className={`game-img ${game.platform.toLowerCase().replace(/\//g, " ")}`}
+                          style={{ aspectRatio: "4/3" }}
+                        >
+                          <img
+                            src={game.imgUrl}
+                            className="img-fluid w-100 h-100"
+                            style={{ objectFit: "cover" }}
+                          />
                         </div>
-                        {game.discount > 0 && (
-                          <div
-                            className="old-price"
-                            style={{ color: "#8b95a5" }}
-                          >
-                            LKR {game.price.toFixed(2)}
-                          </div>
+                        {game.discount !== 0 && (
+                          <span className="discount-badge">
+                            -{game.discount}%
+                          </span>
                         )}
+                        <span
+                          className={`stock-badge ${game.stock === 0 ? "bg-danger" : "bg-success"}`}
+                        >
+                          {game.stock === 0
+                            ? `Out of stock`
+                            : `${game.stock} in stock`}
+                        </span>
+                      </div>
+                      <div className="p-3">
+                        <h5
+                          style={{
+                            color: "#fff",
+                            fontWeight: 700,
+                            fontSize: "18px",
+                            marginBottom: "8px",
+                          }}
+                        >
+                          {game.title}
+                        </h5>
+                        <div className="mb-2 d-flex gap-2 align-items-center flex-wrap">
+                          <span
+                            className={`platform-badge ${game.platform.toLowerCase().replace(/\//g, " ")}`}
+                          >
+                            {game.platform}
+                          </span>
+                          <span
+                            style={{
+                              display: "inline-block",
+                              background: "rgba(189, 155, 82, 0.15)",
+                              border: "1px solid rgba(189, 155, 82, 0.3)",
+                              color: "#BD9B52",
+                              fontSize: "10px",
+                              padding: "3px 8px",
+                              borderRadius: "4px",
+                              fontWeight: 600,
+                              letterSpacing: "0.5px",
+                            }}
+                          >
+                            {game.genre}
+                          </span>
+                          <span
+                            style={{
+                              color: "#8b95a5",
+                              fontSize: "10px",
+                              fontWeight: 600,
+                            }}
+                          >
+                            {game.region}
+                          </span>
+                        </div>
+                        <div className="seller-info mb-2">
+                          <i className="bi bi-person-check verified-seller me-1"></i>
+                          Sold by:{" "}
+                          <span style={{ color: "#BD9B52" }}>
+                            {game.seller}
+                          </span>
+                        </div>
+                        <div className="rating-stars mb-3">
+                          {[...Array(5)].map((_, i) => (
+                            <i
+                              key={i}
+                              className={`bi bi-star${i < Math.floor(game.rating) ? "-fill" : ""}`}
+                            ></i>
+                          ))}
+                          <span
+                            style={{
+                              color: "#8b95a5",
+                              fontSize: "13px",
+                              marginLeft: "8px",
+                            }}
+                          >
+                            ({game.rating})
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-between mb-3">
+                          <div>
+                            <div className="price-tag">
+                              LKR{" "}
+                              {(game.discount > 0
+                                ? game.price -
+                                  (game.price * game.discount) / 100
+                                : game.price
+                              ).toFixed(2)}
+                            </div>
+                            {game.discount > 0 && (
+                              <div
+                                className="old-price"
+                                style={{ color: "#8b95a5" }}
+                              >
+                                LKR {game.price.toFixed(2)}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className="d-flex gap-2">
+                          <button
+                            className="btn btn-gaming flex-grow-1"
+                            style={{ padding: "10px", fontSize: "13px" }}
+                            disabled={game.stock === 0}
+                          >
+                            <i className="bi bi-cart-plus me-1"></i>
+                            Add to Cart
+                          </button>
+                        </div>
                       </div>
                     </div>
-                    <div className="d-flex gap-2">
-                      <button
-                        className="btn btn-gaming flex-grow-1"
-                        style={{ padding: "10px", fontSize: "13px" }}
-                        disabled={game.stock === 0}
-                      >
-                        <i className="bi bi-cart-plus me-1"></i>
-                        Add to Cart
-                      </button>
-                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                ))}
+              </>
+            )}
           </div>
         </div>
       </section>

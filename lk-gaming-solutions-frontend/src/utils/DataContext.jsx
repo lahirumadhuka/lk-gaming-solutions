@@ -19,7 +19,7 @@ export const DataProvider = ({ children }) => {
   // Get data from APIs
   const getGames = () => {
     axios
-      .get("http://localhost:3001/api/games")
+      .get("http://localhost:3001/api/v1/games")
       .then((res) => {
         setGames(res.data?.response || []);
         setErrorGames(null);

@@ -230,28 +230,28 @@ const FilterSidebar = ({
             All Prices
           </button>
           <button
-            className={`filter-option ${price[0] === 0 && price[1] === 10 ? "active" : ""}`}
-            onClick={() => setPrice([0, 10])}
+            className={`filter-option ${price[0] === 0 && price[1] === 1000 ? "active" : ""}`}
+            onClick={() => setPrice([0, 1000])}
           >
-            Under $10
+            Under LKR 1000
           </button>
           <button
-            className={`filter-option ${price[0] === 10 && price[1] === 30 ? "active" : ""}`}
-            onClick={() => setPrice([10, 30])}
+            className={`filter-option ${price[0] === 1000 && price[1] === 10000 ? "active" : ""}`}
+            onClick={() => setPrice([1000, 10000])}
           >
-            $10 - $30
+            LKR 1000 - LKR 10000
           </button>
           <button
-            className={`filter-option ${price[0] === 30 && price[1] === 50 ? "active" : ""}`}
-            onClick={() => setPrice([30, 50])}
+            className={`filter-option ${price[0] === 10000 && price[1] === 30000 ? "active" : ""}`}
+            onClick={() => setPrice([10000, 30000])}
           >
-            $30 - $50
+            LKR 10000 - LKR 30000
           </button>
           <button
-            className={`filter-option ${price === 50 ? "active" : ""}`}
-            onClick={() => setPrice(50)}
+            className={`filter-option ${price === 30000 ? "active" : ""}`}
+            onClick={() => setPrice(30000)}
           >
-            Over $50
+            Over LKR 30000
           </button>
         </div>
 
