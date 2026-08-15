@@ -3,13 +3,43 @@ import SectionCard from "../components/card/SectionCard";
 import UseTitleName from "../utils/UseTitleName";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useData } from "../utils/DataContext";
 
 const Home = () => {
   UseTitleName("");
-
   const navigate = useNavigate();
-  const { games } = useData();
+
+  const [featuredGames, setFeaturedGames] = useState([]);
+  const [hotDeals, setHotDeals] = useState([]);
+  const [psGames, setPSGames] = useState([]);
+  const [xboxGames, setXboxGames] = useState([]);
+  const [pcGames, setPCGames] = useState([]);
+
+  const [isPendingGames, setIsPendingGames] = useState(true);
+  const [errorGames, setErrorGames] = useState(null);
+  const [gamesCount, setGamesCount] = useState(0);
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:3001/api/v1/games/section?sort=title`,
+      )
+      .then((res) => {
+        setFeaturedGames(res.data?.response.featuredGames || []);
+        setHotDeals(res.data?.response.hotDeals || []);
+        setPSGames(res.data?.response.psGames || []);
+        setXboxGames(res.data?.response.xboxGames || []);
+        setPCGames(res.data?.response.pcGames || []);
+
+        setGamesCount(res.data?.gamesCount || 0);
+        setErrorGames(null);
+      })
+      .catch((err) => {
+        setErrorGames(err.message);
+      })
+      .finally(() => {
+        setIsPendingGames(false);
+      });
+  }, []);
 
   return (
     <>
@@ -211,6 +241,31 @@ const Home = () => {
           color: #5a6270;
         }
 
+        /* Loader */
+        .loader-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 220px;
+        }
+
+        .loader {
+          width: 70px;
+          height: 70px;
+          border: 8px dotted transparent;
+          border-left-color: #BD9B52;
+          border-top-color: #BD9B52;
+          border-right-color: #BD9B52;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
         @media (max-width: 768px) {
           .hero-title {
             font-size: 42px;
@@ -259,7 +314,7 @@ const Home = () => {
               <div className="row g-3">
                 <div className="col-md-6">
                   <div className="stat-card">
-                    <div className="stat-number">50K+</div>
+                    <div className="stat-number">{gamesCount}</div>
                     <div className="stat-label">Games Available</div>
                   </div>
                 </div>
@@ -289,46 +344,51 @@ const Home = () => {
 
       {/* Featured Games Section */}
       <SectionCard
-        section_data={games.filter((g) => g.stock > 0)}
+        section_data={featuredGames}
         section_title={"Featured Games"}
         section_icon={"bi-star-fill"}
         section_style={"#ffd700"}
+        isPendingGames={isPendingGames}
       />
 
       {/* Hot Deals Section */}
       <SectionCard
-        section_data={games.filter((g) => g.stock > 0 || g.discount > 0)}
+        section_data={hotDeals}
         section_title={"Hot Deals"}
         section_icon={"bi-fire"}
         section_style={"#ff0080"}
         section_link={"/hot-deals"}
+        isPendingGames={isPendingGames}
       />
 
       {/* Play Station Section */}
       <SectionCard
-        section_data={games.filter((g) => g.stock > 0)}
+        section_data={psGames}
         section_title={"Play Station"}
         section_icon={"bi-playstation"}
         section_style={"#0059B4"}
         section_link={"/play-station"}
+        isPendingGames={isPendingGames}
       />
 
       {/* Xbox Section */}
       <SectionCard
-        section_data={games.filter((g) => g.stock > 0)}
+        section_data={xboxGames}
         section_title={"Xbox"}
         section_icon={"bi-xbox"}
         section_style={"#0F730F"}
         section_link={"/xbox"}
+        isPendingGames={isPendingGames}
       />
 
       {/* PC Section */}
       <SectionCard
-        section_data={games.filter((g) => g.stock > 0)}
+        section_data={pcGames}
         section_title={"PC"}
         section_icon={"bi-pc-display"}
         section_style={"#FF0000"}
         section_link={"/pc"}
+        isPendingGames={isPendingGames}
       />
 
       {/* Why Choose Us Section */}

@@ -1,108 +1,19 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
-const GamingCard = ({
-  card_data,
-  pathname,
-  setGamesPlatformCount,
-  setGamesCount,
-  isStockAvailable = "All",
-  platform,
-  discount = "All",
-  price = "All",
-  genre = "All",
-  region = "All",
-  sortBy,
-  searchValue = "",
-}) => {
-  // Filter Platform Type
-  const gamePlatformType = card_data.filter((game) => {
-    const platform = game.platform.toLowerCase();
-
-    return pathname === "PlayStation"
-      ? platform.includes("ps")
-      : pathname === "Xbox"
-        ? platform.includes("xbox")
-        : pathname === "PC"
-          ? !platform.includes("ps") && !platform.includes("xbox")
-          : true;
-  });
-
-  useEffect(() => {
-    setGamesPlatformCount && setGamesPlatformCount(gamePlatformType.length);
-  }, [gamePlatformType]);
-
-  // Filter games
-  const games = gamePlatformType
-    .filter(
-      (c) =>
-        isStockAvailable === "All" ||
-        (isStockAvailable === true && c.stock > 0) ||
-        (isStockAvailable === false && c.stock === 0),
-    )
-    .filter((c) => platform === "All" || c.platform === platform)
-    .filter(
-      (c) =>
-        discount === "All" ||
-        c.discount >= discount ||
-        (c.discount >= discount[0] && c.discount < discount[1]),
-    )
-    .filter(
-      (c) =>
-        price === "All" ||
-        c.price >= price ||
-        (c.price >= price[0] && c.price < price[1]),
-    )
-    .filter((c) => genre === "All" || c.genre === genre)
-    .filter((c) => region === "All" || c.region === region)
-    .filter(
-      (c) =>
-        searchValue === "" ||
-        c.title.toLowerCase().includes(searchValue.toLowerCase()) ||
-        c.genre.toLowerCase().includes(searchValue.toLowerCase()) ||
-        c.platform.toLowerCase().includes(searchValue.toLowerCase()),
-    )
-    .sort((a, b) => {
-      if (sortBy === "name") {
-        return a.title.localeCompare(b.title);
-      }
-
-      if (sortBy === "price-low") {
-        return a.price - b.price;
-      }
-
-      if (sortBy === "price-high") {
-        return b.price - a.price;
-      }
-
-      if (sortBy === "discount") {
-        return b.discount - a.discount;
-      }
-
-      if (sortBy === "rating") {
-        return parseFloat(b.rating) - parseFloat(a.rating);
-      }
-
-      return 0;
-    });
-
-  // Get games count
-  useEffect(() => {
-    setGamesCount(games.length);
-  }, [games, setGamesCount]);
-
+const GamingCard = ({ card_data, pathname }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 12;
   const lastIndex = currentPage * postsPerPage;
   const firstIndex = lastIndex - postsPerPage;
-  const currentGames = games.slice(firstIndex, lastIndex);
-  const npage = Math.ceil(games.length / postsPerPage);
+  const currentGames = card_data.slice(firstIndex, lastIndex);
+  const npage = Math.ceil(card_data.length / postsPerPage);
   const numbers = [...Array(npage).keys()].map((n) => n + 1);
 
   // Reset page when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [platform, price, genre, region, discount, searchValue]);
+  }, []);
 
   // Pagination Buttons Functions
   const prePage = () => {
@@ -331,7 +242,7 @@ const GamingCard = ({
       `}</style>
 
       <div className="row g-4">
-        {currentGames.map((game, index) => (
+        {card_data.map((game, index) => (
           <div key={index} className="col-lg-4 col-md-6">
             <div className="game-card">
               <div style={{ position: "relative" }}>
@@ -450,7 +361,7 @@ const GamingCard = ({
         ))}
 
         {/* Pagination */}
-        {games.length > 0 && (
+        {card_data.length > 0 && (
           <div className="d-flex justify-content-center mt-5">
             <nav>
               <ul className="pagination">

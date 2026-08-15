@@ -5,14 +5,15 @@ import SortingSelect from "../components/filter/SortingSelect";
 import UseTitleName from "../utils/UseTitleName";
 import { useEffect } from "react";
 import axios from "axios";
-import { useData } from "../utils/DataContext";
 
 const Games = ({ pathname }) => {
-  const { games } = useData();
+  const [games, setGames] = useState([]);
+  const [isPendingGames, setIsPendingGames] = useState(true);
+  const [errorGames, setErrorGames] = useState(null);
 
-  const [sortBy, setSortBy] = useState("name");
-  const [gamesPlatformCount, setGamesPlatformCount] = useState();
-  const [gamesCount, setGamesCount] = useState();
+  const [gamesCount, setGamesCount] = useState(0);
+
+  const [sortBy, setSortBy] = useState("title");
   const [isStockAvailable, setIsStockAvailable] = useState("All");
   const [platform, setPlatform] = useState("All");
   const [price, setPrice] = useState("All");
@@ -22,13 +23,36 @@ const Games = ({ pathname }) => {
   UseTitleName(pathname);
 
   useEffect(() => {
-    setSortBy("name");
+    setSortBy("title");
     setIsStockAvailable("All");
     setPlatform("All");
     setPrice("All");
     setGenre("All");
     setRegion("All");
+
+    setGamesCount(0);
+    setGames([]);
+    setIsPendingGames(true);
+    setErrorGames(null);
   }, [pathname]);
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:3001/api/v1/games?category=${pathname}&platform=${platform}&genre=${genre}&region=${region}&stock=${isStockAvailable}&price=${price}&sort=${sortBy}`,
+      )
+      .then((res) => {
+        setGames(res.data?.response || []);
+        setGamesCount(res.data?.gamesCount || 0);
+        setErrorGames(null);
+      })
+      .catch((err) => {
+        setErrorGames(err.message);
+      })
+      .finally(() => {
+        setIsPendingGames(false);
+      });
+  }, [pathname, platform, genre, region, isStockAvailable, sortBy, price]);
 
   return (
     <>
@@ -183,6 +207,31 @@ const Games = ({ pathname }) => {
           letter-spacing: 2px;
         }
 
+        /* Loader */
+        .loader-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 220px;
+        }
+
+        .loader {
+          width: 70px;
+          height: 70px;
+          border: 8px dotted transparent;
+          border-left-color: #BD9B52;
+          border-top-color: #BD9B52;
+          border-right-color: #BD9B52;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
         @media (max-width: 768px) {
           .games-title {
             font-size: 36px;
@@ -204,8 +253,7 @@ const Games = ({ pathname }) => {
                 {pathname}
               </h1>
               <p className="games-subtitle mb-0">
-                Browse verified {gamesPlatformCount} {pathname} game keys from
-                trusted sellers
+                Browse verified {pathname} game keys from trusted sellers
               </p>
             </div>
           </div>
@@ -232,29 +280,28 @@ const Games = ({ pathname }) => {
 
             {/* Games Grid */}
             <div className="col-lg-9">
-              {/* Sort Bar */}
-              <div className="d-flex justify-content-between align-items-center mb-4">
-                <h5 style={{ color: "#fff", fontWeight: 700, margin: 0 }}>
-                  {gamesCount === 0
-                    ? "No Games Found"
-                    : `${gamesCount} Game${gamesCount > 1 ? "s" : ""} Found`}
-                </h5>
-                <SortingSelect sortBy={sortBy} setSortBy={setSortBy} />
-              </div>
+              {isPendingGames ? (
+                <div className="loader-container">
+                  <div className="loader"></div>
+                </div>
+              ) : errorGames ? (
+                <div>Something Went Wrong!</div>
+              ) : (
+                <>
+                  {/* Sort Bar */}
+                  <div className="d-flex justify-content-between align-items-center mb-4">
+                    <h5 style={{ color: "#fff", fontWeight: 700, margin: 0 }}>
+                      {gamesCount === 0
+                        ? "No Games Found"
+                        : `${gamesCount} Game${gamesCount > 1 ? "s" : ""} Found`}
+                    </h5>
+                    <SortingSelect sortBy={sortBy} setSortBy={setSortBy} />
+                  </div>
 
-              {/* Games Grid */}
-              <GamingCard
-                card_data={games}
-                pathname={pathname}
-                setGamesPlatformCount={setGamesPlatformCount}
-                setGamesCount={setGamesCount}
-                isStockAvailable={isStockAvailable}
-                platform={platform}
-                price={price}
-                genre={genre}
-                region={region}
-                sortBy={sortBy}
-              />
+                  {/* Games Grid */}
+                  <GamingCard card_data={games} pathname={pathname} />
+                </>
+              )}
             </div>
           </div>
         </div>

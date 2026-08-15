@@ -15,6 +15,7 @@ const PORT = process.env.PORT || 8000;
 const HOST = process.env.HOST;
 const MONGOURL = process.env.MONGO_URL;
 
+//Database Connection
 mongoose
   .connect(MONGOURL)
   .then(() => {
@@ -24,7 +25,7 @@ mongoose
     });
   })
   .catch((error) => {
-    console.log(error);
+    console.log("Error while connecting to database: " + error);
   });
 
 // Routes
@@ -32,4 +33,4 @@ app.get("/", (req, res) => {
   res.send("LK Gaming Solutions Server Updated");
 });
 
-app.use("/api/games", gameRoutes);
+app.use("/api/v1/games", gameRoutes);

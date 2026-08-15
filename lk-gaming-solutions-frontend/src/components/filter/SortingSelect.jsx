@@ -53,11 +53,11 @@ const SortingSelect = ({ sortBy, setSortBy }) => {
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
           >
-            <option value="name">Name: A to Z</option>
-            <option value="price-low">Price: Low to High</option>
-            <option value="price-high">Price: High to Low</option>
-            <option value="discount">Biggest Discount</option>
-            <option value="rating">Highest Rated</option>
+            <option value="title">Name: A to Z</option>
+            <option value="price">Price: Low to High</option>
+            <option value="-price">Price: High to Low</option>
+            <option value="-discount">Biggest Discount</option>
+            <option value="-rating">Highest Rated</option>
           </select>
           <i className="bi bi-chevron-down"></i>
         </div>
