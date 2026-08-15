@@ -2,7 +2,17 @@ const GameModel = require("../model/game_model");
 
 const getGames = async (req, res) => {
   try {
-    const { price, stock, region, genre, platform, search, sort, category } = req.query;
+    const {
+      price,
+      discount,
+      stock,
+      region,
+      genre,
+      platform,
+      search,
+      sort,
+      category,
+    } = req.query;
     const queryObject = {};
 
     // Filter by category
@@ -19,31 +29,55 @@ const getGames = async (req, res) => {
         $not: {
           $regex: "xbox|ps",
           $options: "i",
-        }
+        },
       };
     }
 
     // Filter by price
+    // Discounted price
+    const discountedPrice = {
+      $subtract: [
+        "$price",
+        {
+          $multiply: ["$price", { $divide: ["$discount", 100] }],
+        },
+      ],
+    };
+
     if (price && price !== "All") {
       const priceRange = price.split(",");
 
-      queryObject.price = {
-        $gte: Number(priceRange[0]),
-        $lte: Number(priceRange[1]),
+      queryObject.$expr = {
+        $and: [
+          { $gte: [discountedPrice, Number(priceRange[0])] },
+          { $lte: [discountedPrice, Number(priceRange[1])] },
+        ],
       };
     }
 
-    if (price && price !== "All" && price >= 30000) {
-      queryObject.price = { $gte: Number(price) };
+    if (price && price !== "All" && price === "30000") {
+      queryObject.$expr = {
+        $gte: [discountedPrice, Number(price)],
+      };
+    }
+
+    // Filter by discount
+    if (discount && discount !== "All") {
+      const discountRange = discount.split(",");
+
+      queryObject.discount = {
+        $gte: Number(discountRange[0]),
+        $lte: Number(discountRange[1]),
+      };
+    }
+
+    if (discount && discount !== "All" && discount === "70") {
+      queryObject.discount = { $gte: Number(discount) };
     }
 
     // Filter by stock
-    if (stock && stock !== "All" && stock === "true") {
-      queryObject.stock = { $gt: 0 };
-    }
-
-    if (stock && stock !== "All" && stock === "false") {
-      queryObject.stock = { $eq: 0 };
+    if (stock && stock !== "All") {
+      queryObject.stock = stock === "true" ? { $gt: 0 } : { $eq: 0 };
     }
 
     // Filter by region
@@ -79,6 +113,21 @@ const getGames = async (req, res) => {
 
     const games = await results;
 
+    // Sort by discounted price
+    if (sort === "price") {
+      games.sort(
+        (a, b) =>
+          a.price * (1 - a.discount / 100) - b.price * (1 - b.discount / 100),
+      );
+    }
+
+    if (sort === "-price") {
+      games.sort(
+        (a, b) =>
+          b.price * (1 - b.discount / 100) - a.price * (1 - a.discount / 100),
+      );
+    }
+
     res.status(200).json({ gamesCount: games.length, response: games });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error!" });
@@ -87,35 +136,8 @@ const getGames = async (req, res) => {
 
 const getSectionGames = async (req, res) => {
   try {
-    const { stock, sort, category } = req.query;
+    const { sort } = req.query;
     const queryObject = {};
-
-    // Filter by category
-    if (category === "PlayStation") {
-      queryObject.platform = { $regex: "ps", $options: "i" };
-    }
-
-    if (category === "Xbox") {
-      queryObject.platform = { $regex: "xbox", $options: "i" };
-    }
-
-    if (category === "PC") {
-      queryObject.platform = {
-        $not: {
-          $regex: "xbox|ps",
-          $options: "i",
-        }
-      };
-    }
-
-    // Filter by stock
-    if (stock && stock !== "All" && stock === "true") {
-      queryObject.stock = { $gt: 0 };
-    }
-
-    if (stock && stock !== "All" && stock === "false") {
-      queryObject.stock = { $eq: 0 };
-    }
 
     let results = GameModel.find(queryObject);
 
@@ -124,9 +146,35 @@ const getSectionGames = async (req, res) => {
       results.sort(sort.split(",").join(" "));
     }
 
-    const games = await results;
+    const sections = await results;
+    let games = {};
 
-    res.status(200).json({ gamesCount: games.length, response: games });
+    games.featuredGames = sections
+      .filter((g) => g.stock > 0)
+      .sort((a, b) => b.rating - a.rating)
+      .slice(0, 8);
+    games.hotDeals = sections
+      .filter((g) => g.stock > 0)
+      .sort((a, b) => b.discount - a.discount)
+      .slice(0, 8);
+    games.psGames = sections
+      .filter((g) => g.stock > 0 && g.platform.toLowerCase().includes("ps"))
+      .slice(0, 8);
+    games.xboxGames = sections
+      .filter((g) => g.stock > 0 && g.platform.toLowerCase().includes("xbox"))
+      .sort((a, b) => b.rating - a.rating)
+      .slice(0, 8);
+    games.pcGames = sections
+      .filter(
+        (g) =>
+          g.stock > 0 &&
+          !g.platform.toLowerCase().includes("ps") &&
+          !g.platform.toLowerCase().includes("xbox"),
+      )
+      .sort((a, b) => b.rating - a.rating)
+      .slice(0, 8);
+
+    res.status(200).json({ gamesCount: sections.length, response: games });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error!" });
   }
@@ -183,6 +231,7 @@ const deleteGame = async (req, res) => {
 
 module.exports = {
   getGames,
+  getSectionGames,
   getGame,
   createGame,
   updateGame,

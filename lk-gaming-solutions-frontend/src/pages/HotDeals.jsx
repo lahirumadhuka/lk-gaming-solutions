@@ -14,7 +14,7 @@ const HotDeals = () => {
 
   const [gamesCount, setGamesCount] = useState(0);
 
-  const [sortBy, setSortBy] = useState("name");
+  const [sortBy, setSortBy] = useState("title");
   const [platform, setPlatform] = useState("All");
   const [discount, setDiscount] = useState("All");
   const [price, setPrice] = useState("All");
@@ -22,11 +22,12 @@ const HotDeals = () => {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:3001/api/v1/games?platform=${platform}&price=${price}&stock=true&sort=${sortBy}`,
+        `http://localhost:3001/api/v1/games?platform=${platform}&price=${price}&stock=true&discount=${discount}&sort=${sortBy}`,
       )
       .then((res) => {
         setGames(res.data?.response || []);
         setGamesCount(res.data?.gamesCount || 0);
+        setErrorGames(null);
       })
       .catch((err) => {
         setErrorGames(err.message);
@@ -34,7 +35,7 @@ const HotDeals = () => {
       .finally(() => {
         setIsPendingGames(false);
       });
-  }, [platform, sortBy, price]);
+  }, [platform, sortBy, price, discount]);
 
   return (
     <>

@@ -44,6 +44,7 @@ const Games = ({ pathname }) => {
       .then((res) => {
         setGames(res.data?.response || []);
         setGamesCount(res.data?.gamesCount || 0);
+        setErrorGames(null);
       })
       .catch((err) => {
         setErrorGames(err.message);

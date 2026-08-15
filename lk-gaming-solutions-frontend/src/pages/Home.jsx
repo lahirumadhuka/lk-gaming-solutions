@@ -8,7 +8,12 @@ const Home = () => {
   UseTitleName("");
   const navigate = useNavigate();
 
-  const [games, setGames] = useState([]);
+  const [featuredGames, setFeaturedGames] = useState([]);
+  const [hotDeals, setHotDeals] = useState([]);
+  const [psGames, setPSGames] = useState([]);
+  const [xboxGames, setXboxGames] = useState([]);
+  const [pcGames, setPCGames] = useState([]);
+
   const [isPendingGames, setIsPendingGames] = useState(true);
   const [errorGames, setErrorGames] = useState(null);
   const [gamesCount, setGamesCount] = useState(0);
@@ -16,11 +21,17 @@ const Home = () => {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:3001/api/v1/games?stock=true&sort=title`,
+        `http://localhost:3001/api/v1/games/section?sort=title`,
       )
       .then((res) => {
-        setGames(res.data?.response || []);
+        setFeaturedGames(res.data?.response.featuredGames || []);
+        setHotDeals(res.data?.response.hotDeals || []);
+        setPSGames(res.data?.response.psGames || []);
+        setXboxGames(res.data?.response.xboxGames || []);
+        setPCGames(res.data?.response.pcGames || []);
+
         setGamesCount(res.data?.gamesCount || 0);
+        setErrorGames(null);
       })
       .catch((err) => {
         setErrorGames(err.message);
@@ -333,7 +344,7 @@ const Home = () => {
 
       {/* Featured Games Section */}
       <SectionCard
-        section_data={games}
+        section_data={featuredGames}
         section_title={"Featured Games"}
         section_icon={"bi-star-fill"}
         section_style={"#ffd700"}
@@ -342,7 +353,7 @@ const Home = () => {
 
       {/* Hot Deals Section */}
       <SectionCard
-        section_data={games.filter((g) => g.discount > 0)}
+        section_data={hotDeals}
         section_title={"Hot Deals"}
         section_icon={"bi-fire"}
         section_style={"#ff0080"}
@@ -352,7 +363,7 @@ const Home = () => {
 
       {/* Play Station Section */}
       <SectionCard
-        section_data={games}
+        section_data={psGames}
         section_title={"Play Station"}
         section_icon={"bi-playstation"}
         section_style={"#0059B4"}
@@ -362,7 +373,7 @@ const Home = () => {
 
       {/* Xbox Section */}
       <SectionCard
-        section_data={games}
+        section_data={xboxGames}
         section_title={"Xbox"}
         section_icon={"bi-xbox"}
         section_style={"#0F730F"}
@@ -372,7 +383,7 @@ const Home = () => {
 
       {/* PC Section */}
       <SectionCard
-        section_data={games}
+        section_data={pcGames}
         section_title={"PC"}
         section_icon={"bi-pc-display"}
         section_style={"#FF0000"}

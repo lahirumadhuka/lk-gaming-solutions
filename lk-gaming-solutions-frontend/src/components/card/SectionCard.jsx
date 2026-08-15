@@ -8,24 +8,6 @@ const SectionCard = ({
   section_link,
   isPendingGames,
 }) => {
-  // Filter Data by Section Type
-  const sectionDataType =
-    section_title === "Featured Games"
-      ? section_data.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating))
-      : section_title === "Hot Deals"
-        ? section_data.sort((a, b) => b.discount - a.discount)
-        : section_data.filter((game) => {
-            const platform = game.platform.toLowerCase();
-
-            return section_title === "Play Station"
-              ? platform.includes("ps")
-              : section_title === "Xbox"
-                ? platform.includes("xbox")
-                : section_title === "PC"
-                  ? !platform.includes("ps") && !platform.includes("xbox")
-                  : true;
-          });
-
   return (
     <>
       <style>{`
@@ -311,7 +293,7 @@ const SectionCard = ({
               </div>
             ) : (
               <>
-                {sectionDataType.slice(0, 8).map((game, index) => (
+                {section_data.map((game, index) => (
                   <div key={index} className="col-lg-3 col-md-6">
                     <div className="game-card">
                       <div style={{ position: "relative" }}>
