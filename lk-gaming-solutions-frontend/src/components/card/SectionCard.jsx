@@ -391,8 +391,7 @@ const SectionCard = ({
                             <div className="price-tag">
                               LKR{" "}
                               {(game.discount > 0
-                                ? game.price -
-                                  (game.price * game.discount) / 100
+                                ? game.price * (1 - game.discount / 100)
                                 : game.price
                               ).toFixed(2)}
                             </div>
