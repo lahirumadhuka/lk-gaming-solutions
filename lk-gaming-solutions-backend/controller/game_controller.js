@@ -162,7 +162,6 @@ const getSectionGames = async (req, res) => {
       .slice(0, 8);
     games.xboxGames = sections
       .filter((g) => g.stock > 0 && g.platform.toLowerCase().includes("xbox"))
-      .sort((a, b) => b.rating - a.rating)
       .slice(0, 8);
     games.pcGames = sections
       .filter(
@@ -171,7 +170,6 @@ const getSectionGames = async (req, res) => {
           !g.platform.toLowerCase().includes("ps") &&
           !g.platform.toLowerCase().includes("xbox"),
       )
-      .sort((a, b) => b.rating - a.rating)
       .slice(0, 8);
 
     res.status(200).json({ gamesCount: sections.length, response: games });

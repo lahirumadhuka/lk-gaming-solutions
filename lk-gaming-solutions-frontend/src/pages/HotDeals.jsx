@@ -4,6 +4,8 @@ import FilterSidebar from "../components/filter/FilterSidebar";
 import SortingSelect from "../components/filter/SortingSelect";
 import UseTitleName from "../utils/UseTitleName";
 import axios from "axios";
+import Pending from "../components/status/Pending";
+import Error from "../components/status/Error";
 
 const HotDeals = () => {
   UseTitleName("Hot Deals");
@@ -153,31 +155,6 @@ const HotDeals = () => {
           letter-spacing: 2px;
         }
 
-        /* Loader */
-        .loader-container {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          min-height: 220px;
-        }
-
-        .loader {
-          width: 70px;
-          height: 70px;
-          border: 8px dotted transparent;
-          border-left-color: #BD9B52;
-          border-top-color: #BD9B52;
-          border-right-color: #BD9B52;
-          border-radius: 50%;
-          animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-          to {
-            transform: rotate(360deg);
-          }
-        }
-
         @media (max-width: 768px) {
           .deals-title {
             font-size: 36px;
@@ -218,11 +195,9 @@ const HotDeals = () => {
             {/* Games Grid */}
             <div className="col-lg-9">
               {isPendingGames ? (
-                <div className="loader-container">
-                  <div className="loader"></div>
-                </div>
+                <Pending minHeight={"220px"} />
               ) : errorGames ? (
-                <div>Something Went Wrong!</div>
+                <Error />
               ) : (
                 <>
                   {/* Sort Bar */}
