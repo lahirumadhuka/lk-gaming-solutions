@@ -20,9 +20,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get(
-        `http://localhost:3001/api/v1/games/section?sort=title`,
-      )
+      .get(`http://localhost:3001/api/v1/games/section?sort=title`)
       .then((res) => {
         setFeaturedGames(res.data?.response.featuredGames || []);
         setHotDeals(res.data?.response.hotDeals || []);
@@ -314,7 +312,15 @@ const Home = () => {
               <div className="row g-3">
                 <div className="col-md-6">
                   <div className="stat-card">
-                    <div className="stat-number">{gamesCount}</div>
+                    <div className="stat-number">
+                      {isPendingGames ? (
+                        <div className="loader-container" style={{minHeight: "75px"}}>
+                          <div className="loader"></div>
+                        </div>
+                      ) : (
+                        gamesCount
+                      )}
+                    </div>
                     <div className="stat-label">Games Available</div>
                   </div>
                 </div>
