@@ -3,6 +3,7 @@ import SectionCard from "../components/card/SectionCard";
 import UseTitleName from "../utils/UseTitleName";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Pending from "../components/status/Pending";
 
 const Home = () => {
   UseTitleName("");
@@ -239,31 +240,6 @@ const Home = () => {
           color: #5a6270;
         }
 
-        /* Loader */
-        .loader-container {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          min-height: 220px;
-        }
-
-        .loader {
-          width: 70px;
-          height: 70px;
-          border: 8px dotted transparent;
-          border-left-color: #BD9B52;
-          border-top-color: #BD9B52;
-          border-right-color: #BD9B52;
-          border-radius: 50%;
-          animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-          to {
-            transform: rotate(360deg);
-          }
-        }
-
         @media (max-width: 768px) {
           .hero-title {
             font-size: 42px;
@@ -314,9 +290,9 @@ const Home = () => {
                   <div className="stat-card">
                     <div className="stat-number">
                       {isPendingGames ? (
-                        <div className="loader-container" style={{minHeight: "75px"}}>
-                          <div className="loader"></div>
-                        </div>
+                        <Pending minHeight={"75px"} />
+                      ) : errorGames ? (
+                        0
                       ) : (
                         gamesCount
                       )}
@@ -355,6 +331,7 @@ const Home = () => {
         section_icon={"bi-star-fill"}
         section_style={"#ffd700"}
         isPendingGames={isPendingGames}
+        errorGames={errorGames}
       />
 
       {/* Hot Deals Section */}
@@ -365,6 +342,7 @@ const Home = () => {
         section_style={"#ff0080"}
         section_link={"/hot-deals"}
         isPendingGames={isPendingGames}
+        errorGames={errorGames}
       />
 
       {/* Play Station Section */}
@@ -375,6 +353,7 @@ const Home = () => {
         section_style={"#0059B4"}
         section_link={"/play-station"}
         isPendingGames={isPendingGames}
+        errorGames={errorGames}
       />
 
       {/* Xbox Section */}
@@ -385,6 +364,7 @@ const Home = () => {
         section_style={"#0F730F"}
         section_link={"/xbox"}
         isPendingGames={isPendingGames}
+        errorGames={errorGames}
       />
 
       {/* PC Section */}
@@ -395,6 +375,7 @@ const Home = () => {
         section_style={"#FF0000"}
         section_link={"/pc"}
         isPendingGames={isPendingGames}
+        errorGames={errorGames}
       />
 
       {/* Why Choose Us Section */}

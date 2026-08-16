@@ -1,4 +1,6 @@
 import { NavLink } from "react-router-dom";
+import Pending from "../status/Pending";
+import Error from "../status/Error";
 
 const SectionCard = ({
   section_style,
@@ -7,6 +9,7 @@ const SectionCard = ({
   section_icon,
   section_link,
   isPendingGames,
+  errorGames,
 }) => {
   return (
     <>
@@ -288,9 +291,9 @@ const SectionCard = ({
           </div>
           <div className="row g-4">
             {isPendingGames ? (
-              <div className="loader-container">
-                <div className="loader"></div>
-              </div>
+              <Pending minHeight={"220px"} />
+            ) : errorGames ? (
+              <Error />
             ) : (
               <>
                 {section_data.map((game, index) => (
