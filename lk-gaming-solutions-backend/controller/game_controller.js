@@ -2,17 +2,7 @@ const GameModel = require("../model/game_model");
 
 const getGames = async (req, res) => {
   try {
-    const {
-      price,
-      discount,
-      stock,
-      region,
-      genre,
-      platform,
-      search,
-      sort,
-      category,
-    } = req.query;
+    const { price, discount, stock, region, genre, platform, search, sort, category } = req.query;
     const queryObject = {};
 
     // Filter by category
@@ -82,12 +72,12 @@ const getGames = async (req, res) => {
 
     // Filter by region
     if (region && region !== "All") {
-      queryObject.region = { $regex: region };
+      queryObject.region = { $regex: `^${region}$` };
     }
 
     // Filter by genre
     if (genre && genre !== "All") {
-      queryObject.genre = { $regex: genre };
+      queryObject.genre = { $regex: `^${genre}$` };
     }
 
     // Filter by platform
