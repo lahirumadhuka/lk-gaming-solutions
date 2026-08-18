@@ -24,10 +24,13 @@ const BrowseGames = () => {
   const [region, setRegion] = useState("All");
   const [searchValue, setSearchValue] = useState("");
 
+  const [page, setPage] = useState(1);
+  const limit = 12;
+
   useEffect(() => {
     axios
       .get(
-        `http://localhost:3001/api/v1/games?search=${searchValue}&platform=${platform}&genre=${genre}&region=${region}&stock=${isStockAvailable}&price=${price}&sort=${sortBy}`,
+        `http://localhost:3001/api/v1/games?search=${searchValue}&platform=${platform}&genre=${genre}&region=${region}&stock=${isStockAvailable}&price=${price}&sort=${sortBy}&page=${page}&limit=${limit}`,
       )
       .then((res) => {
         setGames(res.data?.response || []);
@@ -40,7 +43,7 @@ const BrowseGames = () => {
       .finally(() => {
         setIsPendingGames(false);
       });
-  }, [searchValue, platform, genre, region, isStockAvailable, sortBy, price]);
+  }, [searchValue, platform, genre, region, isStockAvailable, sortBy, price, page]);
 
   return (
     <>
@@ -254,7 +257,10 @@ const BrowseGames = () => {
                   {/* Games Grid */}
                   <GamingCard
                     card_data={games}
-                    card_icon={"bi-grid-3x3-gap-fill"}
+                    page={page}
+                    setPage={setPage}
+                    gamesCount={gamesCount}
+                    limit={limit}
                   />
                 </>
               )}

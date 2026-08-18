@@ -21,10 +21,13 @@ const HotDeals = () => {
   const [discount, setDiscount] = useState("All");
   const [price, setPrice] = useState("All");
 
+  const [page, setPage] = useState(1);
+  const limit = 12;
+
   useEffect(() => {
     axios
       .get(
-        `http://localhost:3001/api/v1/games?platform=${platform}&price=${price}&stock=true&discount=${discount}&sort=${sortBy}`,
+        `http://localhost:3001/api/v1/games?platform=${platform}&price=${price}&stock=true&discount=${discount}&sort=${sortBy}&page=${page}&limit=${limit}`,
       )
       .then((res) => {
         setGames(res.data?.response || []);
@@ -37,7 +40,7 @@ const HotDeals = () => {
       .finally(() => {
         setIsPendingGames(false);
       });
-  }, [platform, sortBy, price, discount]);
+  }, [platform, sortBy, price, discount, page]);
 
   return (
     <>
@@ -211,7 +214,13 @@ const HotDeals = () => {
                   </div>
 
                   {/* Games Grid */}
-                  <GamingCard card_data={games} />
+                  <GamingCard
+                    card_data={games}
+                    page={page}
+                    setPage={setPage}
+                    gamesCount={gamesCount}
+                    limit={limit}
+                  />
                 </>
               )}
             </div>

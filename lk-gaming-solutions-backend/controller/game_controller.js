@@ -2,17 +2,7 @@ const GameModel = require("../model/game_model");
 
 const getGames = async (req, res) => {
   try {
-    const {
-      price,
-      discount,
-      stock,
-      region,
-      genre,
-      platform,
-      search,
-      sort,
-      category,
-    } = req.query;
+    const { price, discount, stock, region, genre, platform, search, sort, category } = req.query;
     const queryObject = {};
 
     // Filter by category
@@ -82,12 +72,12 @@ const getGames = async (req, res) => {
 
     // Filter by region
     if (region && region !== "All") {
-      queryObject.region = { $regex: region };
+      queryObject.region = { $regex: `^${region}$` };
     }
 
     // Filter by genre
     if (genre && genre !== "All") {
-      queryObject.genre = { $regex: genre };
+      queryObject.genre = { $regex: `^${genre}$` };
     }
 
     // Filter by platform
@@ -105,11 +95,21 @@ const getGames = async (req, res) => {
     }
 
     let results = GameModel.find(queryObject);
+    // Total count
+    const gamesCount = await GameModel.countDocuments(queryObject);
 
     // Sort
     if (sort) {
       results.sort(sort.split(",").join(" "));
     }
+
+    // Pagination
+    const limit = 12;
+    const totalPages = Math.ceil(gamesCount / limit);
+    const page = Math.max(1, Math.min(Number(req.query.page || 1), totalPages));
+    const skip = (page - 1) * limit;
+
+    results = results.skip(skip).limit(limit);
 
     const games = await results;
 
@@ -128,7 +128,7 @@ const getGames = async (req, res) => {
       );
     }
 
-    res.status(200).json({ gamesCount: games.length, response: games });
+    res.status(200).json({ gamesCount: gamesCount, response: games });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error!" });
   }
@@ -146,24 +146,24 @@ const getSectionGames = async (req, res) => {
       results.sort(sort.split(",").join(" "));
     }
 
-    const sections = await results;
+    results = await results;
     let games = {};
 
-    games.featuredGames = sections
+    games.featuredGames = results
       .filter((g) => g.stock > 0)
       .sort((a, b) => b.rating - a.rating)
       .slice(0, 8);
-    games.hotDeals = sections
+    games.hotDeals = results
       .filter((g) => g.stock > 0)
       .sort((a, b) => b.discount - a.discount)
       .slice(0, 8);
-    games.psGames = sections
+    games.psGames = results
       .filter((g) => g.stock > 0 && g.platform.toLowerCase().includes("ps"))
       .slice(0, 8);
-    games.xboxGames = sections
+    games.xboxGames = results
       .filter((g) => g.stock > 0 && g.platform.toLowerCase().includes("xbox"))
       .slice(0, 8);
-    games.pcGames = sections
+    games.pcGames = results
       .filter(
         (g) =>
           g.stock > 0 &&
@@ -172,7 +172,7 @@ const getSectionGames = async (req, res) => {
       )
       .slice(0, 8);
 
-    res.status(200).json({ gamesCount: sections.length, response: games });
+    res.status(200).json({ gamesCount: results.length, response: games });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error!" });
   }
