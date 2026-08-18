@@ -1,38 +1,24 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
-const GamingCard = ({ card_data, pathname }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 12;
-  const lastIndex = currentPage * postsPerPage;
-  const firstIndex = lastIndex - postsPerPage;
-  const currentGames = card_data.slice(firstIndex, lastIndex);
-  const npage = Math.ceil(card_data.length / postsPerPage);
+const GamingCard = ({ card_data, pathname, page, setPage, gamesCount, limit }) => {
+  const npage = Math.ceil(gamesCount / limit);
   const numbers = [...Array(npage).keys()].map((n) => n + 1);
-
-  // Reset page when filters change
-  useEffect(() => {
-    setCurrentPage(1);
-  }, []);
 
   // Pagination Buttons Functions
   const prePage = () => {
-    if (currentPage !== 1) {
-      setCurrentPage(currentPage - 1);
-      window.scrollTo(0, 0);
-    }
+    setPage(page - 1);
+    window.scrollTo(0, 0);
   };
 
   const changeCPage = (id) => {
-    setCurrentPage(id);
+    setPage(id);
     window.scrollTo(0, 0);
   };
 
   const nextPage = () => {
-    if (currentPage !== npage) {
-      setCurrentPage(currentPage + 1);
-      window.scrollTo(0, 0);
-    }
+    setPage(page + 1);
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -365,28 +351,30 @@ const GamingCard = ({ card_data, pathname }) => {
           <div className="d-flex justify-content-center mt-5">
             <nav>
               <ul className="pagination">
-                <li className="page-item">
-                  <NavLink
-                    className="page-link"
-                    style={{
-                      background: "#1e2329",
-                      border: "2px solid #353d4a",
-                      color: "#8b95a5",
-                      fontWeight: 600,
-                    }}
-                    onClick={prePage}
-                  >
-                    <span className="bi bi-chevron-left"></span>
-                  </NavLink>
-                </li>
+                {page !== 1 && (
+                  <li className="page-item">
+                    <NavLink
+                      className="page-link"
+                      style={{
+                        background: "#1e2329",
+                        border: "2px solid #353d4a",
+                        color: "#8b95a5",
+                        fontWeight: 600,
+                      }}
+                      onClick={prePage}
+                    >
+                      <span className="bi bi-chevron-left"></span>
+                    </NavLink>
+                  </li>
+                )}
                 {numbers.map((no, index) => (
                   <li className="page-item active">
                     <NavLink
                       className="page-link"
                       style={{
-                        background: `${currentPage === no ? "linear-gradient(135deg, #BD9B52 0%, #D4AF6A 100%)" : "#1e2329"}`,
+                        background: `${page === no ? "linear-gradient(135deg, #BD9B52 0%, #D4AF6A 100%)" : "#1e2329"}`,
                         border: "2px solid #353d4a",
-                        color: `${currentPage === no ? "#000" : "#8b95a5"}`,
+                        color: `${page === no ? "#000" : "#8b95a5"}`,
                         fontWeight: 700,
                       }}
                       key={index}
@@ -396,20 +384,22 @@ const GamingCard = ({ card_data, pathname }) => {
                     </NavLink>
                   </li>
                 ))}
-                <li className="page-item">
-                  <NavLink
-                    className="page-link"
-                    style={{
-                      background: "#1e2329",
-                      border: "2px solid #353d4a",
-                      color: "#8b95a5",
-                      fontWeight: 600,
-                    }}
-                    onClick={nextPage}
-                  >
-                    <span className="bi bi-chevron-right"></span>
-                  </NavLink>
-                </li>
+                {page !== npage && (
+                  <li className="page-item">
+                    <NavLink
+                      className="page-link"
+                      style={{
+                        background: "#1e2329",
+                        border: "2px solid #353d4a",
+                        color: "#8b95a5",
+                        fontWeight: 600,
+                      }}
+                      onClick={nextPage}
+                    >
+                      <span className="bi bi-chevron-right"></span>
+                    </NavLink>
+                  </li>
+                )}
               </ul>
             </nav>
           </div>
@@ -417,6 +407,6 @@ const GamingCard = ({ card_data, pathname }) => {
       </div>
     </>
   );
-};
+};;
 
 export default GamingCard;
