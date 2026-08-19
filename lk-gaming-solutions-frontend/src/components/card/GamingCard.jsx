@@ -368,7 +368,7 @@ const GamingCard = ({ card_data, pathname, page, setPage, gamesCount, limit }) =
                   </li>
                 )}
                 {numbers.map((no, index) => (
-                  <li className="page-item active">
+                  <li className="page-item active" key={index}>
                     <NavLink
                       className="page-link"
                       style={{
@@ -377,7 +377,6 @@ const GamingCard = ({ card_data, pathname, page, setPage, gamesCount, limit }) =
                         color: `${page === no ? "#000" : "#8b95a5"}`,
                         fontWeight: 700,
                       }}
-                      key={index}
                       onClick={() => changeCPage(no)}
                     >
                       {no}

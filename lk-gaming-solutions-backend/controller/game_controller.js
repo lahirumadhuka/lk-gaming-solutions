@@ -104,7 +104,7 @@ const getGames = async (req, res) => {
     }
 
     // Pagination
-    const limit = 12;
+    const limit = Number(req.query.limit) || 12;
     const totalPages = Math.ceil(gamesCount / limit);
     const page = Math.max(1, Math.min(Number(req.query.page || 1), totalPages));
     const skip = (page - 1) * limit;
