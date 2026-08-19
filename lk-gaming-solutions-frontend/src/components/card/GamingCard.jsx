@@ -24,20 +24,11 @@ const GamingCard = ({ card_data, pathname, page, setPage, gamesCount, limit }) =
     window.scrollTo(0, 0);
   };
 
-  const addCart = async (game) => {
-    setIsPending(game._id);
+  const addCart = async (id) => {
+    setIsPending(id);
 
     const cart = {
-      title: game.title,
-      price: game.price,
-      discount: game.discount,
-      genre: game.genre,
-      platform: game.platform,
-      seller: game.seller,
-      rating: game.rating,
-      stock: game.stock,
-      region: game.region,
-      imgUrl: game.imgUrl,
+      gameId: id
     };
 
     await axios
@@ -45,8 +36,8 @@ const GamingCard = ({ card_data, pathname, page, setPage, gamesCount, limit }) =
       .then((res) => {
         console.log(res.data?.message);
       })
-      .catch((error) => {
-        console.log(res.data?.message);
+      .catch((err) => {
+        console.log(err.response.data?.message);
       })
       .finally(() => {
         setIsPending(null);
@@ -368,7 +359,7 @@ const GamingCard = ({ card_data, pathname, page, setPage, gamesCount, limit }) =
                     className="btn btn-gaming flex-grow-1"
                     style={{ padding: "10px", fontSize: "13px" }}
                     disabled={game.stock === 0 || isPending === game._id}
-                    onClick={() => addCart(game)}
+                    onClick={() => addCart(game._id)}
                   >
                     {isPending === game._id ? (
                       <>
