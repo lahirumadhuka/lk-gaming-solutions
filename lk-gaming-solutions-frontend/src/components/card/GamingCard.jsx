@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
 
 const GamingCard = ({ card_data, pathname, page, setPage, gamesCount, limit }) => {
   const npage = Math.ceil(gamesCount / limit);
   const numbers = [...Array(npage).keys()].map((n) => n + 1);
+
+  const [isPending, setIsPending] = useState(null);
 
   // Pagination Buttons Functions
   const prePage = () => {
@@ -20,6 +23,35 @@ const GamingCard = ({ card_data, pathname, page, setPage, gamesCount, limit }) =
     setPage(page + 1);
     window.scrollTo(0, 0);
   };
+
+  const addCart = async (game) => {
+    setIsPending(game._id);
+
+    const cart = {
+      title: game.title,
+      price: game.price,
+      discount: game.discount,
+      genre: game.genre,
+      platform: game.platform,
+      seller: game.seller,
+      rating: game.rating,
+      stock: game.stock,
+      region: game.region,
+      imgUrl: game.imgUrl,
+    };
+
+    await axios
+      .post("http://localhost:3001/api/v1/cart", cart)
+      .then((res) => {
+        console.log(res.data?.message);
+      })
+      .catch((error) => {
+        console.log(res.data?.message);
+      })
+      .finally(() => {
+        setIsPending(null);
+      });
+  }
 
   return (
     <>
@@ -335,10 +367,18 @@ const GamingCard = ({ card_data, pathname, page, setPage, gamesCount, limit }) =
                   <button
                     className="btn btn-gaming flex-grow-1"
                     style={{ padding: "10px", fontSize: "13px" }}
-                    disabled={game.stock === 0}
+                    disabled={game.stock === 0 || isPending === game._id}
+                    onClick={() => addCart(game)}
                   >
-                    <i className="bi bi-cart-plus me-1"></i>
-                    Add to Cart
+                    {isPending === game._id ? (
+                      <>
+                        <i className="spinner-border spinner-border-sm me-1"></i>Adding...
+                      </>
+                    ) : (
+                      <>
+                        <i className="bi bi-cart-plus me-1"></i>Add to Cart
+                      </>
+                    )}
                   </button>
                 </div>
               </div>
@@ -368,7 +408,7 @@ const GamingCard = ({ card_data, pathname, page, setPage, gamesCount, limit }) =
                   </li>
                 )}
                 {numbers.map((no, index) => (
-                  <li className="page-item active">
+                  <li className="page-item active" key={index}>
                     <NavLink
                       className="page-link"
                       style={{
@@ -377,7 +417,6 @@ const GamingCard = ({ card_data, pathname, page, setPage, gamesCount, limit }) =
                         color: `${page === no ? "#000" : "#8b95a5"}`,
                         fontWeight: 700,
                       }}
-                      key={index}
                       onClick={() => changeCPage(no)}
                     >
                       {no}

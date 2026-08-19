@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const gameRoutes = require("./routes/game_route");
+const cartRoutes = require("./routes/cart_route");
 
 const app = express();
 require("dotenv").config();
@@ -34,3 +35,4 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/games", gameRoutes);
+app.use("/api/v1/cart", cartRoutes);

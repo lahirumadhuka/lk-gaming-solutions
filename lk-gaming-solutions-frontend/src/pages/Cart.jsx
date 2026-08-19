@@ -1,51 +1,32 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UseTitleName from "../utils/UseTitleName";
+import { useEffect } from "react";
+import axios from "axios";
+import Pending from "../components/status/Pending";
+import Error from "../components/status/Error";
 
 const Cart = () => {
   UseTitleName("Cart");
   const navigate = useNavigate();
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      title: "Spider-Man 2",
-      price: 15299,
-      discount: 21,
-      genre: "Action",
-      platform: "PS5",
-      seller: "ProGamer_88",
-      rating: 4.9,
-      stock: 15,
-      region: "Global",
-      quantity: 1,
-    },
-    {
-      id: 2,
-      title: "God of War Ragnarök",
-      price: 14999,
-      discount: 35,
-      genre: "Adventure",
-      platform: "PS4/PS5",
-      seller: "GameHunter",
-      rating: 4.8,
-      stock: 23,
-      region: "Global",
-      quantity: 1,
-    },
-    {
-      id: 3,
-      title: "Horizon Forbidden West",
-      price: 13999,
-      discount: 33,
-      genre: "Racing",
-      platform: "PS5",
-      seller: "KeyMaster_Pro",
-      rating: 4.7,
-      stock: 8,
-      region: "EU",
-      quantity: 1,
-    },
-  ]);
+  const [cartItems, setCartItems] = useState([]);
+  const [isPendingCart, setIsPendingCart] = useState(true);
+  const [errorCart, setErrorCart] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/api/v1/cart")
+      .then((res) => {
+        setCartItems(res.data?.response || []);
+        setErrorCart(null);
+      })
+      .catch((err) => {
+        setErrorCart(err.message);
+      })
+      .finally(() => {
+        setIsPendingCart(false);
+      });
+  }, [])
 
   const updateQuantity = (id, newQuantity, noOfStock) => {
     if (newQuantity < 1 || newQuantity > noOfStock) return;
@@ -420,282 +401,301 @@ const Cart = () => {
       `}</style>
 
       {/* Main Content */}
-      <section className="gaming-bg py-5 px-3 px-lg-0">
-        <div className="container">
-          {/* Page Title */}
-          <div className="d-flex justify-content-between align-items-center mb-4">
-            <h1 className="page-title">
-              <i className="bi bi-cart3 me-3"></i>SHOPPING CART
-            </h1>
-            <div
-              style={{ color: "#8b95a5", fontSize: "18px", fontWeight: 600 }}
-            >
-              {cartItems.length} {cartItems.length === 1 ? "Item" : "Items"}
-            </div>
-          </div>
-
-          {cartItems.length === 0 ? (
-            /* Empty Cart */
-            <div className="empty-cart">
-              <div className="empty-cart-icon">
-                <i className="bi bi-cart-x"></i>
+      {isPendingCart ? (
+        <Pending minHeight={"350px"} />
+      ) : errorCart ? (
+        <Error />
+      ) : (
+        <section className="gaming-bg py-5 px-3 px-lg-0">
+          <div className="container">
+            {/* Page Title */}
+            <div className="d-flex justify-content-between align-items-center mb-4">
+              <h1 className="page-title">
+                <i className="bi bi-cart3 me-3"></i>SHOPPING CART
+              </h1>
+              <div
+                style={{ color: "#8b95a5", fontSize: "18px", fontWeight: 600 }}
+              >
+                {cartItems.length} {cartItems.length === 1 ? "Item" : "Items"}
               </div>
-              <h2 className="empty-cart-title">Your Cart is Empty</h2>
-              <p
-                style={{
-                  color: "#8b95a5",
-                  fontSize: "18px",
-                  marginBottom: "32px",
-                }}
-              >
-                Start adding some games to your cart!
-              </p>
-              <button
-                className="btn btn-gaming"
-                onClick={() => navigate("/browse-games")}
-              >
-                <i className="bi bi-search me-2"></i>Browse Games
-              </button>
             </div>
-          ) : (
-            <div className="row">
-              {/* Cart Items */}
-              <div className="col-lg-8 mb-4">
-                {cartItems.map((item) => (
-                  <div key={item.id} className="cart-item">
-                    <button
-                      className="remove-btn"
-                      onClick={() => removeItem(item.id)}
-                    >
-                      <i className="bi bi-trash"></i>
-                    </button>
 
-                    <div className="row align-items-center mt-md-5">
-                      <div className="col-md-2 mb-3 mb-md-0">
-                        <div className="cart-item-img">
-                          <i
-                            className="bi bi-controller"
-                            style={{ fontSize: "48px", color: "#353d4a" }}
-                          ></i>
+            {cartItems.length === 0 ? (
+              /* Empty Cart */
+              <div className="empty-cart">
+                <div className="empty-cart-icon">
+                  <i className="bi bi-cart-x"></i>
+                </div>
+                <h2 className="empty-cart-title">Your Cart is Empty</h2>
+                <p
+                  style={{
+                    color: "#8b95a5",
+                    fontSize: "18px",
+                    marginBottom: "32px",
+                  }}
+                >
+                  Start adding some games to your cart!
+                </p>
+                <button
+                  className="btn btn-gaming"
+                  onClick={() => navigate("/browse-games")}
+                >
+                  <i className="bi bi-search me-2"></i>Browse Games
+                </button>
+              </div>
+            ) : (
+              <div className="row">
+                {/* Cart Items */}
+                <div className="col-lg-8 mb-4">
+                  {cartItems.map((item) => (
+                    <div key={item.id} className="cart-item">
+                      <button
+                        className="remove-btn"
+                        onClick={() => removeItem(item.id)}
+                      >
+                        <i className="bi bi-trash"></i>
+                      </button>
+
+                      <div className="row align-items-center mt-md-5">
+                        <div className="col-md-2 mb-3 mb-md-0">
+                          <div className="cart-item-img">
+                            <img
+                              src={item.imgUrl}
+                              className="img-fluid w-100 h-100 rounded"
+                              style={{ objectFit: "cover" }}
+                            />
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="col-md-6 mb-3 mb-md-0">
-                        <h4
-                          style={{
-                            color: "#fff",
-                            fontWeight: 700,
-                            marginBottom: "8px",
-                          }}
-                        >
-                          {item.title}
-                        </h4>
-                        <div className="mb-2 d-flex gap-2 align-items-center flex-wrap">
-                          <span
-                            className={`platform-badge ${item.platform.toLowerCase().replace(/\//g, " ")}`}
+                        <div className="col-md-6 mb-3 mb-md-0">
+                          <h4
+                            style={{
+                              color: "#fff",
+                              fontWeight: 700,
+                              marginBottom: "8px",
+                            }}
                           >
-                            {item.platform}
-                          </span>
-                          <span className="genre-badge">{item.genre}</span>
-                          <span className="discount-badge">
-                            -{item.discount}%
-                          </span>
-                        </div>
-                        <div className="seller-info mb-2">
-                          <i className="bi bi-person-check verified-seller me-1"></i>
-                          Sold by:{" "}
-                          <span style={{ color: "#BD9B52" }}>
-                            {item.seller}
-                          </span>
-                        </div>
-                        <div className="rating-stars">
-                          {[...Array(5)].map((_, i) => (
-                            <i
-                              key={i}
-                              className={`bi bi-star${i < Math.floor(item.rating) ? "-fill" : ""}`}
-                            ></i>
-                          ))}
-                          <span
+                            {item.title}
+                          </h4>
+                          <div className="mb-2 d-flex gap-2 align-items-center flex-wrap">
+                            <span
+                              className={`platform-badge ${item.platform.toLowerCase().replace(/\//g, " ")}`}
+                            >
+                              {item.platform}
+                            </span>
+                            <span className="genre-badge">{item.genre}</span>
+                            <span className="discount-badge">
+                              -{item.discount}%
+                            </span>
+                          </div>
+                          <div className="seller-info mb-2">
+                            <i className="bi bi-person-check verified-seller me-1"></i>
+                            Sold by:{" "}
+                            <span style={{ color: "#BD9B52" }}>
+                              {item.seller}
+                            </span>
+                          </div>
+                          <div className="rating-stars">
+                            {[...Array(5)].map((_, i) => (
+                              <i
+                                key={i}
+                                className={`bi bi-star${i < Math.floor(item.rating) ? "-fill" : ""}`}
+                              ></i>
+                            ))}
+                            <span
+                              style={{
+                                color: "#8b95a5",
+                                fontSize: "12px",
+                                marginLeft: "8px",
+                              }}
+                            >
+                              ({item.rating})
+                            </span>
+                          </div>
+                          <div
                             style={{
                               color: "#8b95a5",
                               fontSize: "12px",
-                              marginLeft: "8px",
+                              marginTop: "8px",
                             }}
                           >
-                            ({item.rating})
-                          </span>
-                        </div>
-                        <div
-                          style={{
-                            color: "#8b95a5",
-                            fontSize: "12px",
-                            marginTop: "8px",
-                          }}
-                        >
-                          {item.region}
-                        </div>
-                      </div>
-
-                      <div className="col-md-4">
-                        <div className="text-md-end">
-                          <div className="price-display mb-2">
-                            LKR{" "}
-                            {(
-                              (item.discount > 0
-                                ? item.price -
-                                  (item.price * item.discount) / 100
-                                : item.price) * item.quantity
-                            ).toFixed(2)}
+                            {item.region}
                           </div>
-                          {item.discount > 0 && (
-                            <div className="old-price mb-3">
-                              LKR {(item.price * item.quantity).toFixed(2)}
+                        </div>
+
+                        <div className="col-md-4">
+                          <div className="text-md-end">
+                            <div className="price-display mb-2">
+                              LKR{" "}
+                              {(
+                                (item.discount > 0
+                                  ? item.price -
+                                    (item.price * item.discount) / 100
+                                  : item.price) * item.quantity
+                              ).toFixed(2)}
                             </div>
-                          )}
+                            {item.discount > 0 && (
+                              <div className="old-price mb-3">
+                                LKR {(item.price * item.quantity).toFixed(2)}
+                              </div>
+                            )}
 
-                          <div className="quantity-control d-inline-flex mb-3">
-                            <button
-                              className="quantity-btn"
-                              onClick={() =>
-                                updateQuantity(item.id, item.quantity - 1, item.stock)
-                              }
-                            >
-                              <i className="bi bi-dash"></i>
-                            </button>
-                            <span className="quantity-display">
-                              {item.quantity}
-                            </span>
-                            <button
-                              className="quantity-btn"
-                              onClick={() =>
-                                updateQuantity(item.id, item.quantity + 1, item.stock)
-                              }
-                            >
-                              <i className="bi bi-plus"></i>
-                            </button>
-                          </div>
+                            <div className="quantity-control d-inline-flex mb-3">
+                              <button
+                                className="quantity-btn"
+                                onClick={() =>
+                                  updateQuantity(
+                                    item.id,
+                                    item.quantity - 1,
+                                    item.stock,
+                                  )
+                                }
+                              >
+                                <i className="bi bi-dash"></i>
+                              </button>
+                              <span className="quantity-display">
+                                {item.quantity}
+                              </span>
+                              <button
+                                className="quantity-btn"
+                                onClick={() =>
+                                  updateQuantity(
+                                    item.id,
+                                    item.quantity + 1,
+                                    item.stock,
+                                  )
+                                }
+                              >
+                                <i className="bi bi-plus"></i>
+                              </button>
+                            </div>
 
-                          <div style={{ color: "#8b95a5", fontSize: "13px" }}>
-                            ${item.price} each
+                            <div style={{ color: "#8b95a5", fontSize: "13px" }}>
+                              ${item.price} each
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
 
-              {/* Order Summary */}
-              <div className="col-lg-4">
-                <div className="summary-card">
-                  <h3 className="summary-title">Order Summary</h3>
+                {/* Order Summary */}
+                <div className="col-lg-4">
+                  <div className="summary-card">
+                    <h3 className="summary-title">Order Summary</h3>
 
-                  <div className="summary-row">
-                    <span>
-                      Subtotal (
-                      {cartItems.reduce((sum, item) => sum + item.quantity, 0)}{" "}
-                      items)
-                    </span>
-                    <span className="amount">${total.toFixed(2)}</span>
-                  </div>
-
-                  {savings > 0 && (
-                    <div className="summary-row savings">
-                      <span>Your Savings</span>
-                      <span className="amount">-${savings.toFixed(2)}</span>
+                    <div className="summary-row">
+                      <span>
+                        Subtotal (
+                        {cartItems.reduce(
+                          (sum, item) => sum + item.quantity,
+                          0,
+                        )}{" "}
+                        items)
+                      </span>
+                      <span className="amount">${total.toFixed(2)}</span>
                     </div>
-                  )}
 
-                  <div className="summary-row total">
-                    <span>Total</span>
-                    <span className="amount">${total.toFixed(2)}</span>
-                  </div>
-
-                  {/* Checkout Button */}
-                  <button
-                    className="btn btn-gaming w-100 mt-4"
-                    style={{ padding: "16px" }}
-                  >
-                    <i className="bi bi-lock-fill me-2"></i>Proceed to Checkout
-                  </button>
-
-                  {/* Trust Badges */}
-                  <div
-                    className="mt-4 pt-4"
-                    style={{ borderTop: "2px solid #353d4a" }}
-                  >
-                    <div className="d-flex justify-content-around text-center">
-                      <div>
-                        <i
-                          className="bi bi-shield-check"
-                          style={{
-                            fontSize: "24px",
-                            color: "#00ff88",
-                            marginBottom: "8px",
-                          }}
-                        ></i>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            color: "#8b95a5",
-                            fontWeight: 600,
-                          }}
-                        >
-                          Secure
-                          <br />
-                          Payment
-                        </div>
+                    {savings > 0 && (
+                      <div className="summary-row savings">
+                        <span>Your Savings</span>
+                        <span className="amount">-${savings.toFixed(2)}</span>
                       </div>
-                      <div>
-                        <i
-                          className="bi bi-lightning-charge-fill"
-                          style={{
-                            fontSize: "24px",
-                            color: "#BD9B52",
-                            marginBottom: "8px",
-                          }}
-                        ></i>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            color: "#8b95a5",
-                            fontWeight: 600,
-                          }}
-                        >
-                          Instant
-                          <br />
-                          Delivery
+                    )}
+
+                    <div className="summary-row total">
+                      <span>Total</span>
+                      <span className="amount">${total.toFixed(2)}</span>
+                    </div>
+
+                    {/* Checkout Button */}
+                    <button
+                      className="btn btn-gaming w-100 mt-4"
+                      style={{ padding: "16px" }}
+                    >
+                      <i className="bi bi-lock-fill me-2"></i>Proceed to
+                      Checkout
+                    </button>
+
+                    {/* Trust Badges */}
+                    <div
+                      className="mt-4 pt-4"
+                      style={{ borderTop: "2px solid #353d4a" }}
+                    >
+                      <div className="d-flex justify-content-around text-center">
+                        <div>
+                          <i
+                            className="bi bi-shield-check"
+                            style={{
+                              fontSize: "24px",
+                              color: "#00ff88",
+                              marginBottom: "8px",
+                            }}
+                          ></i>
+                          <div
+                            style={{
+                              fontSize: "11px",
+                              color: "#8b95a5",
+                              fontWeight: 600,
+                            }}
+                          >
+                            Secure
+                            <br />
+                            Payment
+                          </div>
                         </div>
-                      </div>
-                      <div>
-                        <i
-                          className="bi bi-headset"
-                          style={{
-                            fontSize: "24px",
-                            color: "#BD9B52",
-                            marginBottom: "8px",
-                          }}
-                        ></i>
-                        <div
-                          style={{
-                            fontSize: "11px",
-                            color: "#8b95a5",
-                            fontWeight: 600,
-                          }}
-                        >
-                          24/7
-                          <br />
-                          Support
+                        <div>
+                          <i
+                            className="bi bi-lightning-charge-fill"
+                            style={{
+                              fontSize: "24px",
+                              color: "#BD9B52",
+                              marginBottom: "8px",
+                            }}
+                          ></i>
+                          <div
+                            style={{
+                              fontSize: "11px",
+                              color: "#8b95a5",
+                              fontWeight: 600,
+                            }}
+                          >
+                            Instant
+                            <br />
+                            Delivery
+                          </div>
+                        </div>
+                        <div>
+                          <i
+                            className="bi bi-headset"
+                            style={{
+                              fontSize: "24px",
+                              color: "#BD9B52",
+                              marginBottom: "8px",
+                            }}
+                          ></i>
+                          <div
+                            style={{
+                              fontSize: "11px",
+                              color: "#8b95a5",
+                              fontWeight: 600,
+                            }}
+                          >
+                            24/7
+                            <br />
+                            Support
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
-        </div>
-      </section>
+            )}
+          </div>
+        </section>
+      )}
     </>
   );
 };
