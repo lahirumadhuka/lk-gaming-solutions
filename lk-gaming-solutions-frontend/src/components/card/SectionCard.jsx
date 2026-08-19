@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
 import Pending from "../status/Pending";
 import Error from "../status/Error";
+import axios from "axios";
+import { useState } from "react";
 
 const SectionCard = ({
   section_style,
@@ -11,6 +13,37 @@ const SectionCard = ({
   isPendingGames,
   errorGames,
 }) => {
+  const [isPending, setIsPending] = useState(null);
+
+  const addCart = async (game) => {
+    setIsPending(game._id);
+
+    const cart = {
+      title: game.title,
+      price: game.price,
+      discount: game.discount,
+      genre: game.genre,
+      platform: game.platform,
+      seller: game.seller,
+      rating: game.rating,
+      stock: game.stock,
+      region: game.region,
+      imgUrl: game.imgUrl,
+    };
+
+    await axios
+      .post("http://localhost:3001/api/v1/cart", cart)
+      .then((res) => {
+        console.log(res.data?.message);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      })
+      .finally(() => {
+        setIsPending(null);
+      });
+  }
+
   return (
     <>
       <style>{`
@@ -412,10 +445,20 @@ const SectionCard = ({
                           <button
                             className="btn btn-gaming flex-grow-1"
                             style={{ padding: "10px", fontSize: "13px" }}
-                            disabled={game.stock === 0}
+                            disabled={game.stock === 0 || isPending === game._id}
+                            onClick={() => addCart(game)}
                           >
-                            <i className="bi bi-cart-plus me-1"></i>
-                            Add to Cart
+                            {isPending === game._id ? (
+                              <>
+                                <i className="spinner-border spinner-border-sm me-1"></i>
+                                Adding...
+                              </>
+                            ) : (
+                              <>
+                                <i className="bi bi-cart-plus me-1"></i>Add to
+                                Cart
+                              </>
+                            )}
                           </button>
                         </div>
                       </div>
