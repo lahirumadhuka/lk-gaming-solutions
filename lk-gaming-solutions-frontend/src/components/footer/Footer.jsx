@@ -27,7 +27,7 @@ const Footer = () => {
                 </div>
                 <div>
                   <i className="bi bi-star-fill me-1"></i>
-                  <span>100K+ Trusted Sellers</span>
+                  <span>Trusted Buyers and Sellers</span>
                 </div>
               </div>
             </div>
@@ -35,7 +35,7 @@ const Footer = () => {
 
           <div className="row">
             {/* Brand Info */}
-            <div className="col-lg-4 mb-4">
+            <div className="col-lg-5 mb-4">
               <h5 className="mb-3">
                 <img src={logo} style={{ width: "25px" }} className="me-2" alt="logo" />
                 <span style={{ color: "#BD9B52" }}>LK Gaming Solutions</span>
@@ -63,7 +63,7 @@ const Footer = () => {
             </div>
 
             {/* Game Categories */}
-            <div className="col-lg-3 col-md-4 mb-4 ps-lg-5">
+            <div className="col-lg-4 col-md-6 mb-4 ps-lg-5">
               <h6 className="mb-3">Games</h6>
               <ul className="list-unstyled">
                 <li className="mb-2">
@@ -89,27 +89,10 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* Quick Links */}
-            <div className="col-lg-3 col-md-4 mb-4">
-              <h6 className="mb-3">Support</h6>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <NavLink className="small footer-link">How It Works</NavLink>
-                </li>
-                <li className="mb-2">
-                  <NavLink className="small footer-link">FAQ</NavLink>
-                </li>
-                <li className="mb-2">
-                  <NavLink className="small footer-link">Contact Us</NavLink>
-                </li>
-                <li className="mb-2">
-                  <NavLink  className="small footer-link">Report Issue</NavLink>
-                </li>
-              </ul>
-            </div>
+            
 
             {/* Newsletter */}
-            <div className="col-lg-2 col-md-4 mb-4">
+            <div className="col-lg-3 col-md-6 mb-4">
               <h6 className="mb-3">Stay Updated</h6>
               <p className="mb-3 small">
                 Get exclusive deals & new game alerts!
@@ -154,7 +137,7 @@ const Footer = () => {
             </div>
             <div className="col-md-6 text-center text-md-end">
               <p className="mb-0">
-                Powered by gamers, for gamers <i className="bi bi-controller"></i>
+                Designed & Developed by Lahiru Madhuka
               </p>
             </div>
           </div>

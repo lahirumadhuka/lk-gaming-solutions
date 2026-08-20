@@ -302,8 +302,8 @@ const Home = () => {
                 </div>
                 <div className="col-md-6">
                   <div className="stat-card">
-                    <div className="stat-number">100K+</div>
-                    <div className="stat-label">Trusted Sellers</div>
+                    <div className="stat-number">Trusted</div>
+                    <div className="stat-label">Buyers and Sellers</div>
                   </div>
                 </div>
                 <div className="col-md-6">
