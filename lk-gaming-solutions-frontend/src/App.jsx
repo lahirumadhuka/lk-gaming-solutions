@@ -17,12 +17,21 @@ import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import Games from "./pages/Games";
 import { DataProvider } from "./utils/DataContext";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   ScrollToTop();
 
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        theme="dark"
+        toastClassName="toast-message"
+        hideProgressBar={true}
+      />
+
       <DataProvider>
         <header>
           <Header />

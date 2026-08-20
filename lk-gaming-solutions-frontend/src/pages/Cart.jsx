@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import Pending from "../components/status/Pending";
 import Error from "../components/status/Error";
+import { toast } from "react-toastify";
 
 const Cart = () => {
   UseTitleName("Cart");
@@ -33,11 +34,8 @@ const Cart = () => {
     
     await axios
       .patch(`http://localhost:3001/api/v1/cart/${id}`, { quantity: newQuantity })
-      .then((res) => {
-        console.log(res.data?.message);
-      })
       .catch((err) => {
-        console.log(err.message);
+        toast.error(err.response?.data?.message);
       })
   };
 
@@ -47,10 +45,10 @@ const Cart = () => {
     await axios
       .delete(`http://localhost:3001/api/v1/cart/${id}`)
       .then((res) => {
-        console.log(res.data?.message);
+        toast.success(res.data?.message);
       })
       .catch((err) => {
-        console.log(err.message);
+        toast.error(err.response?.data?.message);
       }).finally(() => {
         setIsPendingCart(false);
       })

@@ -13,11 +13,11 @@ const createCart = async (req, res) => {
   try {
     const gameExist = await CartModel.findOne({ gameId: req.body.gameId });
     if (gameExist) {
-      return res.status(409).json({ message: "This Game Already Exists!" });
+      return res.status(409).json({ message: "Game already exists in your cart!" });
     }
     
     await CartModel.create(req.body);
-    res.status(201).json({ message: "Cart Item Added Successfully!" });
+    res.status(201).json({ message: "Game added to your cart successfully!" });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error!" });
   }
@@ -29,10 +29,10 @@ const updateCart = async (req, res) => {
     const cart = await CartModel.findByIdAndUpdate(id, req.body);
 
     if (!cart) {
-      return res.status(404).json({ message: "Cart Item Not Found!" });
+      return res.status(404).json({ message: "This game is no longer in your cart." });
     }
 
-    res.status(200).json({ message: "Cart Item Updated Successfully!" });
+    res.status(200).json({ message: "Game updated in your cart successfully!" });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error!" });
   }
@@ -44,10 +44,10 @@ const deleteCart = async (req, res) => {
     const cart = await CartModel.findByIdAndDelete(id);
 
     if (!cart) {
-      return res.status(404).json({ message: "Cart Item Not Found!" });
+      return res.status(404).json({ message: "This game is no longer in your cart." });
     }
 
-    res.status(200).json({ message: "Cart Item Deleted Successfully!" });
+    res.status(200).json({ message: "Game removed from your cart successfully!" });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error!" });
   }

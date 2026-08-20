@@ -3,3 +3,24 @@ body {
   color: white;
   background-color: #000000;
 }
+
+/* React Toastify Styles */
+.toast-message {
+  background-color: #BD9B52 !important;
+  width: fit-content !important;
+  color: #000000 !important;
+  padding-right: 40px !important;
+  border-radius: 50px !important;
+}
+
+.Toastify__toast-icon,
+.Toastify__toast-icon svg {
+  color: #000000 !important;
+  fill: #000000 !important;
+}
+
+.Toastify__close-button {
+  color: #000000 !important;
+  opacity: 0.5 !important;
+  padding-right: 10px !important;
+}

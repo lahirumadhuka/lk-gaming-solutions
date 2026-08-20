@@ -3,6 +3,7 @@ import Pending from "../status/Pending";
 import Error from "../status/Error";
 import axios from "axios";
 import { useState } from "react";
+import { toast } from 'react-toastify';
 
 const SectionCard = ({
   section_style,
@@ -25,10 +26,10 @@ const SectionCard = ({
     await axios
       .post("http://localhost:3001/api/v1/cart", cart)
       .then((res) => {
-        console.log(res.data?.message);
+        toast.success(res.data?.message);
       })
       .catch((err) => {
-        console.log(err.response.data?.message);
+        toast.error(err.response?.data?.message);
       })
       .finally(() => {
         setIsPending(null);

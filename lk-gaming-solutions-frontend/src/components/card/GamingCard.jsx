@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
+import { toast } from 'react-toastify';
 
-const GamingCard = ({ card_data, pathname, page, setPage, gamesCount, limit }) => {
+const GamingCard = ({ card_data, page, setPage, gamesCount, limit }) => {
   const npage = Math.ceil(gamesCount / limit);
   const numbers = [...Array(npage).keys()].map((n) => n + 1);
 
@@ -34,10 +35,10 @@ const GamingCard = ({ card_data, pathname, page, setPage, gamesCount, limit }) =
     await axios
       .post("http://localhost:3001/api/v1/cart", cart)
       .then((res) => {
-        console.log(res.data?.message);
+        toast.success(res.data?.message);
       })
       .catch((err) => {
-        console.log(err.response.data?.message);
+        toast.error(err.response?.data?.message);
       })
       .finally(() => {
         setIsPending(null);
