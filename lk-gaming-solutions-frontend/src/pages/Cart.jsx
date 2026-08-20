@@ -14,9 +14,11 @@ const Cart = () => {
   const [isPendingCart, setIsPendingCart] = useState(true);
   const [errorCart, setErrorCart] = useState(null);
 
+  const id = "";
+
   useEffect(() => {
     axios
-      .get("http://localhost:3001/api/v1/cart")
+      .get(`http://localhost:3001/api/v1/cart?id=${id}`)
       .then((res) => {
         setCartItems(res.data?.response || []);
         setErrorCart(null);
@@ -505,7 +507,7 @@ const Cart = () => {
                             <i className="bi bi-person-check verified-seller me-1"></i>
                             Sold by:{" "}
                             <span style={{ color: "#BD9B52" }}>
-                              {item.gameId.seller}
+                              {item.gameId.seller.username}
                             </span>
                           </div>
                           <div className="rating-stars">

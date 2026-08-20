@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const CartSchema = mongoose.Schema({
   gameId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Game"
+    ref: "Game",
+    required: true,
   },
   quantity: {
     type: Number,
@@ -11,8 +12,9 @@ const CartSchema = mongoose.Schema({
     default: 1,
   },
   userId: {
-    type: String,
-    required: false,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
   },
 });
 

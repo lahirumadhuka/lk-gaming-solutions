@@ -20,7 +20,8 @@ const SectionCard = ({
     setIsPending(id);
 
     const cart = {
-      gameId: id
+      gameId: id,
+      userId: "",
     };
 
     await axios
@@ -394,7 +395,7 @@ const SectionCard = ({
                           <i className="bi bi-person-check verified-seller me-1"></i>
                           Sold by:{" "}
                           <span style={{ color: "#BD9B52" }}>
-                            {game.seller}
+                            {game.seller.username}
                           </span>
                         </div>
                         <div className="rating-stars mb-3">

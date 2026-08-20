@@ -2,7 +2,11 @@ const CartModel = require("../model/cart_model");
 
 const getCart = async (req, res) => {
   try {
-    const cart = await CartModel.find({}).populate("gameId");
+    const { id } = req.query;
+    if (id || id === "") {
+      return res.status(200).json({ gamesCount: 0, response: 0 });;
+    }
+    const cart = await CartModel.find({ userId: id }).populate({path: "gameId", populate: {path: "seller", select: "username -_id"}});
     res.status(200).json({ gamesCount: cart.length, response: cart });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error!" });
@@ -11,7 +15,7 @@ const getCart = async (req, res) => {
 
 const createCart = async (req, res) => {
   try {
-    const gameExist = await CartModel.findOne({ gameId: req.body.gameId });
+    const gameExist = await CartModel.findOne({ gameId: req.body.gameId, userId: req.body.userId });
     if (gameExist) {
       return res.status(409).json({ message: "Game already exists in your cart!" });
     }

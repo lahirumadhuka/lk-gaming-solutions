@@ -94,7 +94,7 @@ const getGames = async (req, res) => {
       ];
     }
 
-    let results = GameModel.find(queryObject);
+    let results = GameModel.find(queryObject).populate("seller", "username -_id");
     // Total count
     const gamesCount = await GameModel.countDocuments(queryObject);
 

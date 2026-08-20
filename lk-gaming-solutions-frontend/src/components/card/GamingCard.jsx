@@ -29,7 +29,8 @@ const GamingCard = ({ card_data, page, setPage, gamesCount, limit }) => {
     setIsPending(id);
 
     const cart = {
-      gameId: id
+      gameId: id,
+      userId: "",
     };
 
     await axios
@@ -320,7 +321,7 @@ const GamingCard = ({ card_data, page, setPage, gamesCount, limit }) => {
                 <div className="seller-info mb-2">
                   <i className="bi bi-person-check verified-seller me-1"></i>
                   Sold by:{" "}
-                  <span style={{ color: "#BD9B52" }}>{game.seller}</span>
+                  <span style={{ color: "#BD9B52" }}>{game.seller.username}</span>
                 </div>
                 <div className="rating-stars mb-3">
                   {[...Array(5)].map((_, i) => (
