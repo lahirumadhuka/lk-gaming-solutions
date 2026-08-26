@@ -6,39 +6,38 @@ const DataContext = createContext();
 export const useData = () => useContext(DataContext);
 
 export const DataProvider = ({ children }) => {
-  const [games, setGames] = useState([]);
+  const [user, setUser] = useState([]);
 
-  const [isPendingGames, setIsPendingGames] = useState(true);
+  const [isPendingUser, setIsPendingUser] = useState(true);
 
-  const [errorGames, setErrorGames] = useState(null);
+  const [errorUser, setErrorUser] = useState(null);
 
   useEffect(() => {
-    getGames();
+    getUser();
   }, []);
 
   // Get data from APIs
-  const getGames = () => {
+  const getUser = () => {
     axios
-      .get("http://localhost:3001/api/v1/games")
+      .get("http://localhost:3001/api/v1/user/6a86d06162fa09efae611a4f")
       .then((res) => {
-        setGames(res.data?.response || []);
-        setErrorGames(null);
+        setUser(res.data?.response || []);
+        setErrorUser(null);
       })
       .catch((err) => {
-        setErrorGames(err.message);
+        setErrorUser(err.message);
       })
       .finally(() => {
-        setIsPendingGames(false);
+        setIsPendingUser(false);
       });
   };
 
   return (
     <DataContext.Provider
       value={{
-        games,
-        getGames,
-        isPendingGames,
-        errorGames,
+        user,
+        isPendingUser,
+        errorUser,
       }}
     >
       {children}

@@ -57,7 +57,7 @@ const ProfileModal = ({
         </div>
       ) : (
         <div className="avatar my-3" style={{ userSelect: "none" }}>
-          {username.charAt(0).toUpperCase()}
+          {username?.charAt(0).toUpperCase()}
         </div>
       )}
 

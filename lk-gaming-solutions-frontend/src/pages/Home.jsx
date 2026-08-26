@@ -19,6 +19,14 @@ const Home = () => {
   const [errorGames, setErrorGames] = useState(null);
   const [gamesCount, setGamesCount] = useState(0);
 
+  const [usersCount, setUsersCount] = useState(0);
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/api/v1/user").then((res) => {
+      setUsersCount(res.data?.usersCount || 0);
+    });
+  }, []);
+
   useEffect(() => {
     axios
       .get(`http://localhost:3001/api/v1/games/section?sort=title`)
@@ -270,9 +278,8 @@ const Home = () => {
                 Trading
               </p>
               <p className="mb-4" style={{ fontSize: "18px", fontWeight: 600 }}>
-                Join over 100,000+ gamers buying and selling game keys. List
-                your unused keys or find the best deals from trusted sellers
-                worldwide.
+                Buy and sell game keys with confidence. List your unused keys or
+                discover great deals from trusted sellers worldwide.
               </p>
               <div className="d-flex justify-content-center">
                 <button
@@ -494,7 +501,7 @@ const Home = () => {
                 Trusted Community
               </h5>
               <p style={{ color: "#8b95a5", fontSize: "14px" }}>
-                Join 100K+ verified buyers and sellers worldwide
+                Join {usersCount} verified buyers and sellers worldwide
               </p>
             </div>
           </div>

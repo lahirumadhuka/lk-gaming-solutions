@@ -13,6 +13,10 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  profileImage: {
+    type: Number,
+    required: false,
+  }
 });
 
 const User = mongoose.model("User", UserSchema);

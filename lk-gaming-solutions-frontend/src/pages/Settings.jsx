@@ -1,34 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UseTitleName from "../utils/UseTitleName";
 import ProfileModal from "../components/modal/ProfileModal";
+import { useData } from "../utils/DataContext";
 
 const Settings = () => {
   UseTitleName("Settings");
 
-  const user = {
-    id: 1,
-    username: "Lahiru",
-    email: "lahiru@example.com",
-    password: "Password123",
-    cardName: "",
-    cardNumber: "",
-    expiry: "",
-    paypal: "",
-    profileImage: 1,
-  };
+  const {user} = useData();
 
   const [form, setForm] = useState({
-    username: user.username,
-    email: user.email,
+    username: "",
+    email: "",
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
-    cardName: user.cardName,
-    cardNumber: user.cardNumber,
-    expiry: user.expiry,
-    paypal: user.paypal,
-    profileImage: user.profileImage,
+    profileImage: "",
   });
+
+  useEffect(() => {
+    setForm({
+      username: user.username || "",
+      email: user.email || "",
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+      profileImage: user.profileImage || "",
+    });
+  }, [user]);
 
   const [hasChanged, setHasChanged] = useState(false);
 
@@ -67,7 +65,7 @@ const Settings = () => {
     if (!form.email) newErrors.email = "Email is required";
 
     // Password validation
-    if (form.currentPassword && form.currentPassword !== user.password) {
+    if (form.currentPassword && form.currentPassword !== user?.password) {
       newErrors.currentPassword = "Invalid current password";
     }
 
@@ -214,8 +212,8 @@ const Settings = () => {
             <ProfileModal
               isModalOpen={isProfileModalOpen}
               setIsModalOpen={setIsProfileModalOpen}
-              username={form.username}
-              modal_image={form.profileImage}
+              username={user?.username}
+              modal_image={user?.profileImage}
             />
 
             <input
@@ -330,64 +328,6 @@ const Settings = () => {
                 {errors.confirmPassword}
               </p>
             )}
-
-            {/* PAYMENT */}
-            <h5 className="section-title">💳 Payment Methods</h5>
-
-            <div>
-              {/* CARD */}
-              <div className="payment-box">
-                <h6 className="payment-title">💳 Card Details</h6>
-
-                <input
-                  type="text"
-                  name="cardName"
-                  placeholder="Card Holder Name"
-                  className="form-control"
-                  value={form.cardName}
-                  onChange={handleChange}
-                />
-
-                <input
-                  type="text"
-                  name="cardNumber"
-                  placeholder="Card Number"
-                  className="form-control"
-                  value={form.cardNumber}
-                  onChange={handleChange}
-                />
-                {errors.cardNumber && (
-                  <p className="error">
-                    <i class="bi bi-exclamation-circle"></i> {errors.cardNumber}
-                  </p>
-                )}
-
-                <input
-                  type="text"
-                  name="expiry"
-                  placeholder="MM/YY"
-                  className="form-control"
-                  value={form.expiry}
-                  onChange={handleChange}
-                />
-              </div>
-
-              {/* PAYPAL */}
-              <div className="payment-box mt-3">
-                <h6 className="payment-title">
-                  <i className="bi bi-paypal"></i> PayPal
-                </h6>
-
-                <input
-                  type="email"
-                  name="paypal"
-                  placeholder="PayPal Email"
-                  className="form-control"
-                  value={form.paypal}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
 
             <button type="submit" className="btn-gaming" disabled={!hasChanged}>
               SAVE CHANGES

@@ -17,11 +17,39 @@ import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import Games from "./pages/Games";
 import { DataProvider } from "./utils/DataContext";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Error from "./components/status/Error";
+import Loader from "./components/status/Loader";
 
 const App = () => {
   ScrollToTop();
+
+  const [error, setError] = useState(null);
+  const [isPending, setIsPending] = useState(true);
+  const [fetchTime, setFetchTime] = useState(null);
+
+  useEffect(() => {
+    setFetchTime(null)
+    const start = performance.now();
+    axios
+      .get("http://localhost:3001")
+      .then((res) => {
+        setError(null);
+      })
+      .catch((err) => {
+        setError(err.message);
+      })
+      .finally(() => {
+        const time = Math.round(performance.now() - start)
+        setFetchTime(time);
+        setTimeout(() => {
+          setIsPending(false);
+        }, time)
+      });
+  }, []);
 
   return (
     <>
@@ -32,37 +60,45 @@ const App = () => {
         hideProgressBar={true}
       />
 
-      <DataProvider>
-        <header>
-          <Header />
-        </header>
+      {isPending && fetchTime ? (
+        <Loader time={fetchTime} />
+      ) : error ? (
+        <div className="d-flex justify-content-center align-items-center min-vh-100">
+          <Error />
+        </div>
+      ) : (
+        <DataProvider>
+          <header>
+            <Header />
+          </header>
 
-        <main className="min-vh-100">
-          <Routes>
-            <Route>
-              <Route path="/" element={<Home />} />
-              <Route
-                path="/play-station"
-                element={<Games pathname={"PlayStation"} />}
-              />
-              <Route path="/xbox" element={<Games pathname={"Xbox"} />} />
-              <Route path="/pc" element={<Games pathname={"PC"} />} />
-              <Route path="/hot-deals" element={<HotDeals />} />
-              <Route path="/browse-games" element={<BrowseGames />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/settings" element={<Settings />} />
-            </Route>
-          </Routes>
-        </main>
+          <main className="min-vh-100">
+            <Routes>
+              <Route>
+                <Route path="/" element={<Home />} />
+                <Route
+                  path="/play-station"
+                  element={<Games pathname={"PlayStation"} />}
+                />
+                <Route path="/xbox" element={<Games pathname={"Xbox"} />} />
+                <Route path="/pc" element={<Games pathname={"PC"} />} />
+                <Route path="/hot-deals" element={<HotDeals />} />
+                <Route path="/browse-games" element={<BrowseGames />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/settings" element={<Settings />} />
+              </Route>
+            </Routes>
+          </main>
 
-        <footer>
-          <Footer />
-        </footer>
-      </DataProvider>
+          <footer>
+            <Footer />
+          </footer>
+        </DataProvider>
+      )}
     </>
   );
 };

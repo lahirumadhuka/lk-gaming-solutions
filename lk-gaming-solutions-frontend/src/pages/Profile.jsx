@@ -3,6 +3,7 @@ import UseTitleName from "../utils/UseTitleName";
 import SaleForm from "../components/form/SaleForm";
 import DeleteModal from "../components/modal/DeleteModal";
 import EditModal from "../components/modal/EditModal";
+import { useData } from "../utils/DataContext";
 
 const Profile = () => {
   UseTitleName("Profile");
@@ -14,9 +15,7 @@ const Profile = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  const user = {
-    username: "Lahiru",
-  };
+  const {user} = useData();
 
   // Games Bought
   const boughtGames = [
@@ -298,11 +297,11 @@ const Profile = () => {
           </h1>
 
           <div className="avatar" style={{ userSelect: "none" }}>
-            {user.username.charAt(0).toUpperCase()}
+            {user?.username?.charAt(0).toUpperCase()}
           </div>
 
           <div className="info">
-            <h3>{user.username}</h3>
+            <h3>{user?.username}</h3>
           </div>
 
           {/* Stats */}
