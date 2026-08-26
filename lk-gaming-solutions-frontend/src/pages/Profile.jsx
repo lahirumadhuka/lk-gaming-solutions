@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UseTitleName from "../utils/UseTitleName";
 import SaleForm from "../components/form/SaleForm";
 import DeleteModal from "../components/modal/DeleteModal";
 import EditModal from "../components/modal/EditModal";
-import { useData } from "../utils/DataContext";
+import axios from "axios";
 
-const Profile = () => {
+const Profile = ({userInfo}) => {
   UseTitleName("Profile");
 
   const [image, setImage] = useState("");
@@ -14,8 +14,6 @@ const Profile = () => {
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
-  const {user} = useData();
 
   // Games Bought
   const boughtGames = [
@@ -297,11 +295,11 @@ const Profile = () => {
           </h1>
 
           <div className="avatar" style={{ userSelect: "none" }}>
-            {user?.username?.charAt(0).toUpperCase()}
+            {userInfo?.username?.charAt(0).toUpperCase()}
           </div>
 
           <div className="info">
-            <h3>{user?.username}</h3>
+            <h3>{userInfo?.username}</h3>
           </div>
 
           {/* Stats */}

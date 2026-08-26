@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Pending from "../components/status/Pending";
 
-const Home = () => {
+const Home = ({ user }) => {
   UseTitleName("");
   const navigate = useNavigate();
 
@@ -339,6 +339,7 @@ const Home = () => {
         section_style={"#ffd700"}
         isPendingGames={isPendingGames}
         errorGames={errorGames}
+        user={user}
       />
 
       {/* Hot Deals Section */}
@@ -350,6 +351,7 @@ const Home = () => {
         section_link={"/hot-deals"}
         isPendingGames={isPendingGames}
         errorGames={errorGames}
+        user={user}
       />
 
       {/* Play Station Section */}
@@ -361,6 +363,7 @@ const Home = () => {
         section_link={"/play-station"}
         isPendingGames={isPendingGames}
         errorGames={errorGames}
+        user={user}
       />
 
       {/* Xbox Section */}
@@ -372,6 +375,7 @@ const Home = () => {
         section_link={"/xbox"}
         isPendingGames={isPendingGames}
         errorGames={errorGames}
+        user={user}
       />
 
       {/* PC Section */}
@@ -383,6 +387,7 @@ const Home = () => {
         section_link={"/pc"}
         isPendingGames={isPendingGames}
         errorGames={errorGames}
+        user={user}
       />
 
       {/* Why Choose Us Section */}

@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Pending from "../status/Pending";
 import Error from "../status/Error";
 import axios from "axios";
@@ -13,15 +13,19 @@ const SectionCard = ({
   section_link,
   isPendingGames,
   errorGames,
+  user
 }) => {
   const [isPending, setIsPending] = useState(null);
+  const navigate = useNavigate();
 
   const addCart = async (id) => {
+    if (!user) return navigate("/login");
+
     setIsPending(id);
 
     const cart = {
       gameId: id,
-      userId: "",
+      userId: user,
     };
 
     await axios

@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from 'react-toastify';
 
-const GamingCard = ({ card_data, page, setPage, gamesCount, limit }) => {
+const GamingCard = ({ card_data, page, setPage, gamesCount, limit, user }) => {
   const npage = Math.ceil(gamesCount / limit);
   const numbers = [...Array(npage).keys()].map((n) => n + 1);
 
   const [isPending, setIsPending] = useState(null);
+  const navigate = useNavigate();
 
   // Pagination Buttons Functions
   const prePage = () => {
@@ -26,11 +27,13 @@ const GamingCard = ({ card_data, page, setPage, gamesCount, limit }) => {
   };
 
   const addCart = async (id) => {
+    if (!user) return navigate("/login");
+    
     setIsPending(id);
 
     const cart = {
       gameId: id,
-      userId: "6a86d06162fa09efae611a4f",
+      userId: user,
     };
 
     await axios

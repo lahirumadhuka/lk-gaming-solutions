@@ -33,7 +33,14 @@ const App = () => {
 
   const [gamesCount, setGamesCount] = useState(0);
   const [user, setUser] = useState(null);
-  const [isLogin, setIsLogin] = useState(false);
+
+  const [userInfo, setUserInfo] = useState([]);
+
+  useEffect(() => {
+    const user = sessionStorage.getItem("user");
+    if (user)
+      return setUser(user);
+  }, []);
 
   useEffect(() => {
     setFetchTime(null);
@@ -44,38 +51,36 @@ const App = () => {
         setError(null);
       })
       .catch((err) => {
-        setTimeout(() => {
-          setError(err.message);
-        }, Math.round(performance.now() - start));
+        setTimeout(
+          () => {
+            setError(err.message);
+          },
+          Math.round(performance.now() - start),
+        );
       })
       .finally(() => {
         const time = Math.round(performance.now() - start);
         setFetchTime(time);
         setTimeout(() => {
           setIsPending(false);
-          setFetchTime(null)
+          setFetchTime(null);
         }, time);
       });
   }, []);
 
   useEffect(() => {
+    setGamesCount(0);
+
     axios.get(`http://localhost:3001/api/v1/cart?id=${user}`).then((res) => {
       setGamesCount(res.data?.gamesCount || 0);
     });
   }, [user]);
 
   useEffect(() => {
-    axios
-      .get(
-        `http://localhost:3001/api/v1/auth?email=lahiru@gmail.com&password=Lahiru@123`,
-      )
-      .then((res) => {
-        setUser(res.data?.response);
-        setIsLogin(true);
-      });
-  }, []);
-
-  console.log(gamesCount + " " + user);
+    axios.get(`http://localhost:3001/api/v1/user/${user}`).then((res) => {
+      setUserInfo(res.data?.response);
+    });
+  }, [user]);
 
   return (
     <>
@@ -92,38 +97,55 @@ const App = () => {
         <div className="d-flex justify-content-center align-items-center min-vh-100">
           <Error />
         </div>
-      ) : !isPending && (
-        <DataProvider>
-          <header>
-            <Header gamesCount={gamesCount} />
-          </header>
+      ) : (
+        !isPending && (
+          <DataProvider>
+            <header>
+              <Header gamesCount={gamesCount} user={user} setUser={setUser} />
+            </header>
 
-          <main className="min-vh-100">
-            <Routes>
-              <Route>
-                <Route path="/" element={<Home />} />
-                <Route
-                  path="/play-station"
-                  element={<Games pathname={"PlayStation"} />}
-                />
-                <Route path="/xbox" element={<Games pathname={"Xbox"} />} />
-                <Route path="/pc" element={<Games pathname={"PC"} />} />
-                <Route path="/hot-deals" element={<HotDeals />} />
-                <Route path="/browse-games" element={<BrowseGames />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/settings" element={<Settings />} />
-              </Route>
-            </Routes>
-          </main>
+            <main className="min-vh-100">
+              <Routes>
+                <Route>
+                  <Route path="/" element={<Home user={user} />} />
+                  <Route
+                    path="/play-station"
+                    element={<Games pathname={"PlayStation"} user={user} />}
+                  />
+                  <Route
+                    path="/xbox"
+                    element={<Games pathname={"Xbox"} user={user} />}
+                  />
+                  <Route
+                    path="/pc"
+                    element={<Games pathname={"PC"} user={user} />}
+                  />
+                  <Route path="/hot-deals" element={<HotDeals user={user} />} />
+                  <Route
+                    path="/browse-games"
+                    element={<BrowseGames user={user} />}
+                  />
+                  <Route path="/cart" element={<Cart user={user} />} />
+                  <Route path="/login" element={<Login setUser={setUser} />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/forgot-password" element={<ForgotPassword />} />
+                  <Route
+                    path="/profile"
+                    element={<Profile userInfo={userInfo} />}
+                  />
+                  <Route
+                    path="/settings"
+                    element={<Settings userInfo={userInfo} />}
+                  />
+                </Route>
+              </Routes>
+            </main>
 
-          <footer>
-            <Footer />
-          </footer>
-        </DataProvider>
+            <footer>
+              <Footer />
+            </footer>
+          </DataProvider>
+        )
       )}
     </>
   );

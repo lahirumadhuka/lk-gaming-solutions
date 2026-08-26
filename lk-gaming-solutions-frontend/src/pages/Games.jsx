@@ -8,7 +8,7 @@ import axios from "axios";
 import Pending from "../components/status/Pending";
 import Error from "../components/status/Error";
 
-const Games = ({ pathname }) => {
+const Games = ({ pathname, user }) => {
   const [games, setGames] = useState([]);
   const [isPendingGames, setIsPendingGames] = useState(true);
   const [errorGames, setErrorGames] = useState(null);
@@ -285,6 +285,7 @@ const Games = ({ pathname }) => {
                     setPage={setPage}
                     gamesCount={gamesCount}
                     limit={limit}
+                    user={user}
                   />
                 </>
               )}

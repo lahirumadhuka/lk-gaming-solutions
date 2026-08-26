@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import UseTitleName from "../utils/UseTitleName";
 import ProfileModal from "../components/modal/ProfileModal";
-import { useData } from "../utils/DataContext";
 
-const Settings = () => {
+const Settings = ({userInfo}) => {
   UseTitleName("Settings");
-
-  const {user} = useData();
 
   const [form, setForm] = useState({
     username: "",
@@ -19,14 +16,14 @@ const Settings = () => {
 
   useEffect(() => {
     setForm({
-      username: user.username || "",
-      email: user.email || "",
+      username: userInfo.username || "",
+      email: userInfo.email || "",
       currentPassword: "",
       newPassword: "",
       confirmPassword: "",
-      profileImage: user.profileImage || "",
+      profileImage: userInfo.profileImage || "",
     });
-  }, [user]);
+  }, [userInfo]);
 
   const [hasChanged, setHasChanged] = useState(false);
 
@@ -65,7 +62,7 @@ const Settings = () => {
     if (!form.email) newErrors.email = "Email is required";
 
     // Password validation
-    if (form.currentPassword && form.currentPassword !== user?.password) {
+    if (form.currentPassword && form.currentPassword !== userInfo?.password) {
       newErrors.currentPassword = "Invalid current password";
     }
 
@@ -174,10 +171,10 @@ const Settings = () => {
         }
 
         .btn-gaming:disabled {
-          opacity: 0.5;
+          opacity: 0.6;
           transform: none;
           box-shadow: none;
-          background: linear-gradient(135deg, #b8b8b8, #d0d0d0);
+          color: #ffffff;
         }
 
         .error {
@@ -212,8 +209,8 @@ const Settings = () => {
             <ProfileModal
               isModalOpen={isProfileModalOpen}
               setIsModalOpen={setIsProfileModalOpen}
-              username={user?.username}
-              modal_image={user?.profileImage}
+              username={userInfo?.username}
+              modal_image={userInfo?.profileImage}
             />
 
             <input

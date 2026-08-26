@@ -7,18 +7,20 @@ import Pending from "../components/status/Pending";
 import Error from "../components/status/Error";
 import { toast } from "react-toastify";
 
-const Cart = () => {
+const Cart = ({ user }) => {
   UseTitleName("Cart");
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const [isPendingCart, setIsPendingCart] = useState(true);
   const [errorCart, setErrorCart] = useState(null);
 
-  const id = "6a86d06162fa09efae611a4f";
+  useEffect(() => {
+    if (!user) return navigate("/login")
+  }, [])
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/v1/cart`)
+      .get(`http://localhost:3001/api/v1/cart?id=${user}`)
       .then((res) => {
         setCartItems(res.data?.response || []);
         setErrorCart(null);

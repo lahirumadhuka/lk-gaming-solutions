@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import UseTitleName from "../utils/UseTitleName";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-const Login = () => {
+const Login = ({ setUser }) => {
   UseTitleName("Login");
   const navigate = useNavigate();
 
@@ -14,6 +16,8 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const [errors, setErrors] = useState({});
+
+  const [isPending, setIsPending] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -39,7 +43,24 @@ const Login = () => {
 
     // If no errors then submit
     if (Object.keys(newErrors).length === 0) {
-      navigate("/");
+      setIsPending(true);
+
+      axios
+        .get(
+          `http://localhost:3001/api/v1/auth?email=${formData.email}&password=${formData.password}`,
+        )
+        .then((res) => {
+          setUser(res.data?.response);
+          sessionStorage.setItem("user", res.data?.response);
+          toast.success(res.data?.message);
+          navigate("/");
+        })
+        .catch((err) => {
+          toast.error(err.response?.data?.message);
+        })
+        .finally(() => {
+          setIsPending(false);
+        });
     }
   };
 
@@ -111,6 +132,13 @@ const Login = () => {
           box-shadow: 0 8px 25px rgba(189,155,82,0.5);
         }
 
+        .btn-gaming:disabled {
+          opacity: 0.6;
+          transform: none;
+          box-shadow: none;
+          color: #ffffff;
+        }
+
         .extra-links {
           text-align: center;
           margin-top: 15px;
@@ -178,8 +206,19 @@ const Login = () => {
               </p>
             )}
 
-            <button type="submit" className="btn-gaming mt-3">
-              LOGIN
+            <button type="submit" className="btn-gaming mt-3" disabled={isPending}>
+              {isPending ? (
+                <>
+                  <span
+                    className="spinner-border spinner-border-sm me-2"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  LOGGING IN...
+                </>
+              ) : (
+                <span>LOGIN</span>
+              )}
             </button>
           </form>
 

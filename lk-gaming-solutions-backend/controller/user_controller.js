@@ -3,8 +3,7 @@ const UserModel = require("../model/user_model");
 const getUsers = async (req, res) => {
   try {
     const users = await UserModel.countDocuments();
-    const user = await UserModel.find({});
-    res.status(200).json({ usersCount: users, response: user });
+    res.status(200).json({ usersCount: users });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error!" });
   }
@@ -33,7 +32,7 @@ const createUser = async (req, res) => {
     }
     
     await UserModel.create(req.body);
-    res.status(201).json({ message: "User created successfully!" });
+    res.status(201).json({ message: "Account created successfully!" });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error!" });
   }
@@ -48,7 +47,7 @@ const updateUser = async (req, res) => {
       return res.status(404).json({ message: "User not found!" });
     }
 
-    res.status(200).json({ message: "User updated successfully!" });
+    res.status(200).json({ message: "Account updated successfully!" });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error!" });
   }
@@ -63,7 +62,7 @@ const deleteUser = async (req, res) => {
       return res.status(404).json({ message: "User not found!" });
     }
 
-    res.status(200).json({ message: "User deleted successfully!" });
+    res.status(200).json({ message: "Account deleted successfully!" });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error!" });
   }

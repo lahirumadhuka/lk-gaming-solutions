@@ -7,7 +7,7 @@ import axios from "axios";
 import Pending from "../components/status/Pending";
 import Error from "../components/status/Error";
 
-const HotDeals = () => {
+const HotDeals = ({user}) => {
   UseTitleName("Hot Deals");
 
   const [games, setGames] = useState([]);
@@ -220,6 +220,7 @@ const HotDeals = () => {
                     setPage={setPage}
                     gamesCount={gamesCount}
                     limit={limit}
+                    user={user}
                   />
                 </>
               )}
