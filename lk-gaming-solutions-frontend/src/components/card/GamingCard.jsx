@@ -30,7 +30,7 @@ const GamingCard = ({ card_data, page, setPage, gamesCount, limit }) => {
 
     const cart = {
       gameId: id,
-      userId: "",
+      userId: "6a86d06162fa09efae611a4f",
     };
 
     await axios

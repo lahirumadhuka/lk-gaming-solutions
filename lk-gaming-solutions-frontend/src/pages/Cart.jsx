@@ -14,11 +14,11 @@ const Cart = () => {
   const [isPendingCart, setIsPendingCart] = useState(true);
   const [errorCart, setErrorCart] = useState(null);
 
-  const id = "";
+  const id = "6a86d06162fa09efae611a4f";
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/v1/cart?id=${id}`)
+      .get(`http://localhost:3001/api/v1/cart`)
       .then((res) => {
         setCartItems(res.data?.response || []);
         setErrorCart(null);

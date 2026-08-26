@@ -5,18 +5,8 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import logo from "../../assets/logo.png";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
-const Header = () => {
-  const [isLogin, setIsLogin] = useState(true);
-  const [gamesCount, setGamesCount] = useState(0);
-
-  useEffect(() => {
-    axios.get("http://localhost:3001/api/v1/cart").then((res) => {
-      setGamesCount(res.data?.gamesCount || 0);
-    })
-  }, [])
+const Header = ({ isLogin = true, setIsLogin, gamesCount = 0 }) => {
 
   return (
     <Navbar expand="xl" className="px-xl-5 px-3 header shadow-lg">

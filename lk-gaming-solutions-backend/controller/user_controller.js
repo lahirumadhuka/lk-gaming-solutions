@@ -2,8 +2,9 @@ const UserModel = require("../model/user_model");
 
 const getUsers = async (req, res) => {
   try {
-    const users = await UserModel.find({});
-    res.status(200).json({ usersCount: users.length, response: users });
+    const users = await UserModel.countDocuments();
+    const user = await UserModel.find({});
+    res.status(200).json({ usersCount: users, response: user });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error!" });
   }

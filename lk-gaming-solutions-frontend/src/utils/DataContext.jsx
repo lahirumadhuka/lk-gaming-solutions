@@ -19,7 +19,7 @@ export const DataProvider = ({ children }) => {
   // Get data from APIs
   const getUser = () => {
     axios
-      .get("http://localhost:3001/api/v1/user/6a86d06162fa09efae611a4f")
+      .get("")
       .then((res) => {
         setUser(res.data?.response || []);
         setErrorUser(null);

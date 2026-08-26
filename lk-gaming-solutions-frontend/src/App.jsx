@@ -31,8 +31,12 @@ const App = () => {
   const [isPending, setIsPending] = useState(true);
   const [fetchTime, setFetchTime] = useState(null);
 
+  const [gamesCount, setGamesCount] = useState(0);
+  const [user, setUser] = useState(null);
+  const [isLogin, setIsLogin] = useState(false);
+
   useEffect(() => {
-    setFetchTime(null)
+    setFetchTime(null);
     const start = performance.now();
     axios
       .get("http://localhost:3001")
@@ -40,16 +44,38 @@ const App = () => {
         setError(null);
       })
       .catch((err) => {
-        setError(err.message);
+        setTimeout(() => {
+          setError(err.message);
+        }, Math.round(performance.now() - start));
       })
       .finally(() => {
-        const time = Math.round(performance.now() - start)
+        const time = Math.round(performance.now() - start);
         setFetchTime(time);
         setTimeout(() => {
           setIsPending(false);
-        }, time)
+          setFetchTime(null)
+        }, time);
       });
   }, []);
+
+  useEffect(() => {
+    axios.get(`http://localhost:3001/api/v1/cart?id=${user}`).then((res) => {
+      setGamesCount(res.data?.gamesCount || 0);
+    });
+  }, [user]);
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:3001/api/v1/auth?email=lahiru@gmail.com&password=Lahiru@123`,
+      )
+      .then((res) => {
+        setUser(res.data?.response);
+        setIsLogin(true);
+      });
+  }, []);
+
+  console.log(gamesCount + " " + user);
 
   return (
     <>
@@ -60,16 +86,16 @@ const App = () => {
         hideProgressBar={true}
       />
 
-      {isPending && fetchTime ? (
+      {fetchTime && isPending ? (
         <Loader time={fetchTime} />
       ) : error ? (
         <div className="d-flex justify-content-center align-items-center min-vh-100">
           <Error />
         </div>
-      ) : (
+      ) : !isPending && (
         <DataProvider>
           <header>
-            <Header />
+            <Header gamesCount={gamesCount} />
           </header>
 
           <main className="min-vh-100">

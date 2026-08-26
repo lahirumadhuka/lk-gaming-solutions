@@ -4,6 +4,7 @@ const cors = require("cors");
 const gameRoutes = require("./routes/game_route");
 const cartRoutes = require("./routes/cart_route");
 const userRoutes = require("./routes/user_route");
+const authRoutes = require("./routes/auth_route");
 
 const app = express();
 require("dotenv").config();
@@ -38,3 +39,4 @@ app.get("/", (req, res) => {
 app.use("/api/v1/games", gameRoutes);
 app.use("/api/v1/cart", cartRoutes);
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/auth", authRoutes);

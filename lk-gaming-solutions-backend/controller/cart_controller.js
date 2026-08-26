@@ -3,7 +3,7 @@ const CartModel = require("../model/cart_model");
 const getCart = async (req, res) => {
   try {
     const { id } = req.query;
-    if (id || id === "") {
+    if (id === "") {
       return res.status(200).json({ gamesCount: 0, response: 0 });;
     }
     const cart = await CartModel.find({ userId: id }).populate({path: "gameId", populate: {path: "seller", select: "username -_id"}});
