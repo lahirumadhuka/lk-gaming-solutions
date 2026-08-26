@@ -5,8 +5,9 @@ import { useEffect } from "react";
 import axios from "axios";
 import Pending from "../components/status/Pending";
 import Error from "../components/status/Error";
+import { toast } from "react-toastify";
 
-const Cart = () => {
+const Cart = ({ user }) => {
   UseTitleName("Cart");
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
@@ -14,8 +15,12 @@ const Cart = () => {
   const [errorCart, setErrorCart] = useState(null);
 
   useEffect(() => {
+    if (!user) return navigate("/login")
+  }, [])
+
+  useEffect(() => {
     axios
-      .get("http://localhost:3001/api/v1/cart")
+      .get(`http://localhost:3001/api/v1/cart?id=${user}`)
       .then((res) => {
         setCartItems(res.data?.response || []);
         setErrorCart(null);
@@ -26,27 +31,39 @@ const Cart = () => {
       .finally(() => {
         setIsPendingCart(false);
       });
-  }, [])
+  }, [cartItems])
 
-  const updateQuantity = (id, newQuantity, noOfStock) => {
+  const updateItem = async (id, newQuantity, noOfStock) => {
     if (newQuantity < 1 || newQuantity > noOfStock) return;
-    setCartItems(
-      cartItems.map((item) =>
-        item.id === id ? { ...item, quantity: newQuantity } : item,
-      ),
-    );
+    
+    await axios
+      .patch(`http://localhost:3001/api/v1/cart/${id}`, { quantity: newQuantity })
+      .catch((err) => {
+        toast.error(err.response?.data?.message);
+      })
   };
 
-  const removeItem = (id) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
+  const removeItem = async (id) => {
+    setIsPendingCart(true);
+    
+    await axios
+      .delete(`http://localhost:3001/api/v1/cart/${id}`)
+      .then((res) => {
+        toast.success(res.data?.message);
+      })
+      .catch((err) => {
+        toast.error(err.response?.data?.message);
+      }).finally(() => {
+        setIsPendingCart(false);
+      })
   };
 
   const total = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+    (sum, item) => sum + item.gameId.price * item.quantity,
     0,
   );
   const savings = cartItems.reduce(
-    (sum, item) => sum + (item.oldPrice - item.price) * item.quantity,
+    (sum, item) => sum + (item.gameId.price * (item.gameId.discount / 100)) * item.quantity,
     0,
   );
 
@@ -447,11 +464,11 @@ const Cart = () => {
               <div className="row">
                 {/* Cart Items */}
                 <div className="col-lg-8 mb-4">
-                  {cartItems.map((item) => (
-                    <div key={item.id} className="cart-item">
+                  {cartItems.map((item, index) => (
+                    <div key={index} className="cart-item">
                       <button
                         className="remove-btn"
-                        onClick={() => removeItem(item.id)}
+                        onClick={() => removeItem(item._id)}
                       >
                         <i className="bi bi-trash"></i>
                       </button>
@@ -460,7 +477,7 @@ const Cart = () => {
                         <div className="col-md-2 mb-3 mb-md-0">
                           <div className="cart-item-img">
                             <img
-                              src={item.imgUrl}
+                              src={item.gameId.imgUrl}
                               className="img-fluid w-100 h-100 rounded"
                               style={{ objectFit: "cover" }}
                             />
@@ -475,31 +492,31 @@ const Cart = () => {
                               marginBottom: "8px",
                             }}
                           >
-                            {item.title}
+                            {item.gameId.title}
                           </h4>
                           <div className="mb-2 d-flex gap-2 align-items-center flex-wrap">
                             <span
-                              className={`platform-badge ${item.platform.toLowerCase().replace(/\//g, " ")}`}
+                              className={`platform-badge ${item.gameId.platform.toLowerCase().replace(/\//g, " ")}`}
                             >
-                              {item.platform}
+                              {item.gameId.platform}
                             </span>
-                            <span className="genre-badge">{item.genre}</span>
+                            <span className="genre-badge">{item.gameId.genre}</span>
                             <span className="discount-badge">
-                              -{item.discount}%
+                              -{item.gameId.discount}%
                             </span>
                           </div>
                           <div className="seller-info mb-2">
                             <i className="bi bi-person-check verified-seller me-1"></i>
                             Sold by:{" "}
                             <span style={{ color: "#BD9B52" }}>
-                              {item.seller}
+                              {item.gameId.seller.username}
                             </span>
                           </div>
                           <div className="rating-stars">
                             {[...Array(5)].map((_, i) => (
                               <i
                                 key={i}
-                                className={`bi bi-star${i < Math.floor(item.rating) ? "-fill" : ""}`}
+                                className={`bi bi-star${i < Math.floor(item.gameId.rating) ? "-fill" : ""}`}
                               ></i>
                             ))}
                             <span
@@ -509,7 +526,7 @@ const Cart = () => {
                                 marginLeft: "8px",
                               }}
                             >
-                              ({item.rating})
+                              ({item.gameId.rating})
                             </span>
                           </div>
                           <div
@@ -519,7 +536,7 @@ const Cart = () => {
                               marginTop: "8px",
                             }}
                           >
-                            {item.region}
+                            {item.gameId.region}
                           </div>
                         </div>
 
@@ -528,15 +545,15 @@ const Cart = () => {
                             <div className="price-display mb-2">
                               LKR{" "}
                               {(
-                                (item.discount > 0
-                                  ? item.price -
-                                    (item.price * item.discount) / 100
-                                  : item.price) * item.quantity
+                                (item.gameId.discount > 0
+                                  ? item.gameId.price -
+                                    (item.gameId.price * item.gameId.discount) / 100
+                                  : item.gameId.price) * item.quantity
                               ).toFixed(2)}
                             </div>
-                            {item.discount > 0 && (
+                            {item.gameId.discount > 0 && (
                               <div className="old-price mb-3">
-                                LKR {(item.price * item.quantity).toFixed(2)}
+                                LKR {(item.gameId.price * item.quantity).toFixed(2)}
                               </div>
                             )}
 
@@ -544,10 +561,10 @@ const Cart = () => {
                               <button
                                 className="quantity-btn"
                                 onClick={() =>
-                                  updateQuantity(
-                                    item.id,
+                                  updateItem(
+                                    item._id,
                                     item.quantity - 1,
-                                    item.stock,
+                                    item.gameId.stock,
                                   )
                                 }
                               >
@@ -559,10 +576,10 @@ const Cart = () => {
                               <button
                                 className="quantity-btn"
                                 onClick={() =>
-                                  updateQuantity(
-                                    item.id,
+                                  updateItem(
+                                    item._id,
                                     item.quantity + 1,
-                                    item.stock,
+                                    item.gameId.stock,
                                   )
                                 }
                               >
@@ -571,7 +588,7 @@ const Cart = () => {
                             </div>
 
                             <div style={{ color: "#8b95a5", fontSize: "13px" }}>
-                              ${item.price} each
+                              ${item.gameId.price} each
                             </div>
                           </div>
                         </div>
@@ -606,7 +623,7 @@ const Cart = () => {
 
                     <div className="summary-row total">
                       <span>Total</span>
-                      <span className="amount">${total.toFixed(2)}</span>
+                      <span className="amount">${(total - savings).toFixed(2)}</span>
                     </div>
 
                     {/* Checkout Button */}

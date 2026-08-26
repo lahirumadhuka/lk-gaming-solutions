@@ -7,7 +7,7 @@ import axios from "axios";
 import Pending from "../components/status/Pending";
 import Error from "../components/status/Error";
 
-const BrowseGames = () => {
+const BrowseGames = ({user}) => {
   UseTitleName("Browse Games");
 
   const [games, setGames] = useState([]);
@@ -261,6 +261,7 @@ const BrowseGames = () => {
                     setPage={setPage}
                     gamesCount={gamesCount}
                     limit={limit}
+                    user={user}
                   />
                 </>
               )}

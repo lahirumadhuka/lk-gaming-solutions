@@ -23,7 +23,8 @@ const GameSchema = mongoose.Schema({
     required: [true, "Please select the game platform type!"],
   },
   seller: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
   rating: {

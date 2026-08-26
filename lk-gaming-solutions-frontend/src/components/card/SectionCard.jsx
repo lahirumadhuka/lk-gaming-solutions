@@ -1,8 +1,9 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Pending from "../status/Pending";
 import Error from "../status/Error";
 import axios from "axios";
 import { useState } from "react";
+import { toast } from 'react-toastify';
 
 const SectionCard = ({
   section_style,
@@ -12,32 +13,28 @@ const SectionCard = ({
   section_link,
   isPendingGames,
   errorGames,
+  user
 }) => {
   const [isPending, setIsPending] = useState(null);
+  const navigate = useNavigate();
 
-  const addCart = async (game) => {
-    setIsPending(game._id);
+  const addCart = async (id) => {
+    if (!user) return navigate("/login");
+
+    setIsPending(id);
 
     const cart = {
-      title: game.title,
-      price: game.price,
-      discount: game.discount,
-      genre: game.genre,
-      platform: game.platform,
-      seller: game.seller,
-      rating: game.rating,
-      stock: game.stock,
-      region: game.region,
-      imgUrl: game.imgUrl,
+      gameId: id,
+      userId: user,
     };
 
     await axios
       .post("http://localhost:3001/api/v1/cart", cart)
       .then((res) => {
-        console.log(res.data?.message);
+        toast.success(res.data?.message);
       })
       .catch((err) => {
-        console.log(err.message);
+        toast.error(err.response?.data?.message);
       })
       .finally(() => {
         setIsPending(null);
@@ -402,7 +399,7 @@ const SectionCard = ({
                           <i className="bi bi-person-check verified-seller me-1"></i>
                           Sold by:{" "}
                           <span style={{ color: "#BD9B52" }}>
-                            {game.seller}
+                            {game.seller.username}
                           </span>
                         </div>
                         <div className="rating-stars mb-3">
@@ -446,7 +443,7 @@ const SectionCard = ({
                             className="btn btn-gaming flex-grow-1"
                             style={{ padding: "10px", fontSize: "13px" }}
                             disabled={game.stock === 0 || isPending === game._id}
-                            onClick={() => addCart(game)}
+                            onClick={() => addCart(game._id)}
                           >
                             {isPending === game._id ? (
                               <>

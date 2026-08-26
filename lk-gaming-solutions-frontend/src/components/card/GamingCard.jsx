@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from 'react-toastify';
 
-const GamingCard = ({ card_data, pathname, page, setPage, gamesCount, limit }) => {
+const GamingCard = ({ card_data, page, setPage, gamesCount, limit, user }) => {
   const npage = Math.ceil(gamesCount / limit);
   const numbers = [...Array(npage).keys()].map((n) => n + 1);
 
   const [isPending, setIsPending] = useState(null);
+  const navigate = useNavigate();
 
   // Pagination Buttons Functions
   const prePage = () => {
@@ -24,29 +26,23 @@ const GamingCard = ({ card_data, pathname, page, setPage, gamesCount, limit }) =
     window.scrollTo(0, 0);
   };
 
-  const addCart = async (game) => {
-    setIsPending(game._id);
+  const addCart = async (id) => {
+    if (!user) return navigate("/login");
+    
+    setIsPending(id);
 
     const cart = {
-      title: game.title,
-      price: game.price,
-      discount: game.discount,
-      genre: game.genre,
-      platform: game.platform,
-      seller: game.seller,
-      rating: game.rating,
-      stock: game.stock,
-      region: game.region,
-      imgUrl: game.imgUrl,
+      gameId: id,
+      userId: user,
     };
 
     await axios
       .post("http://localhost:3001/api/v1/cart", cart)
       .then((res) => {
-        console.log(res.data?.message);
+        toast.success(res.data?.message);
       })
-      .catch((error) => {
-        console.log(res.data?.message);
+      .catch((err) => {
+        toast.error(err.response?.data?.message);
       })
       .finally(() => {
         setIsPending(null);
@@ -328,7 +324,7 @@ const GamingCard = ({ card_data, pathname, page, setPage, gamesCount, limit }) =
                 <div className="seller-info mb-2">
                   <i className="bi bi-person-check verified-seller me-1"></i>
                   Sold by:{" "}
-                  <span style={{ color: "#BD9B52" }}>{game.seller}</span>
+                  <span style={{ color: "#BD9B52" }}>{game.seller.username}</span>
                 </div>
                 <div className="rating-stars mb-3">
                   {[...Array(5)].map((_, i) => (
@@ -368,7 +364,7 @@ const GamingCard = ({ card_data, pathname, page, setPage, gamesCount, limit }) =
                     className="btn btn-gaming flex-grow-1"
                     style={{ padding: "10px", fontSize: "13px" }}
                     disabled={game.stock === 0 || isPending === game._id}
-                    onClick={() => addCart(game)}
+                    onClick={() => addCart(game._id)}
                   >
                     {isPending === game._id ? (
                       <>

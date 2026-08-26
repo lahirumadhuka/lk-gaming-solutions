@@ -94,7 +94,7 @@ const getGames = async (req, res) => {
       ];
     }
 
-    let results = GameModel.find(queryObject);
+    let results = GameModel.find(queryObject).populate("seller", "username -_id");
     // Total count
     const gamesCount = await GameModel.countDocuments(queryObject);
 
@@ -178,19 +178,9 @@ const getSectionGames = async (req, res) => {
   }
 };
 
-const getGame = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const game = await GameModel.findById(id);
-    res.status(200).json(game);
-  } catch (error) {
-    res.status(500).json({ message: "Internal Server Error!" });
-  }
-};
-
 const createGame = async (req, res) => {
   try {
-    const game = await GameModel.create(req.body);
+    await GameModel.create(req.body);
     res.status(201).json({ message: "Game Created Successfully!" });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error!" });
@@ -230,7 +220,6 @@ const deleteGame = async (req, res) => {
 module.exports = {
   getGames,
   getSectionGames,
-  getGame,
   createGame,
   updateGame,
   deleteGame,

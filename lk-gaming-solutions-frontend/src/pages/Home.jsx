@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Pending from "../components/status/Pending";
 
-const Home = () => {
+const Home = ({ user }) => {
   UseTitleName("");
   const navigate = useNavigate();
 
@@ -18,6 +18,14 @@ const Home = () => {
   const [isPendingGames, setIsPendingGames] = useState(true);
   const [errorGames, setErrorGames] = useState(null);
   const [gamesCount, setGamesCount] = useState(0);
+
+  const [usersCount, setUsersCount] = useState(0);
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/api/v1/user").then((res) => {
+      setUsersCount(res.data?.usersCount || 0);
+    });
+  }, []);
 
   useEffect(() => {
     axios
@@ -270,9 +278,8 @@ const Home = () => {
                 Trading
               </p>
               <p className="mb-4" style={{ fontSize: "18px", fontWeight: 600 }}>
-                Join over 100,000+ gamers buying and selling game keys. List
-                your unused keys or find the best deals from trusted sellers
-                worldwide.
+                Buy and sell game keys with confidence. List your unused keys or
+                discover great deals from trusted sellers worldwide.
               </p>
               <div className="d-flex justify-content-center">
                 <button
@@ -302,8 +309,8 @@ const Home = () => {
                 </div>
                 <div className="col-md-6">
                   <div className="stat-card">
-                    <div className="stat-number">100K+</div>
-                    <div className="stat-label">Trusted Sellers</div>
+                    <div className="stat-number">Trusted</div>
+                    <div className="stat-label">Buyers and Sellers</div>
                   </div>
                 </div>
                 <div className="col-md-6">
@@ -332,6 +339,7 @@ const Home = () => {
         section_style={"#ffd700"}
         isPendingGames={isPendingGames}
         errorGames={errorGames}
+        user={user}
       />
 
       {/* Hot Deals Section */}
@@ -343,6 +351,7 @@ const Home = () => {
         section_link={"/hot-deals"}
         isPendingGames={isPendingGames}
         errorGames={errorGames}
+        user={user}
       />
 
       {/* Play Station Section */}
@@ -354,6 +363,7 @@ const Home = () => {
         section_link={"/play-station"}
         isPendingGames={isPendingGames}
         errorGames={errorGames}
+        user={user}
       />
 
       {/* Xbox Section */}
@@ -365,6 +375,7 @@ const Home = () => {
         section_link={"/xbox"}
         isPendingGames={isPendingGames}
         errorGames={errorGames}
+        user={user}
       />
 
       {/* PC Section */}
@@ -376,6 +387,7 @@ const Home = () => {
         section_link={"/pc"}
         isPendingGames={isPendingGames}
         errorGames={errorGames}
+        user={user}
       />
 
       {/* Why Choose Us Section */}
@@ -494,7 +506,7 @@ const Home = () => {
                 Trusted Community
               </h5>
               <p style={{ color: "#8b95a5", fontSize: "14px" }}>
-                Join 100K+ verified buyers and sellers worldwide
+                Join {usersCount} verified buyers and sellers worldwide
               </p>
             </div>
           </div>

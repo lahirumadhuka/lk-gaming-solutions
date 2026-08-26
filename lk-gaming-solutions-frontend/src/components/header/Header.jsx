@@ -5,19 +5,8 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import logo from "../../assets/logo.png";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
-const Header = () => {
-  const [isLogin, setIsLogin] = useState(true);
-  const [gamesCount, setGamesCount] = useState(0);
-
-  useEffect(() => {
-    axios.get("http://localhost:3001/api/v1/cart").then((res) => {
-      setGamesCount(res.data?.gamesCount || 0);
-    })
-  }, [])
-
+const Header = ({ user, setUser, gamesCount }) => {
   return (
     <Navbar expand="xl" className="px-xl-5 px-3 header shadow-lg">
       <Container fluid>
@@ -30,11 +19,9 @@ const Header = () => {
           <span className="d-none d-md-block">LK Gaming Solutions</span>
         </Navbar.Brand>
         <div className="d-flex gap-3">
-          {isLogin && (
-            <Nav.Link as={NavLink} to={"/cart"} className="d-xl-none mt-1">
-              <i className="bi bi-cart-fill"></i> {gamesCount}
-            </Nav.Link>
-          )}
+          <Nav.Link as={NavLink} to={"/cart"} className="d-xl-none mt-1">
+            <i className="bi bi-cart-fill"></i> {gamesCount}
+          </Nav.Link>
           <Navbar.Toggle className="nav-toggle">
             <i className="bi bi-list fs-1 nav-toggle-icon"></i>
           </Navbar.Toggle>
@@ -64,7 +51,7 @@ const Header = () => {
             <Nav.Link as={NavLink} to={"/hot-deals"} className="mx-auto">
               <i className="bi bi-fire me-1"></i>Hot Deals
             </Nav.Link>
-            {isLogin ? (
+            {user ? (
               <>
                 <Nav.Link
                   className="d-xl-none mx-auto"
@@ -82,7 +69,10 @@ const Header = () => {
                 </Nav.Link>
                 <Nav.Link
                   className="d-xl-none mx-auto"
-                  onClick={() => setIsLogin(false)}
+                  onClick={() => {
+                    setUser(null);
+                    sessionStorage.removeItem("user");
+                  }}
                 >
                   Logout
                 </Nav.Link>
@@ -104,12 +94,11 @@ const Header = () => {
               as={NavLink}
               to={"/cart"}
               className="d-none d-xl-block me-xl-5"
-              style={{visibility: `${!isLogin && "hidden"}`}}
             >
               <i className="bi bi-cart-fill"></i> {gamesCount}
             </Nav.Link>
 
-            {isLogin ? (
+            {user ? (
               <NavDropdown
                 className="d-none d-xl-block"
                 title={<i className="bi bi-person-circle"></i>}
@@ -122,7 +111,12 @@ const Header = () => {
                   Settings
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item onClick={() => setIsLogin(false)}>
+                <NavDropdown.Item
+                  onClick={() => {
+                    setUser(null);
+                    sessionStorage.removeItem("user");
+                  }}
+                >
                   Logout
                 </NavDropdown.Item>
               </NavDropdown>
