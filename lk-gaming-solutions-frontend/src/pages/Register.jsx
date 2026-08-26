@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import UseTitleName from "../utils/UseTitleName";
 
 const Register = () => {
@@ -256,7 +256,7 @@ const Register = () => {
           <div className="extra-links">
             <p>
               Already have an account?
-              <a href="/login"> Login</a>
+              <NavLink to="/login"> Login</NavLink>
             </p>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import UseTitleName from "../utils/UseTitleName";
 
 const ForgotPassword = () => {
@@ -242,7 +242,7 @@ const ForgotPassword = () => {
           </form>
 
           <div className="back-link">
-            <a href="/login">← Back to Login</a>
+            <NavLink to="/login"><i className="bi-arrow-left me-1"></i>Back to Login</NavLink>
           </div>
         </div>
       </section>
